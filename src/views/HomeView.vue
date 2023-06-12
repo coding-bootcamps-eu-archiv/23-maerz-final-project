@@ -1,5 +1,7 @@
-<script setup></script>
+<script setup>
+import RotatingGallery from '../components/home-view/RotatingGallery.vue';
+</script>
 
 <template>
-  <main><h1>Arcade</h1></main>
+  <RotatingGallery></RotatingGallery>
 </template>
