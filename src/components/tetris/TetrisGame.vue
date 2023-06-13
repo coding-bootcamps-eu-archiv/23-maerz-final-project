@@ -87,8 +87,9 @@ function freeze() {
       //changes the grid cells of the tetromino to taken
       grid.value[currentPosition.value + index].isTaken = true;
     });
+    // puts out another tetromino
     currentTetromino.value = theTetrominos.value[0][currentRotation.value];
-    currentPosition.value = 2;
+    currentPosition.value = 4;
     clearInterval(timerId);
     startGame();
   }
@@ -99,6 +100,7 @@ function freeze() {
 function moveLeft() {
   undrawTetromino();
 
+  // checks if tetromino hit the left border
   const isAtLeftEdge = currentTetromino.value.some(
     (index) => (currentPosition.value + index) % width.value === 0
   );
@@ -107,6 +109,7 @@ function moveLeft() {
     currentPosition.value -= 1;
   }
 
+  // checks if space is already taken by a tetromino
   if (
     currentTetromino.value.some(
       (index) => grid.value[currentPosition.value + index].isTaken === true
