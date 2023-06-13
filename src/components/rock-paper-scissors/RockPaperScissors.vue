@@ -7,67 +7,74 @@
     </section>
   </header>
   <div class="game-wrapper">
-    <section class="score-wrapper">
-      <h2>current game:</h2>
-      <div>you won {{ userPoints }}x</div>
-      <div>your opponent won {{ opponentPoints }}x</div>
-    </section>
+    <div v-if="!gameHasEnded">
+      <section class="score-wrapper">
+        <h2>current game:</h2>
+        <div>you won {{ userPoints }}x</div>
+        <div>your opponent won {{ opponentPoints }}x</div>
+      </section>
 
-    <div v-if="choiceIsNotSet" class="start-game">
-      <h3>choose your tool:</h3>
-      <section class="choices-wrapper">
-        <label class="choice-wrapper rock-btn">
-          <input
-            class="radio-btn"
-            type="radio"
-            name="choosing"
-            id="rock"
-            value="rock"
-            v-model="userChoice"
-          />
-          rock
-        </label>
-        <label class="choice-wrapper paper-btn">
-          <input
-            class="radio-btn"
-            type="radio"
-            name="choosing"
-            id="paper"
-            value="paper"
-            v-model="userChoice"
-          />
-          paper
-        </label>
-        <label class="choice-wrapper scissors-btn">
-          <input
-            class="radio-btn"
-            type="radio"
-            name="choosing"
-            id="scissors"
-            value="scissors"
-            v-model="userChoice"
-          />
-          scissors
-        </label>
+      <div v-if="choiceIsNotSet" class="start-game">
+        <h3>choose your tool:</h3>
+        <section class="choices-wrapper">
+          <label class="choice-wrapper rock-btn">
+            <input
+              class="radio-btn"
+              type="radio"
+              name="choosing"
+              id="rock"
+              value="rock"
+              v-model="userChoice"
+            />
+            rock
+          </label>
+          <label class="choice-wrapper paper-btn">
+            <input
+              class="radio-btn"
+              type="radio"
+              name="choosing"
+              id="paper"
+              value="paper"
+              v-model="userChoice"
+            />
+            paper
+          </label>
+          <label class="choice-wrapper scissors-btn">
+            <input
+              class="radio-btn"
+              type="radio"
+              name="choosing"
+              id="scissors"
+              value="scissors"
+              v-model="userChoice"
+            />
+            scissors
+          </label>
+        </section>
+      </div>
+
+      <section v-else class="choices-display-wrapper">
+        <div class="user-choice-wrapper choice-display">{{ userChoice }}</div>
+        <div>vs.</div>
+        <div class="choice-display opponent-choice-wrapper">
+          {{ opponentChoice }}
+        </div>
+      </section>
+      <section class="bottom-wrap" v-if="!choiceIsNotSet">
+        <button class="btn" :disabled="!isCompared" @click="compareChoices">
+          Compare
+        </button>
+
+        <button class="btn" @click="playAgain" :disabled="isCompared">
+          New Round
+        </button>
       </section>
     </div>
 
-    <section v-else class="choices-display-wrapper">
-      <div class="user-choice-wrapper choice-display">{{ userChoice }}</div>
-      <div>vs.</div>
-      <div class="choice-display opponent-choice-wrapper">
-        {{ opponentChoice }}
-      </div>
-    </section>
-    <section class="bottom-wrap" v-if="!choiceIsNotSet">
-      <button class="btn" :disabled="!isCompared" @click="compareChoices">
-        Compare
-      </button>
-
-      <button class="btn" @click="playAgain" :disabled="isCompared">
-        New Round
-      </button>
-    </section>
+    <div v-else class="end-of-game">
+      <p>{{ winningLosingMsg }}</p>
+      <button class="btn" @click="startNewGame">Start new game</button>
+    </div>
   </div>
 </template>
 
@@ -145,6 +152,36 @@ const playAgain = () => {
   userChoice.value = "";
   opponentChoice.value = "";
   message.value = "";
+};
+
+// end game
+const gameHasEnded = computed(() => {
+  if (userPoints.value === 2 || opponentPoints.value === 2) {
+    return true;
+  } else {
+    return false;
+  }
+});
+
+const winningLosingMsg = computed(() => {
+  if (userPoints.value > opponentPoints.value) {
+    return `You won this game ${userPoints.value} to ${opponentPoints.value}!`;
+  } else {
+    return `Your opponent won this game ${opponentPoints.value} to ${userPoints.value}!`;
+  }
+});
+
+const startNewGame = () => {
+  if (userPoints.value > opponentPoints.value) {
+    allGamesWon.value++;
+  } else {
+    allGamesLost.value++;
+  }
+  userChoice.value = "";
+  opponentChoice.value = "";
+  message.value = "";
+  userPoints.value = 0;
+  opponentPoints.value = 0;
 };
 </script>
 
@@ -303,8 +340,24 @@ h1 {
   transform: translate(0.25rem, -0.25rem);
 }
 
+.btn:disabled {
+  color: grey;
+  background-color: white;
+  outline: 0.1rem solid grey;
+  transform: none;
+  box-shadow: none;
+  cursor: auto;
+}
+
 .game-msg {
   text-align: center;
   margin: 2rem;
+}
+
+.end-of-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
 }
 </style>
