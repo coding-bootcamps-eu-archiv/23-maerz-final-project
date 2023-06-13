@@ -1,9 +1,9 @@
 <template>
-  <section class="grid-wrapper">
+  <section class="grid-wrapper" @click="moveLeft()">
     <div :class="cell.class" v-for="cell in grid">{{ cell.id }}</div>
   </section>
   <button @click="undrawTetromino()">undraw</button>
-  <button @click="move()">start</button>
+  <button @click="startGame()">start</button>
 </template>
 
 <script setup>
@@ -44,28 +44,40 @@ const currentTetromino = ref(theTetrominos.value[0][currentRotation.value]);
 function drawTetromino() {
   currentTetromino.value.forEach((index) => {
     grid.value[currentPosition.value + index].class = "tetromino";
+    // grid.value[currentPosition.value + index].isTaken = true;
   });
 }
 
 function undrawTetromino() {
   currentTetromino.value.forEach((index) => {
     grid.value[currentPosition.value + index].class = "grid-cell";
+    // grid.value[currentPosition.value + index].isTaken = false;
   });
 }
 
-// moving tetrominos
-
-function move() {
-  let timerId = null;
-  timerId = setInterval(moveDown, 100);
-  function moveDown() {
-    undrawTetromino();
-    currentPosition.value += width.value;
-    drawTetromino();
-    freeze();
-  }
+// moving tetrominos down every intervall
+function moveDown() {
+  undrawTetromino();
+  currentPosition.value += width.value;
+  drawTetromino();
+  freeze();
 }
 
+// function to start the game and reset timer
+let timerId;
+
+function startGame() {
+  // if (timerId) {
+  //   clearInterval(timerId);
+  //   timerId = null;
+  // } else {
+  //   drawTetromino();
+  //   timerId = setInterval(moveDown, 200);
+  // }
+  timerId = setInterval(moveDown, 200);
+}
+
+// freezes the tetrominos if they touch a grid cell that is taken
 function freeze() {
   if (
     currentTetromino.value.some(
@@ -77,12 +89,39 @@ function freeze() {
       //changes the grid cells of the tetromino to taken
       grid.value[currentPosition.value + index].isTaken = true;
       //selects a new tetromino and puts it at the start
-      currentTetromino.value = theTetrominos.value[0][currentRotation.value];
-      currentPosition.value = 4;
-      clearInterval(timerId);
-      move();
+
+      // clearInterval(timerId);
+      console.log(index);
+      console.log("is blocked");
     });
+    currentTetromino.value = theTetrominos.value[0][currentRotation.value];
+    currentPosition.value = 2;
+    clearInterval(timerId);
+    startGame();
   }
+}
+
+// moving tetrominos left
+
+function moveLeft() {
+  undrawTetromino();
+  let isAtLeftEdge = currentTetromino.value.some((index) => {
+    (currentPosition.value + index) % width.value === 0;
+  });
+
+  if (!isAtLeftEdge) {
+    console.log(isAtLeftEdge);
+    currentPosition.value -= 1;
+  }
+
+  if (
+    currentTetromino.value.forEach(
+      (index) => grid.value[currentPosition.value + index].isTaken === true
+    )
+  ) {
+    currentPosition.value += 1;
+  }
+  drawTetromino();
 }
 </script>
 
