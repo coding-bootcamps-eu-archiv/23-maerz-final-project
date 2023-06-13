@@ -60,9 +60,13 @@
       </div>
     </section>
     <section class="bottom-wrap" v-if="!choiceIsNotSet">
-      <button class="btn" @click="compareChoices">Compare</button>
+      <button class="btn" :disabled="!isCompared" @click="compareChoices">
+        Compare
+      </button>
 
-      <button class="btn" @click="playAgain">New Round</button>
+      <button class="btn" @click="playAgain" :disabled="isCompared">
+        New Round
+      </button>
     </section>
   </div>
 </template>
@@ -125,6 +129,16 @@ const compareChoices = () => {
     opponentPoints.value++;
   }
 };
+
+// disabling comparing button after clicking and enabling new game button
+// when comparison is done
+const isCompared = computed(() => {
+  if (message.value === "") {
+    return true;
+  } else {
+    return false;
+  }
+});
 
 // new round
 const playAgain = () => {
@@ -283,6 +297,7 @@ h1 {
   border-radius: 0.25rem;
   cursor: pointer;
 }
+
 .btn:hover {
   box-shadow: -0.25rem 0.25rem black;
   transform: translate(0.25rem, -0.25rem);
