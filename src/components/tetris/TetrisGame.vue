@@ -1,6 +1,6 @@
 <template>
   <section class="grid-wrapper" @click="moveLeft()">
-    <div :class="cell.class" v-for="cell in grid">{{ cell.id }}</div>
+    <div :class="cell.class" v-for="cell in grid"></div>
   </section>
   <button @click="undrawTetromino()">undraw</button>
   <button @click="startGame()">start</button>
@@ -44,14 +44,12 @@ const currentTetromino = ref(theTetrominos.value[0][currentRotation.value]);
 function drawTetromino() {
   currentTetromino.value.forEach((index) => {
     grid.value[currentPosition.value + index].class = "tetromino";
-    // grid.value[currentPosition.value + index].isTaken = true;
   });
 }
 
 function undrawTetromino() {
   currentTetromino.value.forEach((index) => {
     grid.value[currentPosition.value + index].class = "grid-cell";
-    // grid.value[currentPosition.value + index].isTaken = false;
   });
 }
 
@@ -88,11 +86,6 @@ function freeze() {
     currentTetromino.value.forEach((index) => {
       //changes the grid cells of the tetromino to taken
       grid.value[currentPosition.value + index].isTaken = true;
-      //selects a new tetromino and puts it at the start
-
-      // clearInterval(timerId);
-      console.log(index);
-      console.log("is blocked");
     });
     currentTetromino.value = theTetrominos.value[0][currentRotation.value];
     currentPosition.value = 2;
@@ -105,17 +98,17 @@ function freeze() {
 
 function moveLeft() {
   undrawTetromino();
-  let isAtLeftEdge = currentTetromino.value.some((index) => {
-    (currentPosition.value + index) % width.value === 0;
-  });
+
+  const isAtLeftEdge = currentTetromino.value.some(
+    (index) => (currentPosition.value + index) % width.value === 0
+  );
 
   if (!isAtLeftEdge) {
-    console.log(isAtLeftEdge);
     currentPosition.value -= 1;
   }
 
   if (
-    currentTetromino.value.forEach(
+    currentTetromino.value.some(
       (index) => grid.value[currentPosition.value + index].isTaken === true
     )
   ) {
