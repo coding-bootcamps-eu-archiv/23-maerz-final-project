@@ -1,10 +1,9 @@
-<script setup></script>
-
 <template>
-  <main><h1>Arcade</h1></main>
+  <RotatingGallery></RotatingGallery>
   <FooterArea />
 </template>
 
 <script setup>
-import FooterArea from "@/components/home-view/FooterArea.vue"
+import FooterArea from "@/components/home-view/FooterArea.vue";
+import RotatingGallery from "../components/home-view/RotatingGallery.vue";
 </script>
