@@ -1,6 +1,6 @@
 <template>
   <section class="grid-wrapper">
-    <div class="grid-cell" v-for="cell in grid"></div>
+    <div :class="cell.class" v-for="cell in grid"></div>
   </section>
   <button></button>
 </template>
@@ -13,7 +13,7 @@ const grid = ref([]);
 
 function createGrid() {
   for (let i = 0; i < 200; i++) {
-    grid.value.push(i);
+    grid.value.push({ id: i, class: "grid-cell" });
   }
 }
 createGrid();
@@ -28,11 +28,23 @@ const lTetromino = ref([
   [width.value, width.value * 2, width.value * 2 + 1, width.value * 2 + 2],
 ]);
 
-const theTetrominos = ref([lTetromino]);
+const theTetrominos = ref([lTetromino.value]);
 
 // position and tetromino selection
 const currentPosition = ref(4);
 const currentTetromino = ref(theTetrominos.value[0][0]);
+
+function drawTetromino() {
+  //   console.log(lTetromino.value);
+  //   console.log(theTetrominos.value[0]);
+  console.log(currentTetromino.value[0]);
+  currentTetromino.value.forEach((index) => {
+    // console.log(index);
+    grid.value[currentPosition.value + index].class = "tetromino";
+  });
+}
+
+drawTetromino();
 </script>
 
 <style scoped>
@@ -45,9 +57,15 @@ const currentTetromino = ref(theTetrominos.value[0][0]);
 }
 
 .grid-cell {
-  background-color: red;
+  _background-color: red;
   height: 20px;
   width: 20px;
   font-size: 0.8rem;
+}
+
+.tetromino {
+  background-color: aqua;
+  eight: 20px;
+  width: 20px;
 }
 </style>
