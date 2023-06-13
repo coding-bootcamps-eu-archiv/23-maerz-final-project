@@ -2,7 +2,8 @@
   <section class="grid-wrapper">
     <div :class="cell.class" v-for="cell in grid"></div>
   </section>
-  <button></button>
+  <button @click="undrawTetromino()">undraw</button>
+  <button @click="move()">start</button>
 </template>
 
 <script setup>
@@ -32,19 +33,34 @@ const theTetrominos = ref([lTetromino.value]);
 
 // position and tetromino selection
 const currentPosition = ref(4);
-const currentTetromino = ref(theTetrominos.value[0][0]);
+const currentRotation = ref(0);
+
+const currentTetromino = ref(theTetrominos.value[0][currentRotation.value]);
 
 function drawTetromino() {
-  //   console.log(lTetromino.value);
-  //   console.log(theTetrominos.value[0]);
-  console.log(currentTetromino.value[0]);
   currentTetromino.value.forEach((index) => {
-    // console.log(index);
     grid.value[currentPosition.value + index].class = "tetromino";
   });
 }
 
-drawTetromino();
+function undrawTetromino() {
+  currentTetromino.value.forEach((index) => {
+    grid.value[currentPosition.value + index].class = "grid-cell";
+  });
+}
+
+// drawTetromino();
+// moving tetrominos
+
+function move() {
+  drawTetromino();
+  timerId = setInterval(moveDown, 80);
+  function moveDown() {
+    undrawTetromino();
+    currentPosition.value += width.value;
+    drawTetromino();
+  }
+}
 </script>
 
 <style scoped>
@@ -65,7 +81,7 @@ drawTetromino();
 
 .tetromino {
   background-color: aqua;
-  eight: 20px;
+  height: 20px;
   width: 20px;
 }
 </style>
