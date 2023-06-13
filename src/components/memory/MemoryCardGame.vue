@@ -20,6 +20,7 @@
       </div>
       <div>{{ duplicatedCards }}</div>
       <div>{{ shuffledCards }}</div>
+      <div>{{ countClickedCards }}</div>
     </main>
   </section>
 </template>
@@ -51,6 +52,7 @@ const memoryCards = ref([
   },
 ]);
 
+//Game-Setup
 const duplicatedCards = ref(
   memoryCards.value.flatMap((card) => [card, { ...card }])
 );
@@ -60,11 +62,20 @@ const nowShuffleCards = () => {
   shuffledCards.value.sort(() => Math.random() - 0.5);
 };
 
+// play Game
+
+const countClickedCards = computed(() => {
+  return memoryCards.value.filter((card) => card.clicked).length;
+});
+
 const showImage = (card) => {
-  card.clicked = true;
-  card.shownCardSite = card.img;
+  if (countClickedCards.value < 2) {
+    card.clicked = true;
+    card.shownCardSite = card.img;
+  }
 };
 
+// New Game Button
 const startNewGame = () => {
   //count null
   //timer null
@@ -82,7 +93,7 @@ const timer = computed(() => {});
   display: grid;
   justify-content: center;
   gap: 1rem;
-  grid-auto-flow: dense;
+  max-width: 600px;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   grid-template-rows: repeat(auto-fit);
   background: salmon;
