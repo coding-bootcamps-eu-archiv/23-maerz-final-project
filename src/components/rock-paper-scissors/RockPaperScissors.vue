@@ -12,11 +12,53 @@
       <div>you won {{ userPoints }}x</div>
       <div>your opponent won {{ opponentPoints }}x</div>
     </section>
+
+    <div class="start-game">
+      <h3>choose your tool:</h3>
+      <section class="choices-wrapper">
+        <label class="choice-wrapper rock-btn">
+          <input
+            class="radio-btn"
+            type="radio"
+            name="choosing"
+            id="rock"
+            value="rock"
+            v-model="userChoice"
+          />
+          rock
+        </label>
+        <label class="choice-wrapper paper-btn">
+          <input
+            class="radio-btn"
+            type="radio"
+            name="choosing"
+            id="paper"
+            value="paper"
+            v-model="userChoice"
+          />
+          paper
+        </label>
+        <label class="choice-wrapper scissors-btn">
+          <input
+            class="radio-btn"
+            type="radio"
+            name="choosing"
+            id="scissors"
+            value="scissors"
+            v-model="userChoice"
+          />
+          scissors
+        </label>
+      </section>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
+
+// user choice of r, p or s
+const userChoice = ref("");
 
 // game state/score in one round
 const userPoints = ref(0);
@@ -71,5 +113,54 @@ h1 {
   top: 2rem;
   left: 2rem;
   right: 0;
+}
+
+.start-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.radio-btn {
+  all: unset;
+}
+
+.choices-wrapper {
+  display: flex;
+  margin: 3rem;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5rem;
+}
+.choice-wrapper {
+  margin: 1rem;
+  padding: 3rem;
+  width: 5rem;
+  height: 5rem;
+  border: 0.25rem solid black;
+  border-radius: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+}
+
+.rock-btn {
+  background-color: rgb(40, 40, 132);
+}
+
+.paper-btn {
+  background-color: #36827fff;
+}
+
+.scissors-btn {
+  background-color: #f9db6dff;
+  color: black;
+}
+
+.choice-wrapper:hover {
+  border: 0.25rem solid white;
 }
 </style>
