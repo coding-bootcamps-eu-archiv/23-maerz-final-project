@@ -1,12 +1,14 @@
 <template>
-  <section class="game-wrapper">
-    <div class="grid-cell" v-for="cell in grid">{{ cell }}</div>
+  <section class="grid-wrapper">
+    <div class="grid-cell" v-for="cell in grid"></div>
   </section>
+  <button></button>
 </template>
 
 <script setup>
 import { ref } from "vue";
 
+// this creates the game grid
 const grid = ref([]);
 
 function createGrid() {
@@ -14,13 +16,27 @@ function createGrid() {
     grid.value.push(i);
   }
 }
-
 createGrid();
-console.log(grid);
+
+// tetrominos
+const width = ref(10);
+
+const lTetromino = ref([
+  [1, width.value + 1, width.value * 2 + 1, 2],
+  [width.value, width.value + 1, width.value + 2, width.value * 2 + 2],
+  [1, width.value + 1, width.value * 2 + 1, width.value * 2],
+  [width.value, width.value * 2, width.value * 2 + 1, width.value * 2 + 2],
+]);
+
+const theTetrominos = ref([lTetromino]);
+
+// position and tetromino selection
+const currentPosition = ref(4);
+const currentTetromino = ref(theTetrominos.value[0][0]);
 </script>
 
 <style scoped>
-.game-wrapper {
+.grid-wrapper {
   display: flex;
   flex-wrap: wrap;
   height: 400px;
