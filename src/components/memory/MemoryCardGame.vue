@@ -4,7 +4,7 @@
       <h1>Memory</h1>
       <div>Click-Count</div>
       <div>Timer</div>
-      <p>{{ timer }}</p>
+      <p>{{ stopwatch }}</p>
       <button id="newGame" @click="startNewGame">New Game</button>
     </header>
 
@@ -55,6 +55,14 @@ const memoryCards = ref([
     defaultImg: "BILD",
     status: "hidden",
   },
+  {
+    id: "cat4",
+    img: "source4",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg: "BILD",
+    status: "hidden",
+  },
 ]);
 
 //Game-Setup
@@ -66,12 +74,41 @@ const shuffledCards = ref([...duplicatedCards.value]);
 const nowShuffleCards = () => {
   shuffledCards.value.sort(() => Math.random() - 0.5);
 };
-// New Game Button
+
+// Setup Stopwatch
+const elapsedTime = ref(0);
+
+let stopwatchId = null;
+
+const stopwatch = computed(() => {
+  const date = new Date(elapsedTime.value);
+  return date.toLocaleString("en-US", {
+    minute: "2-digit",
+    second: "2-digit",
+    fractionalSecondDigits: 3,
+  });
+});
+
+const startStopwatch = () => {
+  elapsedTime.value = 0;
+  const startTime = Date.now();
+  stopwatchId = setInterval(() => {
+    elapsedTime.value = Date.now() - startTime;
+  }, 10);
+};
+
+const stopStopwatch = () => {
+  clearInterval(stopwatchId);
+};
+
+// Start Game
+
 const startNewGame = () => {
   //count null
   //timer null
   clickedCards.value = [];
-
+  stopStopwatch();
+  startStopwatch();
   shuffledCards.value.forEach((card) => {
     card.clicked = false;
     card.shownCardSite = "back";
@@ -121,8 +158,6 @@ const comparePairs = () => {
     }, 1700);
   }
 };
-
-const timer = computed(() => {});
 </script>
 
 <style>
