@@ -13,7 +13,7 @@
       <div>your opponent won {{ opponentPoints }}x</div>
     </section>
 
-    <div class="start-game">
+    <div v-if="choiceIsNotSet" class="start-game">
       <h3>choose your tool:</h3>
       <section class="choices-wrapper">
         <label class="choice-wrapper rock-btn">
@@ -51,6 +51,11 @@
         </label>
       </section>
     </div>
+    <section v-else class="choices-display-wrapper">
+      <div class="user-choice-wrapper choice-display">{{ userChoice }}</div>
+      <div>vs.</div>
+      <div class="choice-display opponent-choice-wrapper"></div>
+    </section>
   </div>
 </template>
 
@@ -67,6 +72,15 @@ const opponentPoints = ref(0);
 // all games overall game state
 const allGamesWon = ref(0);
 const allGamesLost = ref(0);
+
+// displaying only 3 possible choices
+const choiceIsNotSet = computed(() => {
+  if (userChoice.value === "") {
+    return true;
+  } else {
+    return false;
+  }
+});
 </script>
 
 <style scoped>
@@ -119,6 +133,42 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.choices-display-wrapper {
+  display: flex;
+  width: 80ch;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.choice-display {
+  font-size: 1.5rem;
+  margin: 1rem;
+  padding: 3rem;
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.25rem solid black;
+  border-radius: 100%;
+  cursor: pointer;
+
+  color: black;
+}
+
+.user-choice-wrapper {
+  position: absolute;
+  left: 0;
+  margin: 3rem;
+}
+
+.opponent-choice-wrapper {
+  position: absolute;
+  right: 0;
+  margin: 3rem;
 }
 
 .radio-btn {
