@@ -65,7 +65,7 @@ const nowShuffleCards = () => {
 // play Game
 
 const countClickedCards = computed(() => {
-  return memoryCards.value.filter((card) => card.clicked).length;
+  return shuffledCards.value.filter((card) => card.clicked).length;
 });
 
 const showImage = (card) => {
@@ -79,6 +79,7 @@ const showImage = (card) => {
 const startNewGame = () => {
   //count null
   //timer null
+  countClickedCards.value = [];
   shuffledCards.value.forEach((card) => {
     card.clicked = false;
   });
