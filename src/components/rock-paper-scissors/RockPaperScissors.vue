@@ -51,10 +51,18 @@
         </label>
       </section>
     </div>
+
     <section v-else class="choices-display-wrapper">
       <div class="user-choice-wrapper choice-display">{{ userChoice }}</div>
       <div>vs.</div>
-      <div class="choice-display opponent-choice-wrapper"></div>
+      <div class="choice-display opponent-choice-wrapper">
+        {{ opponentChoice }}
+      </div>
+    </section>
+    <section class="bottom-wrap" v-if="!choiceIsNotSet">
+      <button class="btn" @click="compareChoices">Compare</button>
+
+      <button class="btn" @click="">New Round</button>
     </section>
   </div>
 </template>
@@ -66,6 +74,7 @@ import { ref, computed } from "vue";
 const userChoice = ref("");
 
 // game state/score in one round
+const message = ref("");
 const userPoints = ref(0);
 const opponentPoints = ref(0);
 
@@ -79,6 +88,41 @@ const choiceIsNotSet = computed(() => {
     return true;
   } else {
     return false;
+  }
+});
+
+// comparing user choice and opponent choice
+const compareChoices = () => {
+  randomNum = Math.floor(Math.random() * 3);
+  opponentChoice.value = randomChoice.value;
+  if (userChoice.value === opponentChoice.value) {
+    message.value = "It's a draw!";
+  } else if (
+    (userChoice.value === "paper" && opponentChoice.value === "rock") ||
+    (userChoice.value === "scissors" && opponentChoice.value === "paper") ||
+    (userChoice.value === "rock" && opponentChoice.value === "scissors")
+  ) {
+    message.value = "One point to you!";
+    userPoints.value++;
+  } else if (
+    (userChoice.value === "rock" && opponentChoice.value === "paper") ||
+    (userChoice.value === "paper" && opponentChoice.value === "scissors") ||
+    (userChoice.value === "scissors" && opponentChoice.value === "rock")
+  ) {
+    message.value = "One point to the opponent!";
+    opponentPoints.value++;
+  }
+};
+
+// getting random choice for opponent
+const possibleChoices = ref(["rock", "paper", "scissors"]);
+let randomNum = ref();
+
+const opponentChoice = ref("");
+
+const randomChoice = computed(() => {
+  if (userChoice.value !== "") {
+    return possibleChoices.value[randomNum];
   }
 });
 </script>
@@ -212,5 +256,33 @@ h1 {
 
 .choice-wrapper:hover {
   border: 0.25rem solid white;
+}
+.bottom-wrap {
+  display: flex;
+  margin: 3rem;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.btn {
+  all: unset;
+  margin: 1rem;
+  padding: 0.5rem;
+  outline: 0.1rem solid black;
+  color: white;
+  background-color: rgb(107, 31, 31);
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+.btn:hover {
+  box-shadow: -0.25rem 0.25rem black;
+  transform: translate(0.25rem, -0.25rem);
+}
+
+.game-msg {
+  text-align: center;
+  margin: 2rem;
 }
 </style>
