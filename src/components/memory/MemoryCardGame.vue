@@ -15,12 +15,14 @@
         :key="card.index"
         @click="showImage(card)"
       >
-        <span v-if="!card.clicked">{{ card.defaultImg }}</span>
+        <span v-if="!cardStatus">{{ card.defaultImg }}</span>
         <span v-else>{{ card.shownCardSite }}</span>
       </div>
       <div>{{ duplicatedCards }}</div>
       <div>{{ shuffledCards }}</div>
-      <div>{{ countClickedCards }}</div>
+      <div>___________________</div>
+      <div>{{ clickedCards }}</div>
+      <div>--------------------</div>
     </main>
   </section>
 </template>
@@ -35,6 +37,7 @@ const memoryCards = ref([
     clicked: false,
     shownCardSite: "back",
     defaultImg: "BILD",
+    status: "hidden",
   },
   {
     id: "cat2",
@@ -42,6 +45,7 @@ const memoryCards = ref([
     clicked: false,
     shownCardSite: "back",
     defaultImg: "BILD",
+    status: "hidden",
   },
   {
     id: "cat3",
@@ -49,6 +53,7 @@ const memoryCards = ref([
     clicked: false,
     shownCardSite: "back",
     defaultImg: "BILD",
+    status: "hidden",
   },
 ]);
 
@@ -61,29 +66,60 @@ const shuffledCards = ref([...duplicatedCards.value]);
 const nowShuffleCards = () => {
   shuffledCards.value.sort(() => Math.random() - 0.5);
 };
-
-// play Game
-
-const countClickedCards = computed(() => {
-  return shuffledCards.value.filter((card) => card.clicked).length;
-});
-
-const showImage = (card) => {
-  if (countClickedCards.value < 2) {
-    card.clicked = true;
-    card.shownCardSite = card.img;
-  }
-};
-
 // New Game Button
 const startNewGame = () => {
   //count null
   //timer null
-  countClickedCards.value = [];
+  clickedCards.value = [];
+
   shuffledCards.value.forEach((card) => {
     card.clicked = false;
+    card.shownCardSite = "back";
+    card.status = "hidden";
   });
   nowShuffleCards();
+};
+
+// play Game
+
+const clickedCards = computed(() => {
+  return shuffledCards.value.filter((card) => card.clicked);
+});
+
+const cardStatus = computed((card) => {
+  return (card) => card.status === "shown";
+});
+
+const showImage = (card) => {
+  clickedCards.value = [];
+  if (card.status === "hidden" && clickedCards.value.length < 2) {
+    card.clicked = true;
+    card.shownCardSite = card.img;
+    card.status = "shown";
+  }
+  if (clickedCards.value.length === 2) {
+    comparePairs();
+  }
+};
+
+const comparePairs = () => {
+  const clicked = clickedCards.value;
+
+  if (clicked[0].id === clicked[1].id) {
+    setTimeout(() => {
+      clicked[0].clicked = false;
+      clicked[1].clicked = false;
+    }, 1000);
+  } else {
+    setTimeout(() => {
+      clicked[0].clicked = false;
+      clicked[0].shownCardSite = "back";
+      clicked[0].status = "hidden";
+      clicked[1].clicked = false;
+      clicked[1].shownCardSite = "back";
+      clicked[1].status = "hidden";
+    }, 1700);
+  }
 };
 
 const timer = computed(() => {});
