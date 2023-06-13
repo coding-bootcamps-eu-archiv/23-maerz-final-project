@@ -60,6 +60,7 @@
           {{ opponentChoice }}
         </div>
       </section>
+      <p class="game-msg">{{ message }}</p>
       <section class="bottom-wrap" v-if="!choiceIsNotSet">
         <button class="btn" :disabled="!isCompared" @click="compareChoices">
           Compare
