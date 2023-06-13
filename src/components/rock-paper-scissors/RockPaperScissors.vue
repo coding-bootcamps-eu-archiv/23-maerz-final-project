@@ -62,7 +62,7 @@
     <section class="bottom-wrap" v-if="!choiceIsNotSet">
       <button class="btn" @click="compareChoices">Compare</button>
 
-      <button class="btn" @click="">New Round</button>
+      <button class="btn" @click="playAgain">New Round</button>
     </section>
   </div>
 </template>
@@ -91,6 +91,18 @@ const choiceIsNotSet = computed(() => {
   }
 });
 
+// getting random choice for opponent
+const possibleChoices = ref(["rock", "paper", "scissors"]);
+let randomNum = ref();
+
+const opponentChoice = ref("");
+
+const randomChoice = computed(() => {
+  if (userChoice.value !== "") {
+    return possibleChoices.value[randomNum];
+  }
+});
+
 // comparing user choice and opponent choice
 const compareChoices = () => {
   randomNum = Math.floor(Math.random() * 3);
@@ -114,17 +126,12 @@ const compareChoices = () => {
   }
 };
 
-// getting random choice for opponent
-const possibleChoices = ref(["rock", "paper", "scissors"]);
-let randomNum = ref();
-
-const opponentChoice = ref("");
-
-const randomChoice = computed(() => {
-  if (userChoice.value !== "") {
-    return possibleChoices.value[randomNum];
-  }
-});
+// new round
+const playAgain = () => {
+  userChoice.value = "";
+  opponentChoice.value = "";
+  message.value = "";
+};
 </script>
 
 <style scoped>
