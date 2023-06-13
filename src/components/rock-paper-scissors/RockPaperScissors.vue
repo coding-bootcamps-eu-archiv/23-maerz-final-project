@@ -54,9 +54,14 @@
       </div>
 
       <section v-else class="choices-display-wrapper">
-        <div class="user-choice-wrapper choice-display">{{ userChoice }}</div>
+        <div class="user-choice-wrapper choice-display" :class="setStylingUser">
+          {{ userChoice }}
+        </div>
         <div>vs.</div>
-        <div class="choice-display opponent-choice-wrapper">
+        <div
+          class="choice-display opponent-choice-wrapper"
+          :class="setStylingOpponent"
+        >
           {{ opponentChoice }}
         </div>
       </section>
@@ -127,6 +132,8 @@ const compareChoices = () => {
     (userChoice.value === "rock" && opponentChoice.value === "scissors")
   ) {
     message.value = "One point to you!";
+    setStylingUser.value = "win-style";
+    setStylingOpponent.value = "lose-style";
     userPoints.value++;
   } else if (
     (userChoice.value === "rock" && opponentChoice.value === "paper") ||
@@ -134,9 +141,16 @@ const compareChoices = () => {
     (userChoice.value === "scissors" && opponentChoice.value === "rock")
   ) {
     message.value = "One point to the opponent!";
+    setStylingUser.value = "lose-style";
+    setStylingOpponent.value = "win-style";
     opponentPoints.value++;
   }
 };
+
+// adjust styling/color of different choices that are displayed in comparison
+
+const setStylingUser = ref("");
+const setStylingOpponent = ref("");
 
 // disabling comparing button after clicking and enabling new game button
 // when comparison is done
@@ -153,6 +167,8 @@ const playAgain = () => {
   userChoice.value = "";
   opponentChoice.value = "";
   message.value = "";
+  setStylingUser.value = "";
+  setStylingOpponent.value = "";
 };
 
 // end game
@@ -183,6 +199,8 @@ const startNewGame = () => {
   message.value = "";
   userPoints.value = 0;
   opponentPoints.value = 0;
+  setStylingUser.value = "";
+  setStylingOpponent.value = "";
 };
 </script>
 
@@ -360,5 +378,15 @@ h1 {
   flex-direction: column;
   align-items: center;
   gap: 3rem;
+}
+
+.win-style {
+  background-color: green;
+  color: white;
+}
+
+.lose-style {
+  background-color: red;
+  color: white;
 }
 </style>
