@@ -1,6 +1,6 @@
 <template>
   <section class="grid-wrapper">
-    <div :class="cell.class" v-for="cell in grid"></div>
+    <div :class="cell.class" v-for="cell in grid">{{ cell.id }}</div>
   </section>
   <button @click="undrawTetromino()">undraw</button>
   <button @click="move()">start</button>
@@ -14,9 +14,13 @@ const grid = ref([]);
 
 function createGrid() {
   for (let i = 0; i < 200; i++) {
-    grid.value.push({ id: i, class: "grid-cell" });
+    grid.value.push({ id: i, class: "grid-cell", isTaken: false });
+  }
+  for (let i = 0; i < 10; i++) {
+    grid.value.push({ id: i + 199, class: "end", isTaken: true });
   }
 }
+
 createGrid();
 
 // tetrominos
@@ -49,16 +53,35 @@ function undrawTetromino() {
   });
 }
 
-// drawTetromino();
 // moving tetrominos
 
 function move() {
-  drawTetromino();
-  timerId = setInterval(moveDown, 80);
+  let timerId = null;
+  timerId = setInterval(moveDown, 100);
   function moveDown() {
     undrawTetromino();
     currentPosition.value += width.value;
     drawTetromino();
+    freeze();
+  }
+}
+
+function freeze() {
+  if (
+    currentTetromino.value.some(
+      (index) =>
+        grid.value[currentPosition.value + index + width.value].isTaken === true
+    )
+  ) {
+    currentTetromino.value.forEach((index) => {
+      //changes the grid cells of the tetromino to taken
+      grid.value[currentPosition.value + index].isTaken = true;
+      //selects a new tetromino and puts it at the start
+      currentTetromino.value = theTetrominos.value[0][currentRotation.value];
+      currentPosition.value = 4;
+      clearInterval(timerId);
+      move();
+    });
   }
 }
 </script>
@@ -83,5 +106,7 @@ function move() {
   background-color: aqua;
   height: 20px;
   width: 20px;
+}
+.taken {
 }
 </style>
