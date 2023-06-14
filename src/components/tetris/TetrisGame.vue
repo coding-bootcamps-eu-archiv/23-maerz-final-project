@@ -7,6 +7,7 @@
   <button @click="moveLeft()">Left</button>
   <button @click="moveRight()">Right</button>
   <button @click="rotate()">rotate</button>
+  <div>Score: {{ score }}</div>
 </template>
 
 <script setup>
@@ -25,6 +26,9 @@ function createGrid() {
 }
 
 createGrid();
+
+// keeps score
+const score = ref(0);
 
 // tetrominos
 const width = ref(10);
@@ -94,6 +98,7 @@ function freeze() {
     currentTetromino.value = theTetrominos.value[0][currentRotation.value];
     currentPosition.value = 4;
     clearInterval(timerId);
+    addScore();
     startGame();
   }
 }
@@ -157,6 +162,50 @@ function rotate() {
   }
   currentTetromino.value = theTetrominos.value[0][currentRotation.value];
   drawTetromino();
+}
+
+// removes filled lines and adds score
+
+function addScore() {
+  for (let i = 0; i < 199; i += width.value) {
+    // checking a whole row
+    const row = [
+      i,
+      i + 1,
+      i + 2,
+      i + 3,
+      i + 4,
+      i + 5,
+      i + 6,
+      i + 7,
+      i + 8,
+      i + 9,
+    ];
+
+    function checkRows() {
+      let isFilled = true;
+      row.forEach((element) => {
+        if (grid.value[element].class === "grid-cell") {
+          isFilled = false;
+        }
+      });
+      console.log(isFilled);
+      return isFilled;
+    }
+
+    checkRows();
+
+    if (checkRows()) {
+      score.value += 100;
+
+      //changes the row back to default
+      row.forEach((index) => {
+        grid.value[index].class = "grid-cell";
+        grid.value[index].isTaken = false;
+        console.log(grid.value[index]);
+      });
+    }
+  }
 }
 </script>
 
