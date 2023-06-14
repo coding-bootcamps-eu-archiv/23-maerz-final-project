@@ -4,9 +4,13 @@
   box-sizing: border-box;
 }
 
+* {
+  font-size: 18px;
+}
+
 :root {
   --primary-dark: #242038ff;
-  --primary-light: #f8f4e3ff;
+  --primary-light: rgb(236, 227, 217);
 
   --accent-color-one: #c73e1dff;
   --accent-color-two: #8d86c9ff;
@@ -31,4 +35,26 @@
 .base-btn:active {
   box-shadow: none;
   transform: translate(-0.25rem, 0.25rem);
+}
+
+.nav-link {
+  all: unset;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.35rem;
+}
+
+.nav-link:hover {
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+.base-link {
+  all: unset;
+  color: grey;
+  cursor: pointer;
+}
+
+.base-link:hover {
+  color: var(--primary-dark);
 }
