@@ -1,9 +1,15 @@
 <template>
   <section class="grid-wrapper">
-    <div :class="cell.class" v-for="cell in grid"></div>
+    <template v-if="gameActive">
+      <div :class="cell.class" v-for="cell in grid"></div>
+    </template>
+    <template v-else>
+      <div class="end-screen">GAME OVER</div>
+      <div>Final Score: {{ score }}</div>
+    </template>
   </section>
   <button @click="undrawTetromino()">undraw</button>
-  <button @click="startGame()">start</button>
+  <button @click="autoMove()">start</button>
   <button @click="moveLeft()">Left</button>
   <button @click="moveRight()">Right</button>
   <button @click="rotate()">rotate</button>
@@ -107,15 +113,20 @@ function moveDown() {
 
 // function to start the game and reset timer
 let timerId;
+let nextRandom = 0;
 
-function startGame() {
-  // if (timerId) {
-  //   clearInterval(timerId);
-  //   timerId = null;
-  // } else {
-  //   drawTetromino();
-  //   timerId = setInterval(moveDown, 200);
-  // }
+// function startGame() {
+//   if (timerId) {
+//     clearInterval(timerId);
+//     timerId = null;
+//   } else {
+//     timerId = setInterval(moveDown, 200);
+//     nextRandom = Math.floor(Math.random() * theTetrominos.value.length);
+//     drawTetromino();
+//   }
+// }
+
+function autoMove() {
   timerId = setInterval(moveDown, 200);
 }
 
@@ -132,13 +143,14 @@ function freeze() {
       grid.value[currentPosition.value + index].isTaken = true;
     });
     // puts out another tetromino
-    let nextRandom = Math.floor(Math.random() * theTetrominos.value.length);
+    nextRandom = Math.floor(Math.random() * theTetrominos.value.length);
     random = nextRandom;
     currentTetromino.value = theTetrominos.value[random][currentRotation.value];
     currentPosition.value = 4;
     clearInterval(timerId);
     addScore();
-    startGame();
+    gameOver();
+    autoMove();
   }
 }
 
@@ -191,7 +203,6 @@ function moveRight() {
 }
 
 // rotate tetromino
-
 function rotate() {
   undrawTetromino();
   currentRotation.value++;
@@ -204,7 +215,6 @@ function rotate() {
 }
 
 // event listener for key controls
-
 function keyControl(input) {
   if (input.keyCode === 37) {
     moveLeft();
@@ -212,12 +222,14 @@ function keyControl(input) {
     rotate();
   } else if (input.keyCode === 39) {
     moveRight();
+  } else if (input.keyCode === 40) {
+    moveDown();
   }
 }
+
 document.addEventListener("keydown", keyControl);
 
 // removes filled lines and adds score
-
 function addScore() {
   for (let i = 0; i < 199; i += width.value) {
     // checking a whole row
@@ -258,6 +270,20 @@ function addScore() {
       const removeRow = grid.value.splice(i, width.value);
       grid.value = removeRow.concat(grid.value);
     }
+  }
+}
+
+// keeps track of gameover
+const gameActive = ref(true);
+
+// checks if the game is over
+function gameOver() {
+  if (
+    currentTetromino.value.some(
+      (index) => grid.value[currentPosition.value + index].class === "tetromino"
+    )
+  ) {
+    gameActive.value = false;
   }
 }
 </script>
