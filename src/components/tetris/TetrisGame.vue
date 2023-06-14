@@ -53,7 +53,7 @@ const theTetrominos = ref([lTetromino.value, zTetromino.value]);
 const currentPosition = ref(4);
 const currentRotation = ref(0);
 
-const currentTetromino = ref(theTetrominos.value[1][currentRotation.value]);
+const currentTetromino = ref(theTetrominos.value[0][currentRotation.value]);
 
 function drawTetromino() {
   currentTetromino.value.forEach((index) => {
@@ -167,7 +167,7 @@ function rotate() {
   if (currentRotation.value === 4) {
     currentRotation.value = 0;
   }
-  currentTetromino.value = theTetrominos.value[1][currentRotation.value];
+  currentTetromino.value = theTetrominos.value[0][currentRotation.value];
   drawTetromino();
 }
 
@@ -222,6 +222,9 @@ function addScore() {
         grid.value[index].class = "grid-cell";
         grid.value[index].isTaken = false;
       });
+
+      const removeRow = grid.value.splice(i, width.value);
+      grid.value = removeRow.concat(grid.value);
     }
   }
 }
