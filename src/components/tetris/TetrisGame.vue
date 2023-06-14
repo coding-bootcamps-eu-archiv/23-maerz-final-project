@@ -40,13 +40,20 @@ const lTetromino = ref([
   [width.value, width.value * 2, width.value * 2 + 1, width.value * 2 + 2],
 ]);
 
-const theTetrominos = ref([lTetromino.value]);
+const zTetromino = ref([
+  [0, width.value, width.value + 1, width.value * 2 + 1],
+  [width.value + 1, width.value + 2, width.value * 2, width.value * 2 + 1],
+  [0, width.value, width.value + 1, width.value * 2 + 1],
+  [width.value + 1, width.value + 2, width.value * 2, width.value * 2 + 1],
+]);
+
+const theTetrominos = ref([lTetromino.value, zTetromino.value]);
 
 // position and tetromino selection
 const currentPosition = ref(4);
 const currentRotation = ref(0);
 
-const currentTetromino = ref(theTetrominos.value[0][currentRotation.value]);
+const currentTetromino = ref(theTetrominos.value[1][currentRotation.value]);
 
 function drawTetromino() {
   currentTetromino.value.forEach((index) => {
@@ -160,9 +167,22 @@ function rotate() {
   if (currentRotation.value === 4) {
     currentRotation.value = 0;
   }
-  currentTetromino.value = theTetrominos.value[0][currentRotation.value];
+  currentTetromino.value = theTetrominos.value[1][currentRotation.value];
   drawTetromino();
 }
+
+// event listener for key controls
+
+function keyControl(input) {
+  if (input.keyCode === 37) {
+    moveLeft();
+  } else if (input.keyCode === 38) {
+    rotate();
+  } else if (input.keyCode === 39) {
+    moveRight();
+  }
+}
+document.addEventListener("keydown", keyControl);
 
 // removes filled lines and adds score
 
@@ -189,7 +209,6 @@ function addScore() {
           isFilled = false;
         }
       });
-      console.log(isFilled);
       return isFilled;
     }
 
@@ -202,7 +221,6 @@ function addScore() {
       row.forEach((index) => {
         grid.value[index].class = "grid-cell";
         grid.value[index].isTaken = false;
-        console.log(grid.value[index]);
       });
     }
   }
