@@ -29,9 +29,11 @@ const games = ref([
 .all-cards-wrapper {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   padding: 2rem;
   gap: 2rem;
-  background-color: var(--primary-dark);
+  height: 100%;
 }
 </style>

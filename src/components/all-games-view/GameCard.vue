@@ -22,7 +22,7 @@ defineProps({
   border: 0.2rem solid var(--primary-light);
   border-radius: 0.5rem;
   cursor: pointer;
-  background-color: black;
+  background-color: var(--accent-color-one);
 }
 
 .game-card-wrapper:hover {

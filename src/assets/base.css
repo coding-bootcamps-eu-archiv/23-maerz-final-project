@@ -4,21 +4,23 @@
   box-sizing: border-box;
 }
 
-* {
-  font-size: 18px;
-}
-
 html,
 body {
   height: 100%;
-  width: 100%;
+  font-size: 18px;
+}
+
+#app {
+  display: grid;
+  grid-template-rows: min-content 1fr min-content;
+  min-height: 100%;
 }
 
 :root {
-  --primary-dark: #242038ff;
+  --primary-dark: rgb(31, 28, 43);
   --primary-light: rgb(236, 227, 217);
 
-  --accent-color-one: #c73e1dff;
+  --accent-color-one: rgb(222, 101, 15);
   --accent-color-two: #8d86c9ff;
   --accent-color-three: #f6ae2dff;
 }
