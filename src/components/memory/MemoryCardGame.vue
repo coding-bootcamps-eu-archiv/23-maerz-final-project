@@ -1,10 +1,12 @@
 <template>
   <section id="memory">
     <header>
+      <!-- <div>Click-Count</div> -->
+      <div>
+        <p>{{ gameStatus }}</p>
+        <p>{{ stopwatch }}</p>
+      </div>
       <h1>Memory</h1>
-      <div>Click-Count</div>
-      <div>Timer</div>
-      <p>{{ stopwatch }}</p>
       <button id="newGame" @click="startNewGame">New Game</button>
     </header>
 
@@ -22,14 +24,14 @@
         />
         <img v-else class="card-image" :src="card.img" />
       </div>
-      <div>{{ duplicatedCards }}</div>
-      <div>{{ shuffledCards }}</div>
+      <!-- <div>{{ duplicatedCards }}</div>
+      <div>{{ shuffledCards }}</div> -->
     </main>
   </section>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 const memoryCards = ref([
   {
@@ -107,6 +109,12 @@ const memoryCards = ref([
 ]);
 
 //Game-Setup
+onMounted(() => {
+  setGameStatus();
+});
+
+const isGameStarted = ref(false);
+
 const duplicatedCards = ref(
   memoryCards.value.flatMap((card) => [card, { ...card }])
 );
@@ -146,7 +154,8 @@ const stopStopwatch = () => {
 
 const startNewGame = () => {
   //count null
-  //timer null
+  isGameStarted.value = true;
+
   clickedCards.value = [];
   stopStopwatch();
   startStopwatch();
@@ -156,6 +165,7 @@ const startNewGame = () => {
     card.status = "hidden";
   });
   nowShuffleCards();
+  setGameStatus();
 };
 
 // play Game
@@ -164,9 +174,9 @@ const clickedCards = computed(() => {
   return shuffledCards.value.filter((card) => card.clicked);
 });
 
-const cardStatus = computed((card) => {
-  return (card) => card.status === "shown";
-});
+// const cardStatus = computed((card) => {
+//   return (card) => card.status === 'shown'
+// })
 
 const showImage = (card) => {
   clickedCards.value = [];
@@ -184,10 +194,9 @@ const comparePairs = () => {
   const clicked = clickedCards.value;
 
   if (clicked[0].id === clicked[1].id) {
-    setTimeout(() => {
-      clicked[0].clicked = false;
-      clicked[1].clicked = false;
-    }, 1000);
+    clicked[0].clicked = false;
+    clicked[1].clicked = false;
+    setGameStatus();
   } else {
     setTimeout(() => {
       clicked[0].clicked = false;
@@ -196,7 +205,26 @@ const comparePairs = () => {
       clicked[1].clicked = false;
       clicked[1].shownCardSite = "back";
       clicked[1].status = "hidden";
-    }, 1700);
+    }, 1300);
+  }
+};
+
+//  Game Status
+const gameStatus = ref("");
+
+const setGameStatus = () => {
+  const foundAll = shuffledCards.value.filter(
+    (card) => card.status === "hidden"
+  );
+  if (foundAll.length === 0) {
+    gameStatus.value = "WINNER";
+    stopStopwatch();
+    return;
+  }
+  if (!isGameStarted.value) {
+    gameStatus.value = "Start Game";
+  } else {
+    gameStatus.value = "ACTIVE";
   }
 };
 </script>
