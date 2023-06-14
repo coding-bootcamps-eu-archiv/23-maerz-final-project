@@ -323,12 +323,12 @@ h1 {
 }
 
 .paper-btn {
-  background-color: #36827fff;
+  background-color: #f9db6dff;
+  color: black;
 }
 
 .scissors-btn {
-  background-color: #f9db6dff;
-  color: black;
+  background-color: #36827fff;
 }
 
 .choice-wrapper:hover {
@@ -349,7 +349,7 @@ h1 {
   padding: 0.5rem;
   outline: 0.1rem solid black;
   color: white;
-  background-color: rgb(107, 31, 31);
+  background-color: rgb(0, 0, 0);
   border-radius: 0.25rem;
   cursor: pointer;
 }
@@ -381,12 +381,14 @@ h1 {
 }
 
 .win-style {
-  background-color: green;
+  background-color: rgb(0, 0, 0);
   color: white;
 }
 
 .lose-style {
-  background-color: red;
-  color: white;
+  background-color: none;
+  color: black;
+  border: 0.25rem solid grey;
+  color: grey;
 }
 </style>
