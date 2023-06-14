@@ -47,13 +47,43 @@ const zTetromino = ref([
   [width.value + 1, width.value + 2, width.value * 2, width.value * 2 + 1],
 ]);
 
-const theTetrominos = ref([lTetromino.value, zTetromino.value]);
+const tTetromino = ref([
+  [1, width.value, width.value + 1, width.value + 2],
+  [1, width.value + 1, width.value + 2, width.value * 2 + 1],
+  [width.value, width.value + 1, width.value + 2, width.value * 2 + 1],
+  [1, width.value, width.value + 1, width.value * 2 + 1],
+]);
+
+const oTetromino = ref([
+  [0, 1, width.value, width.value + 1],
+  [0, 1, width.value, width.value + 1],
+  [0, 1, width.value, width.value + 1],
+  [0, 1, width.value, width.value + 1],
+]);
+
+const iTetromino = ref([
+  [1, width.value + 1, width.value * 2 + 1, width.value * 3 + 1],
+  [width.value, width.value + 1, width.value + 2, width.value + 3],
+  [1, width.value + 1, width.value * 2 + 1, width.value * 3 + 1],
+  [width.value, width.value + 1, width.value + 2, width.value + 3],
+]);
+
+const theTetrominos = ref([
+  lTetromino.value,
+  zTetromino.value,
+  tTetromino.value,
+  oTetromino.value,
+  iTetromino.value,
+]);
 
 // position and tetromino selection
 const currentPosition = ref(4);
 const currentRotation = ref(0);
 
-const currentTetromino = ref(theTetrominos.value[0][currentRotation.value]);
+let random = Math.floor(Math.random() * theTetrominos.value.length);
+const currentTetromino = ref(
+  theTetrominos.value[random][currentRotation.value]
+);
 
 function drawTetromino() {
   currentTetromino.value.forEach((index) => {
@@ -102,7 +132,9 @@ function freeze() {
       grid.value[currentPosition.value + index].isTaken = true;
     });
     // puts out another tetromino
-    currentTetromino.value = theTetrominos.value[0][currentRotation.value];
+    let nextRandom = Math.floor(Math.random() * theTetrominos.value.length);
+    random = nextRandom;
+    currentTetromino.value = theTetrominos.value[random][currentRotation.value];
     currentPosition.value = 4;
     clearInterval(timerId);
     addScore();
@@ -167,7 +199,7 @@ function rotate() {
   if (currentRotation.value === 4) {
     currentRotation.value = 0;
   }
-  currentTetromino.value = theTetrominos.value[0][currentRotation.value];
+  currentTetromino.value = theTetrominos.value[random][currentRotation.value];
   drawTetromino();
 }
 
