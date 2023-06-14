@@ -230,14 +230,43 @@ const setGameStatus = () => {
 </script>
 
 <style>
+#memory {
+  background: black;
+}
+header {
+  color: white;
+  display: flex;
+  gap: 2rem;
+  padding: 1rem 0.3rem;
+  justify-content: space-around;
+}
+p {
+  justify-items: center;
+  /* hängt so blöd oben */
+}
+
+h1 {
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+#newGame {
+  font-size: 1rem;
+  font-weight: 600;
+  background: white;
+  border: 2px solid black;
+  box-shadow: 2px 2px 2px yellowgreen;
+}
+
 #gameContainer {
   display: grid;
   justify-content: center;
-  gap: 1rem;
-  max-width: 600px;
+  gap: 2rem;
+  max-width: 1000px;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   grid-template-rows: repeat(auto-fit);
-  background: salmon;
+  background-image: url(https://cdn.pixabay.com/photo/2016/11/29/05/45/astronomy-1867616_1280.jpg);
+  padding: 3rem 2rem;
 }
 .memory_card {
   border: 3px solid black;
@@ -246,7 +275,6 @@ const setGameStatus = () => {
   text-align: center;
   cursor: pointer;
 }
-
 .card-image {
   display: block;
   background-size: contain;
