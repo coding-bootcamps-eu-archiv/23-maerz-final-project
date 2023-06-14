@@ -6,6 +6,7 @@
 
 <script setup>
 import RotatingGallery from "../components/home-view/RotatingGallery.vue";
+import TetrisGame from "../components/tetris/TetrisGame.vue";
 </script>
 
 <style scoped>
