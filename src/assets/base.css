@@ -7,13 +7,14 @@
 html,
 body {
   height: 100%;
-  font-size: 18px;
 }
 
 #app {
   display: grid;
+  font-size: 21px;
   grid-template-rows: min-content 1fr min-content;
   min-height: 100%;
+  font-family: "vt323", monospace;
 }
 
 :root {

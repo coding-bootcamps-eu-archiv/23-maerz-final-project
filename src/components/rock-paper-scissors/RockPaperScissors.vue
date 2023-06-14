@@ -205,14 +205,11 @@ const startNewGame = () => {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Sigmar+One&family=VT323&display=swap");
-
 h1 {
-  font-family: "Sigmar One", cursive;
+  font-family: "sigmar-one", cursive;
   font-size: 4rem;
 }
 .header {
-  font-family: "VT323", monospace;
   font-size: 1.5rem;
   display: flex;
   align-items: center;
@@ -225,7 +222,6 @@ h1 {
 }
 
 .game-wrapper {
-  font-family: "VT323", monospace;
   font-size: 1.5rem;
   margin: 0 auto;
   border: 0.25rem solid black;
