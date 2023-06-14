@@ -1,15 +1,30 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import HomeView from "../views/HomeView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: HomeView
-    }
-  ]
-})
+      path: "/",
+      name: "home",
+      component: HomeView,
+    },
+    {
+      path: "/games",
+      name: "allGames",
+      component: () => import("@/views/AllGamesView.vue"),
+    },
+    {
+      path: "/games/memory",
+      name: "memoryGame",
+      component: () => import("@/views/MemoryView.vue"),
+    },
+    {
+      path: "/games/rock-paper-scissors",
+      name: "RockPaperScissorsGame",
+      component: () => import("@/views/RPSView.vue"),
+    },
+  ],
+});
 
-export default router
+export default router;
