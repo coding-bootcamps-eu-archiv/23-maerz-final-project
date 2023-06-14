@@ -1,9 +1,11 @@
 <template>
-  <section class="grid-wrapper" @click="moveLeft()">
+  <section class="grid-wrapper">
     <div :class="cell.class" v-for="cell in grid"></div>
   </section>
   <button @click="undrawTetromino()">undraw</button>
   <button @click="startGame()">start</button>
+  <button @click="moveLeft()">Left</button>
+  <button @click="moveRight()">Right</button>
 </template>
 
 <script setup>
@@ -116,6 +118,29 @@ function moveLeft() {
     )
   ) {
     currentPosition.value += 1;
+  }
+  drawTetromino();
+}
+
+function moveRight() {
+  undrawTetromino();
+
+  // checks if tetromino hit the right border
+  const isAtRightEdge = currentTetromino.value.some(
+    (index) => (currentPosition.value + index) % width.value === width.value - 1
+  );
+
+  if (!isAtRightEdge) {
+    currentPosition.value += 1;
+  }
+
+  // checks if space is already taken by a tetromino
+  if (
+    currentTetromino.value.some(
+      (index) => grid.value[currentPosition.value + index].isTaken === true
+    )
+  ) {
+    currentPosition.value -= 1;
   }
   drawTetromino();
 }
