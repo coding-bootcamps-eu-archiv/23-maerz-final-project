@@ -8,6 +8,12 @@
   font-size: 18px;
 }
 
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
 :root {
   --primary-dark: #242038ff;
   --primary-light: rgb(236, 227, 217);
@@ -57,4 +63,14 @@
 
 .base-link:hover {
   color: var(--primary-dark);
+}
+
+.base-input-field {
+  all: unset;
+  height: 1.5rem;
+  width: 13rem;
+  background-color: white;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  outline: 0.1rem solid var(--primary-dark);
 }
