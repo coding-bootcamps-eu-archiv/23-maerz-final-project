@@ -1,5 +1,8 @@
 <template>
   <section id="memory">
+    <div v-if="showPopup" class="popup">
+      <button id="popupStartBtn" @click="startGamePopup">Start Game</button>
+    </div>
     <header>
       <!-- <div>Click-Count</div> -->
       <div>
@@ -31,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onBeforeMount } from "vue";
 
 const memoryCards = ref([
   {
@@ -109,8 +112,15 @@ const memoryCards = ref([
 ]);
 
 //Game-Setup
-onMounted(() => {
+
+const showPopup = ref(false);
+
+onBeforeMount(() => {
   setGameStatus();
+});
+
+onMounted(() => {
+  showPopup.value = true;
 });
 
 const isGameStarted = ref(false);
@@ -151,6 +161,11 @@ const stopStopwatch = () => {
 };
 
 // Start Game
+
+const startGamePopup = () => {
+  showPopup.value = false;
+  startNewGame();
+};
 
 const startNewGame = () => {
   //count null
@@ -256,6 +271,7 @@ h1 {
 }
 
 #newGame {
+  all: unset;
   font-size: 1rem;
   font-weight: 600;
   color: white;
@@ -303,5 +319,30 @@ h1 {
   background-position: center;
   width: 100%;
   height: 100%;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transform: 0;
+  background-color: rgba(255, 255, 255, 0.45);
+  padding: 2rem;
+  border-radius: 5px;
+  z-index: 9999;
+}
+
+.popup button {
+  all: unset;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: black;
+  border: 2px solid white;
+  box-shadow: 3px 3px yellow;
+  padding: 0.7rem 1.8rem;
+  cursor: pointer;
 }
 </style>
