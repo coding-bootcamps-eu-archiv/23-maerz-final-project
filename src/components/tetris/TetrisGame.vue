@@ -6,6 +6,7 @@
   <button @click="startGame()">start</button>
   <button @click="moveLeft()">Left</button>
   <button @click="moveRight()">Right</button>
+  <button @click="rotate()">rotate</button>
 </template>
 
 <script setup>
@@ -97,7 +98,7 @@ function freeze() {
   }
 }
 
-// moving tetrominos left
+// moving tetrominos left and right
 
 function moveLeft() {
   undrawTetromino();
@@ -142,6 +143,19 @@ function moveRight() {
   ) {
     currentPosition.value -= 1;
   }
+  drawTetromino();
+}
+
+// rotate tetromino
+
+function rotate() {
+  undrawTetromino();
+  currentRotation.value++;
+  // reset rotation to position one
+  if (currentRotation.value === 4) {
+    currentRotation.value = 0;
+  }
+  currentTetromino.value = theTetrominos.value[0][currentRotation.value];
   drawTetromino();
 }
 </script>
