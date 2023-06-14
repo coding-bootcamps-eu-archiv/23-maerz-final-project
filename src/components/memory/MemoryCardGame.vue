@@ -15,14 +15,15 @@
         :key="card.index"
         @click="showImage(card)"
       >
-        <span v-if="!cardStatus">{{ card.defaultImg }}</span>
-        <span v-else>{{ card.shownCardSite }}</span>
+        <img
+          v-if="card.status === 'hidden'"
+          class="card-image"
+          :src="card.defaultImg"
+        />
+        <img v-else class="card-image" :src="card.img" />
       </div>
       <div>{{ duplicatedCards }}</div>
       <div>{{ shuffledCards }}</div>
-      <div>___________________</div>
-      <div>{{ clickedCards }}</div>
-      <div>--------------------</div>
     </main>
   </section>
 </template>
@@ -33,34 +34,74 @@ import { ref, computed } from "vue";
 const memoryCards = ref([
   {
     id: "cat1",
-    img: "source1",
+    img: "https://images.unsplash.com/photo-1546459094-0b7758695a4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
     clicked: false,
     shownCardSite: "back",
-    defaultImg: "BILD",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
     status: "hidden",
   },
   {
     id: "cat2",
-    img: "source2",
+    img: "https://cdn.pixabay.com/photo/2018/08/13/08/59/cat-3602554_1280.jpg",
     clicked: false,
     shownCardSite: "back",
-    defaultImg: "BILD",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
     status: "hidden",
   },
   {
     id: "cat3",
-    img: "source3",
+    img: "https://cdn.pixabay.com/photo/2017/02/24/01/30/cat-2093639_1280.jpg",
     clicked: false,
     shownCardSite: "back",
-    defaultImg: "BILD",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
     status: "hidden",
   },
   {
     id: "cat4",
-    img: "source4",
+    img: "https://cdn.pixabay.com/photo/2018/05/09/21/47/cat-3386220_1280.jpg",
     clicked: false,
     shownCardSite: "back",
-    defaultImg: "BILD",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat5",
+    img: "https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat6",
+    img: "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat7",
+    img: "https://images.pexels.com/photos/162104/cat-british-shorthair-mieze-blue-eye-162104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat8",
+    img: "https://images.pexels.com/photos/991831/pexels-photo-991831.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
     status: "hidden",
   },
 ]);
@@ -176,5 +217,14 @@ const comparePairs = () => {
   width: 10rem;
   text-align: center;
   cursor: pointer;
+}
+
+.card-image {
+  display: block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100%;
 }
 </style>
