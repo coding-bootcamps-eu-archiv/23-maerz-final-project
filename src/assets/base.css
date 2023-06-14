@@ -3,3 +3,32 @@
 *:after {
   box-sizing: border-box;
 }
+
+:root {
+  --primary-dark: #242038ff;
+  --primary-light: #f8f4e3ff;
+
+  --accent-color-one: #c73e1dff;
+  --accent-color-two: #8d86c9ff;
+  --accent-color-three: #f6ae2dff;
+}
+
+.base-btn {
+  all: unset;
+  border: 0.1rem solid var(--primary-dark);
+  background-color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  box-shadow: -0.25rem 0.25rem var(--primary-dark);
+}
+
+.base-btn:hover {
+  color: var(--primary-light);
+  background-color: var(--primary-dark);
+}
+
+.base-btn:active {
+  box-shadow: none;
+  transform: translate(-0.25rem, 0.25rem);
+}
