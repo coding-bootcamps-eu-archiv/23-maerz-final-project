@@ -1,0 +1,78 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-size: 18px;
+}
+
+#app {
+  display: grid;
+  grid-template-rows: min-content 1fr min-content;
+  min-height: 100%;
+}
+
+:root {
+  --primary-dark: rgb(31, 28, 43);
+  --primary-light: rgb(236, 227, 217);
+
+  --accent-color-one: rgb(222, 101, 15);
+  --accent-color-two: #8d86c9ff;
+  --accent-color-three: #f6ae2dff;
+}
+
+.base-btn {
+  all: unset;
+  border: 0.1rem solid var(--primary-dark);
+  background-color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  box-shadow: -0.25rem 0.25rem var(--primary-dark);
+}
+
+.base-btn:hover {
+  color: var(--primary-light);
+  background-color: var(--primary-dark);
+}
+
+.base-btn:active {
+  box-shadow: none;
+  transform: translate(-0.25rem, 0.25rem);
+}
+
+.nav-link {
+  all: unset;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.35rem;
+}
+
+.nav-link:hover {
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+.base-link {
+  all: unset;
+  color: grey;
+  cursor: pointer;
+}
+
+.base-link:hover {
+  color: var(--primary-dark);
+}
+
+.base-input-field {
+  all: unset;
+  height: 1.5rem;
+  width: 13rem;
+  background-color: white;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  outline: 0.1rem solid var(--primary-dark);
+}

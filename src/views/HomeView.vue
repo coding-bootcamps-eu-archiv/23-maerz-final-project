@@ -1,11 +1,16 @@
 <template>
-  <!-- <RotatingGallery></RotatingGallery> -->
-  <TetrisGame></TetrisGame>
-  <FooterArea />
+  <div class="bg-color">
+    <RotatingGallery></RotatingGallery>
+  </div>
 </template>
 
 <script setup>
-import FooterArea from "@/components/home-view/FooterArea.vue";
 import RotatingGallery from "../components/home-view/RotatingGallery.vue";
 import TetrisGame from "../components/tetris/TetrisGame.vue";
 </script>
+
+<style scoped>
+.bg-color {
+  background-color: var(--primary-dark);
+}
+</style>

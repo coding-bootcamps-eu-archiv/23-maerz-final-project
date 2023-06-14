@@ -1,37 +1,26 @@
 <template>
-    <footer id="Footer-Links"> 
-<div id="links">
-  <a href="">Terms & Conditions</a>
-  <a href=""> 🛈 About</a>
-  <a href=""> 🍪 Cookie Settings</a>
-  <a href="">✉️ Contact</a>
-</div>
-</footer>
-
-
+  <footer id="footer-links">
+    <div id="links">
+      <a href="" class="base-link">Terms & Conditions</a>
+      <a href="" class="base-link">About</a>
+      <a href="" class="base-link">Cookie Settings</a>
+      <a href="" class="base-link">Contact</a>
+    </div>
+  </footer>
 </template>
 
 <style scoped>
-*{
-    font-family: sans-serif;
+#footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--primary-light);
 }
-#Footer-Links{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: lightgrey;
-
-}
-#links{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem 0rem;
-}
-a{
-    padding: 0.1rem 0rem;
-    color: black;
-    font-weight: bold;
+#links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0rem;
 }
 </style>

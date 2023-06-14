@@ -6,16 +6,18 @@
       </RouterLink>
       <p class="app-name">Arcade - GameBox</p>
     </div>
-    <input type="search" placeholder="Search" class="searchbar" />
     <nav class="navigation">
       <!-- a tags are later changed to router links -->
-      <a class="nav-link" href="#" s>All Games</a>
+      <RouterLink class="nav-link" :to="{ name: 'allGames' }"
+        >All Games</RouterLink
+      >
       <a class="nav-link" href="#">Highscores</a>
     </nav>
+    <input type="search" placeholder="Search" class="base-input-field" />
     <div class="action">
       <!-- a tags are later changed to router links -->
-      <a href="#" class="action-link"> Sign Up </a>
-      <a href="#" class="action-link"> Log In </a>
+      <a href="#" class="base-btn"> Sign Up </a>
+      <a href="#" class="base-btn"> Log In </a>
       <a href="#" title="Your profile">
         <button class="account-btn">
           <svg
@@ -45,7 +47,7 @@ import { RouterLink } from "vue-router";
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: lightgrey;
+  background-color: var(--primary-light);
   height: 7rem;
   padding: 1rem;
 }
@@ -67,52 +69,17 @@ import { RouterLink } from "vue-router";
   text-transform: uppercase;
 }
 
-.searchbar {
-  all: unset;
-  height: 1.5rem;
-  width: 15rem;
-  background-color: white;
-  padding: 0.25rem;
-  border-radius: 0.25rem;
-}
 .navigation {
   display: flex;
   position: relative;
   gap: 2rem;
 }
 
-.nav-link {
-  all: unset;
-  border-radius: 0.25rem;
-  padding: 0.25rem;
-  height: 1.5rem;
-  background-color: black;
-  color: white;
-  cursor: pointer;
-}
 .action {
   display: flex;
   align-items: center;
   justify-content: right;
   gap: 0.5rem;
-}
-
-.action-link {
-  all: unset;
-  border-radius: 0.25rem;
-  padding: 0.25rem;
-  height: 1.5rem;
-  outline: 0.1rem solid black;
-  cursor: pointer;
-}
-
-.action-link:nth-child(2) {
-  background-color: black;
-  color: white;
-}
-
-button {
-  all: unset;
 }
 
 .account-btn {
