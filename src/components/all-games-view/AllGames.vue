@@ -1,6 +1,10 @@
 <template>
   <div class="all-cards-wrapper">
-    <GameCard v-for="game in games" :name="game.name"></GameCard>
+    <GameCard
+      v-for="game in games"
+      :name="game.name"
+      :route="game.route"
+    ></GameCard>
   </div>
 </template>
 
@@ -12,15 +16,15 @@ import { ref } from "vue";
 const games = ref([
   {
     id: 1,
-    name: "memory",
-    img: "dsdjkfdsf",
-    link: "",
+    name: "Memory",
+    img: "",
+    route: "/games/memory",
   },
   {
     id: 2,
-    name: "rock paper scissors",
-    img: "jfhjgh",
-    link: "",
+    name: "Rock Paper Scissors",
+    img: "",
+    route: "/games/rock-paper-scissors",
   },
 ]);
 </script>
