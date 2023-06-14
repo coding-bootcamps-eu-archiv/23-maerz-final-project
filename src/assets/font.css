@@ -1,0 +1,59 @@
+@font-face {
+  font-family: "bungee-shade";
+  src: url("@/assets/fonts/Bungee_Shade/BungeeShade-Regular.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "bungee-hairline";
+  src: url("@/assets/fonts/Bungee_Hairline/BungeeHairline-Regular.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "vt323";
+  src: url("@/assets/fonts/VT323/VT323-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "changa";
+  src: url("@/assets/fonts/Changa/Changa-VariableFont_wght.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "fascinate";
+  src: url("@/assets/fonts/Fascinate/Fascinate-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "grand-hotel";
+  src: url("@/assets/fonts/Grand_Hotel/GrandHotel-Regular.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "lobster";
+  src: url("@/assets/fonts/Lobster/Lobster-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "pacifico";
+  src: url("@/assets/fonts/Pacifico/Pacifico-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "pacifico";
+  src: url("@/assets/fonts/Pacifico/Pacifico-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "press-start-2p";
+  src: url("@/assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "sigmar-one";
+  src: url("@/assets/fonts/Sigmar_One/SigmarOne-Regular.ttf") format("truetype");
+}
