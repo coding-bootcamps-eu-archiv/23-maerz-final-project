@@ -1,19 +1,21 @@
 <template>
-  <section class="grid-wrapper">
-    <template v-if="gameActive">
-      <div :class="cell.class" v-for="cell in grid"></div>
-    </template>
-    <template v-else>
-      <div class="end-screen">GAME OVER</div>
-      <div>Final Score: {{ score }}</div>
-    </template>
-  </section>
-  <button @click="undrawTetromino()">undraw</button>
-  <button @click="autoMove()">start</button>
-  <button @click="moveLeft()">Left</button>
-  <button @click="moveRight()">Right</button>
-  <button @click="rotate()">rotate</button>
-  <div>Score: {{ score }}</div>
+  <div class="game-wrapper">
+    <h1 class="game-headline">TETRIS</h1>
+    <div class="game-border-wrapper">
+      <section class="grid-wrapper">
+        <template v-if="gameActive">
+          <div :class="cell.class" v-for="cell in grid"></div>
+        </template>
+        <template v-else>
+          <div class="end-screen">GAME OVER</div>
+          <div>Final Score: {{ score }}</div>
+        </template>
+      </section>
+    </div>
+
+    <button @click="autoMove()">start</button>
+    <div>Score: {{ score }}</div>
+  </div>
 </template>
 
 <script setup>
@@ -114,17 +116,6 @@ function moveDown() {
 // function to start the game and reset timer
 let timerId;
 let nextRandom = 0;
-
-// function startGame() {
-//   if (timerId) {
-//     clearInterval(timerId);
-//     timerId = null;
-//   } else {
-//     timerId = setInterval(moveDown, 200);
-//     nextRandom = Math.floor(Math.random() * theTetrominos.value.length);
-//     drawTetromino();
-//   }
-// }
 
 function autoMove() {
   timerId = setInterval(moveDown, 200);
@@ -294,21 +285,44 @@ function gameOver() {
   flex-wrap: wrap;
   height: 400px;
   width: 200px;
-  background-color: yellow;
+  _background-color: #f8f4e3;
 }
 
 .grid-cell {
-  _background-color: red;
+  background-color: #8d86c93b;
   height: 20px;
   width: 20px;
   font-size: 0.8rem;
+  border: solid #a098e41a 1px;
 }
 
 .tetromino {
-  background-color: aqua;
+  _background-color: rgb(255, 255, 0);
+  background-color: #c73e1d;
   height: 20px;
   width: 20px;
+  opacity: 0.8;
+  _border: outset rgb(230, 77, 209) 2px;
+  border: outset #f74c21 2px;
 }
+
+.game-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 2rem;
+}
+
+.game-border-wrapper {
+  border: solid #8d86c9 2px;
+}
+
+.game-headline {
+  color: white;
+  font-size: 3rem;
+  padding: 1rem;
+}
+
 .taken {
 }
 </style>
