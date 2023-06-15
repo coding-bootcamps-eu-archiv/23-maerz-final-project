@@ -24,6 +24,11 @@ const router = createRouter({
       name: "RockPaperScissorsGame",
       component: () => import("@/views/RPSView.vue"),
     },
+    {
+      path: "/games/tetris",
+      name: "TetrisGame",
+      component: () => import("@/views/TetrisView.vue"),
+    },
   ],
 });
 
