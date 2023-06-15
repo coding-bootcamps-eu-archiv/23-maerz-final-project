@@ -11,7 +11,9 @@
       <RouterLink class="nav-link" :to="{ name: 'allGames' }"
         >All Games</RouterLink
       >
-      <a class="nav-link" href="#">Highscores</a>
+      <RouterLink class="nav-link" :to="{ name: 'Highscores' }"
+        >Highscores</RouterLink
+      >
     </nav>
     <input type="search" placeholder="Search" class="base-input-field" />
     <div class="action">
