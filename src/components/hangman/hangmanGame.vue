@@ -1,30 +1,33 @@
 <template>
-  <body>
-    <header>
-      <h1>Hangman</h1>
-      <section id="top">
-        <div id="status">{{ setStatus }}</div>
+  <div id="wrapper">
+    <div id="body">
+      <header>
+        <h1>Hangman</h1>
+        <section id="top">
+          <div id="status">{{ setStatus }}</div>
+
+          <button id="newGameBtn" @click="startingNewGame">NEW GAME</button>
+        </section>
+      </header>
+      <main>
         <div id="fails">Fails {{ fails }}/10</div>
-        <button id="newGameBtn" @click="startingNewGame">NEW GAME</button>
-      </section>
-    </header>
-    <main>
-      <section id="outputArea">
-        <div id="output">{{ hiddenWord }}</div>
-      </section>
-      <section id="keyboardArea">
-        <button
-          id="keyboardBtns"
-          v-for="char in alphabet"
-          :key="char"
-          @click="pickingLetter(char)"
-          :disabled="toBeDisabled[char]"
-        >
-          {{ char }}
-        </button>
-      </section>
-    </main>
-  </body>
+        <section id="outputArea">
+          <div id="output">{{ hiddenWord }}</div>
+        </section>
+        <section id="keyboardArea">
+          <button
+            id="keyboardBtns"
+            v-for="char in alphabet"
+            :key="char"
+            @click="pickingLetter(char)"
+            :disabled="toBeDisabled[char]"
+          >
+            {{ char }}
+          </button>
+        </section>
+      </main>
+    </div>
+  </div>
 </template>
 <script setup>
 import { ref, computed, onMounted } from "vue";
@@ -41,6 +44,7 @@ const searchWords = ref([
   "localStorage",
   "papayawhip",
   "watcher",
+  "flexbox",
 ]);
 const newWord = ref([]);
 const toBeDisabled = ref({});
@@ -123,62 +127,37 @@ const setStatus = computed(() => {
 });
 </script>
 <style scoped>
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-family: "Pacifico", sans-serif;
+/* #wrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
-  background: black;
-}
+} */
 
-html,
-body {
-  height: 100%;
-}
-
-body {
-  width: 1200px;
+#body {
+  max-width: 1300px;
   height: 750px;
-  margin: 0;
   background-image: url("https://cdn.pixabay.com/photo/2020/10/24/21/21/sun-5682667_1280.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
-#app {
-  margin: 0;
-}
 
 h1 {
-  font-family: "Monoton";
+  font-family: "lobster";
   background: -webkit-linear-gradient(
-    rgb(15, 1, 170) 20%,
-    rgb(245, 3, 124) 45%,
-    rgb(15, 1, 170) 60%
+    var(--accent-color-two) 40%,
+    rgb(245, 3, 124) 65%,
+    var(--accent-color-two) 75%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  /* text-shadow: 5px 5px yellow, 10px 10px blue; */
-  font-size: 4.5rem;
-  letter-spacing: 1rem;
-  font-weight: lighter;
-  text-align: center;
-  margin: 0;
-  padding-bottom: 2rem;
+  font-size: 5rem;
+  font-weight: 1000;
+  letter-spacing: 0.7rem;
+  text-align: left;
+  padding-bottom: 1rem;
+  padding-top: 0rem;
 }
 header {
-  margin: 3rem 2rem 4rem 2rem;
-  /* background: linear-gradient(#0f0012 20%, #c300ff 90%); */
-}
-
-main {
-  height: 100%;
-  font-family: "Bungee";
-  display: flex;
-  flex-direction: column;
+  margin: 3rem 2rem 0rem 2rem;
 }
 
 #top {
@@ -197,7 +176,7 @@ main {
   font-weight: 800;
   padding: 0.5rem 1rem;
   color: rgba(7, 1, 70);
-  text-shadow: 2px 2px rgb(0, 187, 143);
+  text-shadow: 2px 2px var(--accent-color-two);
   text-align: center;
   font-family: "Pacifico";
 }
@@ -213,9 +192,7 @@ main {
   cursor: pointer;
   box-shadow: -0.25rem 0.25rem var(--accent-color-three);
 }
-/* #newGameBtn:active {
-  box-shadow: 3px 4px 5px darkblue;
-} */
+
 #newGameBtn:active {
   color: var(--accent-color-three);
   background-color: var(--primary-dark);
@@ -227,10 +204,10 @@ main {
 }
 
 #outputArea {
-  font-size: 2rem;
+  font-size: 4rem;
+  font-family: "vt323", monospace;
   letter-spacing: 1rem;
   color: black;
-  /* text-shadow: 2px 2px 2px papayawhip; */
   height: 310px;
   display: flex;
   justify-content: center;
@@ -239,9 +216,10 @@ main {
 }
 #output {
   margin-top: 6.5rem;
-  background-color: rgba(238, 0, 255, 0.8);
-  color: antiquewhite;
-  padding: 1.5rem;
+  background-color: rgba(var(--accent-color-two), 0.8);
+  /* hier im Optimalfall wieder die VariablenFarbe eintragen */
+  color: var(--primary-light);
+  padding: 1rem;
   border-radius: 10px;
 }
 
@@ -254,10 +232,10 @@ main {
   padding: 2rem 9rem;
 }
 #keyboardBtns {
-  background: papayawhip;
-  font-weight: bold;
+  background: var(--primary-light);
+  font-family: "vt323", monospace;
   border: 3px solid black;
-  font-size: 1.5rem;
+  font-size: 2.2rem;
   padding: 0.6rem 0.6rem;
   width: 3rem;
   box-shadow: 3px 4px 5px #ee00ff;
