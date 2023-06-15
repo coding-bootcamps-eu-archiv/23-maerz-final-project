@@ -5,15 +5,15 @@
       class="popup"
       :class="{ popup: true, show: showPopup }"
     >
-      <button id="popupStartBtn" @click="startGamePopup">Start Game</button>
+      <button id="popupStartBtn" @click="startGamePopup">Start Now!</button>
     </div>
   </section>
   <section id="memory">
     <header>
       <!-- <div>Click-Count</div> -->
-      <div>
-        <p>{{ gameStatus }}</p>
-        <p>{{ stopwatch }}</p>
+      <div id="gameState">
+        <p id="gameStatus">{{ gameStatus }}</p>
+        <p id="stopwatch">{{ stopwatch }}</p>
       </div>
       <h1>Memory</h1>
       <button id="newGame" @click="startNewGame">New Game</button>
@@ -265,49 +265,66 @@ header {
   color: white;
   display: flex;
   gap: 2rem;
-  padding: 2rem 0.3rem;
+  padding: 2rem 0rem;
   justify-content: space-around;
 }
-p {
-  justify-items: center;
-  /* hängt so blöd oben */
+
+#gameState {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-content: center;
+  justify-content: center;
+}
+
+#gameStatus {
+  -webkit-text-stroke: 1px var(--primary-light);
+  -webkit-text-fill-color: transparent;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+#stopwatch {
+  -webkit-text-stroke: 1px var(--primary-light);
+  -webkit-text-fill-color: transparent;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 h1 {
+  /* font-family: 'bungee'; / GIBTS NOCH NICHT */
+  position: absolute;
   font-weight: 900;
   font-size: 2rem;
 }
 
 #newGame {
   all: unset;
-  font-size: 1rem;
-  font-weight: 600;
-  color: white;
-  background: black;
-  border: 2px solid white;
-  box-shadow: 3px 3px yellow;
-  padding: 0.7rem 1.8rem;
+  border: 0.1rem solid var(--primary-dark);
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  box-shadow: -0.25rem 0.25rem var(--accent-color-two);
 }
 #newGame:active {
-  box-shadow: transparent;
-  box-shadow: inset 2px 2px 2px yellowgreen;
+  color: var(--primary-light);
+  background-color: var(--primary-dark);
 }
 
 #newGame:hover {
-  top: 2px;
-  left: 1px;
-  background-color: white;
-  border-color: transparent;
-  color: black;
-  transition: border-color 0.5s, background-color 0.5s, color 0.5s;
-  cursor: pointer;
+  box-shadow: none;
+  transform: translate(-0.25rem, 0.25rem);
 }
 
 #gameContainer {
   display: grid;
   justify-content: center;
   gap: 2rem;
-  max-width: 900px;
+  max-width: 1000px;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   grid-template-rows: repeat(auto-fit);
   background-image: url(https://images.pexels.com/photos/110854/pexels-photo-110854.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
@@ -348,13 +365,23 @@ h1 {
 
 .popup button {
   all: unset;
-  font-size: 1rem;
-  font-weight: 600;
-  color: white;
-  background: black;
-  border: 2px solid white;
-  box-shadow: 3px 3px yellow;
-  padding: 0.7rem 1.8rem;
+  border: 0.1rem solid var(--primary-dark);
+  background-color: var(--accent-color-two);
+  color: var(--primary-light);
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
   cursor: pointer;
+  transition: transform 0.3s;
+}
+.popup button:active {
+  color: var(--primary-light);
+  background-color: var(--primary-dark);
+}
+
+.popup button:hover {
+  box-shadow: 0px 0px 5px 3px black;
+  transform: scale(1.5);
 }
 </style>
