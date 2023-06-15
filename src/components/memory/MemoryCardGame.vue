@@ -228,7 +228,7 @@ const comparePairs = () => {
       clicked[1].clicked = false;
       clicked[1].shownCardSite = "back";
       clicked[1].status = "hidden";
-    }, 1300);
+    }, 1000);
   }
 };
 
@@ -296,6 +296,7 @@ h1 {
   position: absolute;
   font-weight: 900;
   font-size: 2rem;
+  color: white;
 }
 
 #newGame {
