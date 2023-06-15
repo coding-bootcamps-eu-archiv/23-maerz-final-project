@@ -26,6 +26,12 @@ const games = ref([
     img: "",
     route: "/games/rock-paper-scissors",
   },
+  {
+    id: 3,
+    name: "Hangman",
+    img: "",
+    route: "/games/hangman",
+  },
 ]);
 </script>
 

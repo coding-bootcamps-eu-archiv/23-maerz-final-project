@@ -24,6 +24,11 @@ const router = createRouter({
       name: "RockPaperScissorsGame",
       component: () => import("@/views/RPSView.vue"),
     },
+    {
+      path: "/games/hangman",
+      name: "hangmanGame",
+      component: () => import("@/views/HangmanView.vue"),
+    },
   ],
 });
 
