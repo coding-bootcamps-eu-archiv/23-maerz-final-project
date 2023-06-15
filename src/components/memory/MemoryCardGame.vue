@@ -1,10 +1,19 @@
 <template>
+  <section>
+    <div
+      v-if="showPopup"
+      class="popup"
+      :class="{ popup: true, show: showPopup }"
+    >
+      <button id="popupStartBtn" @click="startGamePopup">Start Now!</button>
+    </div>
+  </section>
   <section id="memory">
     <header>
       <!-- <div>Click-Count</div> -->
-      <div>
-        <p>{{ gameStatus }}</p>
-        <p>{{ stopwatch }}</p>
+      <div id="gameState">
+        <p id="gameStatus">{{ gameStatus }}</p>
+        <p id="stopwatch">{{ stopwatch }}</p>
       </div>
       <h1>Memory</h1>
       <button id="newGame" @click="startNewGame">New Game</button>
@@ -31,7 +40,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onBeforeMount } from "vue";
 
 const memoryCards = ref([
   {
@@ -109,8 +118,17 @@ const memoryCards = ref([
 ]);
 
 //Game-Setup
-onMounted(() => {
+
+const showPopup = ref(false);
+
+onBeforeMount(() => {
   setGameStatus();
+});
+
+onMounted(() => {
+  setTimeout(() => {
+    showPopup.value = true;
+  }, 500);
 });
 
 const isGameStarted = ref(false);
@@ -151,6 +169,11 @@ const stopStopwatch = () => {
 };
 
 // Start Game
+
+const startGamePopup = () => {
+  showPopup.value = false;
+  startNewGame();
+};
 
 const startNewGame = () => {
   //count null
@@ -205,7 +228,7 @@ const comparePairs = () => {
       clicked[1].clicked = false;
       clicked[1].shownCardSite = "back";
       clicked[1].status = "hidden";
-    }, 1300);
+    }, 1000);
   }
 };
 
@@ -231,10 +254,10 @@ const setGameStatus = () => {
 
 <style>
 #memory {
-  background: black;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1;
 }
 header {
   width: 100vw;
@@ -242,51 +265,70 @@ header {
   color: white;
   display: flex;
   gap: 2rem;
-  padding: 2rem 0.3rem;
+  padding: 2rem 0rem;
   justify-content: space-around;
 }
-p {
-  justify-items: center;
-  /* hängt so blöd oben */
+
+#gameState {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-content: center;
+  justify-content: center;
+}
+
+#gameStatus {
+  -webkit-text-stroke: 1px var(--primary-light);
+  -webkit-text-fill-color: transparent;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+#stopwatch {
+  -webkit-text-stroke: 1px var(--primary-light);
+  -webkit-text-fill-color: transparent;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 h1 {
+  /* font-family: 'bungee'; / GIBTS NOCH NICHT */
+  position: absolute;
   font-weight: 900;
   font-size: 2rem;
+  color: white;
 }
 
 #newGame {
-  font-size: 1rem;
-  font-weight: 600;
-  color: white;
-  background: black;
-  border: 2px solid white;
-  box-shadow: 3px 3px yellow;
-  padding: 0.7rem 1.8rem;
+  all: unset;
+  border: 0.1rem solid var(--primary-dark);
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  box-shadow: -0.25rem 0.25rem var(--accent-color-two);
 }
 #newGame:active {
-  box-shadow: transparent;
-  box-shadow: inset 2px 2px 2px yellowgreen;
+  color: var(--primary-light);
+  background-color: var(--primary-dark);
 }
 
 #newGame:hover {
-  top: 2px;
-  left: 1px;
-  background-color: white;
-  border-color: transparent;
-  color: black;
-  transition: border-color 0.5s, background-color 0.5s, color 0.5s;
-  cursor: pointer;
+  box-shadow: none;
+  transform: translate(-0.25rem, 0.25rem);
 }
 
 #gameContainer {
   display: grid;
   justify-content: center;
   gap: 2rem;
-  max-width: 900px;
+  max-width: 1000px;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   grid-template-rows: repeat(auto-fit);
-  background-image: url(https://cdn.pixabay.com/photo/2016/11/29/05/45/astronomy-1867616_1280.jpg);
+  background-image: url(https://images.pexels.com/photos/110854/pexels-photo-110854.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
   padding: 3rem 5rem;
 }
 .memory_card {
@@ -303,5 +345,44 @@ h1 {
   background-position: center;
   width: 100%;
   height: 100%;
+}
+
+.popup {
+  height: 50rem;
+  width: 50rem;
+  background-color: rgba(12, 0, 24, 0.806);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  transition: opacity 1s ease-out;
+  z-index: 2;
+}
+
+.popup button {
+  all: unset;
+  border: 0.1rem solid var(--primary-dark);
+  background-color: var(--accent-color-two);
+  color: var(--primary-light);
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.popup button:active {
+  color: var(--primary-light);
+  background-color: var(--primary-dark);
+}
+
+.popup button:hover {
+  box-shadow: 0px 0px 5px 3px black;
+  transform: scale(1.5);
 }
 </style>
