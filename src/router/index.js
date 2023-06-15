@@ -25,6 +25,11 @@ const router = createRouter({
       component: () => import("@/views/RPSView.vue"),
     },
     {
+
+      path: "/games/hangman",
+      name: "hangmanGame",
+      component: () => import("@/views/HangmanView.vue"),
+    }, {
       path: "/games/tetris",
       name: "TetrisGame",
       component: () => import("@/views/TetrisView.vue"),

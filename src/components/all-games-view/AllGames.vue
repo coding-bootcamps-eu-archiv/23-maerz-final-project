@@ -28,6 +28,12 @@ const games = ref([
   },
   {
     id: 3,
+    name: "Hangman",
+    img: "",
+    route: "/games/hangman",
+    },
+    {
+    id: 4
     name: "Tetris",
     img: "",
     route: "/games/tetris",
