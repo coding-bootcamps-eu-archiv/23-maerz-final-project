@@ -27,7 +27,7 @@
   </body>
 </template>
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 //Data Attributes
 const fails = ref(0);
@@ -46,8 +46,17 @@ const newWord = ref([]);
 const toBeDisabled = ref({});
 
 const alphabet = ref("abcdefghijklmnopqrstuvwxyz".split(""));
+const initialStatus = ref("");
+//Hooks
+onMounted(() => {
+  initialStatus.value = "START NEW GAME";
+});
 
 //Methods
+const setInitialStatusActive = () => {
+  initialStatus.value = "ACTIVE";
+};
+
 const startingNewGame = () => {
   fails.value = 0;
   toBeDisabled.value = {};
@@ -57,6 +66,7 @@ const startingNewGame = () => {
     .toLowerCase()
     .split("");
   replaceWithUnderscore();
+  setInitialStatusActive();
 };
 
 const hiddenWord = ref("");
@@ -107,10 +117,8 @@ const setStatus = computed(() => {
     return "You Lose!";
   } else if (winner.value === true) {
     return "WINNER";
-  } else if (fails.value < 10) {
-    return "ACTIVE";
   } else {
-    return "START NEW GAME";
+    return initialStatus.value;
   }
 });
 </script>
