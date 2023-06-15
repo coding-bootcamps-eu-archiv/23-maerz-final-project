@@ -18,6 +18,7 @@
       <button @click="prevPic()" class="arrow" id="arrow-left">
         &#8249;&#8249;
       </button>
+      <button @click="randomPic()" class="arrow" id="random">?</button>
     </div>
   </div>
 </template>
@@ -50,6 +51,10 @@ function nextPic() {
   if (index.value < games.value.length - 1) {
     index.value++;
   }
+}
+
+function randomPic() {
+  index.value = Math.floor(Math.random() * games.value.length);
 }
 </script>
 
@@ -84,6 +89,11 @@ function nextPic() {
 #arrow-left {
   left: 5%;
   top: 60%;
+}
+
+#random {
+  left: 63%;
+  top: 58%;
 }
 
 .arrow:hover {
