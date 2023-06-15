@@ -1,8 +1,13 @@
 <template>
   <div class="gallery-wrapper">
-    <button @click="prevPic()" class="arrow">&#8249;</button>
+    <!-- <button @click="prevPic()" class="arrow">&#8249;</button>
     <img :src="picture" :alt="name" class="preview-picture" />
-    <button @click="nextPic()" class="arrow">&#8250;</button>
+    <button @click="nextPic()" class="arrow">&#8250;</button> -->
+    <object
+      data="src\assets\img\rotating-gallery\noun-gameboy-2486655.svg"
+      width="300"
+      height="300"
+    ></object>
   </div>
 </template>
 

@@ -31,9 +31,9 @@ const games = ref([
     name: "Hangman",
     img: "",
     route: "/games/hangman",
-    },
-    {
-    id: 4
+  },
+  {
+    id: 4,
     name: "Tetris",
     img: "",
     route: "/games/tetris",
