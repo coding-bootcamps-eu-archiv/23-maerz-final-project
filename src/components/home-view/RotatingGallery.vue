@@ -19,17 +19,38 @@
         &#8249;&#8249;
       </button>
       <button @click="randomPic()" class="arrow" id="random">?</button>
+      <RouterLink :to="route" id="router-link"
+        ><button class="arrow">P</button></RouterLink
+      >
     </div>
   </div>
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
+import { RouterLink } from "vue-router";
 
 const games = ref([
-  { name: "tetris", picture: "https://picsum.photos/260/210" },
-  { name: "hangman", picture: "https://picsum.photos/261/211" },
-  { name: "memory", picture: "https://picsum.photos/262/212" },
+  {
+    name: "tetris",
+    picture: "https://picsum.photos/260/210",
+    route: "/games/tetris",
+  },
+  {
+    name: "hangman",
+    picture: "https://picsum.photos/261/211",
+    route: "/games/hangman",
+  },
+  {
+    name: "memory",
+    picture: "https://picsum.photos/262/212",
+    route: "/games/memory",
+  },
+  {
+    name: "RPS",
+    picture: "https://picsum.photos/263/213",
+    route: "/games/rock-paper-scissors",
+  },
 ]);
 
 const index = ref(0);
@@ -39,6 +60,10 @@ const name = computed(() => {
 });
 const picture = computed(() => {
   return games.value[index.value].picture;
+});
+
+const route = computed(() => {
+  return games.value[index.value].route;
 });
 
 function prevPic() {
@@ -94,6 +119,13 @@ function randomPic() {
 #random {
   left: 63%;
   top: 58%;
+}
+
+#router-link {
+  all: unset;
+  position: relative;
+  left: 45.5%;
+  top: 64%;
 }
 
 .arrow:hover {
