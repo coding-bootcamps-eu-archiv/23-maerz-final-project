@@ -22,8 +22,8 @@ body {
   --primary-light: rgb(236, 227, 217);
 
   --accent-color-one: rgb(222, 101, 15);
-  --accent-color-two: #8d86c9ff;
-  --accent-color-three: #f6ae2dff;
+  --accent-color-two: rgb(141, 134, 201);
+  --accent-color-three: rgb(246, 174, 45);
 }
 
 .base-btn {
