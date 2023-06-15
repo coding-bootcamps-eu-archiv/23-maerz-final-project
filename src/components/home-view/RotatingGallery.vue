@@ -9,9 +9,6 @@
 <script setup>
 import { computed, ref } from "vue";
 
-
-
-
 const games = ref([
   { name: "tetris", picture: "https://picsum.photos/400" },
   { name: "hangman", picture: "https://picsum.photos/401" },
@@ -34,7 +31,7 @@ function prevPic() {
 }
 
 function nextPic() {
-  if (index.value < games.value.length) {
+  if (index.value < games.value.length - 1) {
     index.value++;
   }
 }
