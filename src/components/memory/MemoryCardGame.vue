@@ -1,8 +1,14 @@
 <template>
-  <section id="memory">
-    <div v-if="showPopup" class="popup">
+  <section>
+    <div
+      v-if="showPopup"
+      class="popup"
+      :class="{ popup: true, show: showPopup }"
+    >
       <button id="popupStartBtn" @click="startGamePopup">Start Game</button>
     </div>
+  </section>
+  <section id="memory">
     <header>
       <!-- <div>Click-Count</div> -->
       <div>
@@ -120,7 +126,9 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-  showPopup.value = true;
+  setTimeout(() => {
+    showPopup.value = true;
+  }, 500);
 });
 
 const isGameStarted = ref(false);
@@ -246,10 +254,10 @@ const setGameStatus = () => {
 
 <style>
 #memory {
-  background: black;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1;
 }
 header {
   width: 100vw;
@@ -302,7 +310,7 @@ h1 {
   max-width: 900px;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   grid-template-rows: repeat(auto-fit);
-  background-image: url(https://cdn.pixabay.com/photo/2016/11/29/05/45/astronomy-1867616_1280.jpg);
+  background-image: url(https://images.pexels.com/photos/110854/pexels-photo-110854.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
   padding: 3rem 5rem;
 }
 .memory_card {
@@ -322,16 +330,20 @@ h1 {
 }
 
 .popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  transform: 0;
-  background-color: rgba(255, 255, 255, 0.45);
-  padding: 2rem;
-  border-radius: 5px;
-  z-index: 9999;
+  height: 50rem;
+  width: 50rem;
+  background-color: rgba(12, 0, 24, 0.806);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  transition: opacity 1s ease-out;
+  z-index: 2;
 }
 
 .popup button {
