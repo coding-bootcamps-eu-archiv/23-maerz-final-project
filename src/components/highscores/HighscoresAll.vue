@@ -1,8 +1,9 @@
 <template>
   <section id="table-section">
     <input
+      id="filter-input"
       type="text"
-      placeholder="Filter by game or username"
+      placeholder="Filter by game or username ..."
       v-model="filter"
     />
     <table class="table">
@@ -10,7 +11,15 @@
         <tr>
           <th>ProfilePic</th>
           <th>User</th>
-          <th>Game</th>
+          <th>
+            Game
+            <select v-on:change="filterMember">
+              <option value="">Alle Spiele</option>
+              <option v-for="userScore in userScores" :value="userScore.game">
+                {{ userScores.games }}
+              </option>
+            </select>
+          </th>
           <th>Score</th>
           <th>Date</th>
         </tr>
@@ -80,11 +89,27 @@ const filteredRows = computed(() => {
 </script>
 
 <style>
+#filter-input {
+  all: unset;
+  height: 1.5rem;
+  width: 13rem;
+  background-color: white;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  outline: 0.1rem solid var(--primary-dark);
+  width: 20rem;
+}
+
 #table-section {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
+  gap: 1rem;
+}
+option {
+  color: black;
 }
 .table {
   width: 50rem;
