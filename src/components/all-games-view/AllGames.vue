@@ -48,8 +48,6 @@ const games = ref([
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  padding: 2rem;
   gap: 2rem;
-  height: 100%;
 }
 </style>
