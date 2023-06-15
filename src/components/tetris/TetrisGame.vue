@@ -1,20 +1,25 @@
 <template>
-  <div class="game-wrapper">
+  <div class="main-wrapper">
     <h1 class="game-headline">TETRIS</h1>
-    <div class="game-border-wrapper">
-      <section class="grid-wrapper">
-        <template v-if="gameActive">
-          <div :class="cell.class" v-for="cell in grid"></div>
-        </template>
-        <template v-else>
-          <div class="end-screen">GAME OVER</div>
-          <div>Final Score: {{ score }}</div>
-        </template>
-      </section>
+    <div class="game-wrapper">
+      <div class="game-border-wrapper">
+        <section class="grid-wrapper">
+          <template v-if="gameActive">
+            <div :class="cell.class" v-for="cell in grid"></div>
+          </template>
+          <template v-else>
+            <div class="final-screen">
+              <div id="game-over">GAME OVER</div>
+              <div id="final-score">Score: {{ score }}</div>
+            </div>
+          </template>
+        </section>
+      </div>
+      <nav class="menu-wrapper">
+        <div class="menu-item">Score: {{ score }}</div>
+        <button @click="autoMove()" class="menu-item">Start</button>
+      </nav>
     </div>
-
-    <button @click="autoMove()">start</button>
-    <div>Score: {{ score }}</div>
   </div>
 </template>
 
@@ -285,7 +290,6 @@ function gameOver() {
   flex-wrap: wrap;
   height: 400px;
   width: 200px;
-  _background-color: #f8f4e3;
 }
 
 .grid-cell {
@@ -297,20 +301,19 @@ function gameOver() {
 }
 
 .tetromino {
-  _background-color: rgb(255, 255, 0);
   background-color: #c73e1d;
   height: 20px;
   width: 20px;
   opacity: 0.8;
-  _border: outset rgb(230, 77, 209) 2px;
   border: outset #f74c21 2px;
 }
 
 .game-wrapper {
   display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin: 2rem;
+  align-items: start;
+  justify-content: start;
+  margin: 1rem;
+  gap: 1rem;
 }
 
 .game-border-wrapper {
@@ -323,6 +326,73 @@ function gameOver() {
   padding: 1rem;
 }
 
-.taken {
+.menu-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+}
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.final-screen {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 2.5rem;
+  color: white;
+  background-color: #8d86c93b;
+}
+
+button {
+  all: unset;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #8d86c9;
+  color: #242038;
+}
+.menu-item {
+  background-color: #8d86c93b;
+  color: white;
+  padding: 0.5rem;
+  border: solid #8d86c9 2px;
+}
+
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+#game-over {
+  animation: 1s ease-out 0s 1 slideInFromTop;
+  font-size: 3rem;
+}
+
+#final-score {
+  animation: 1s ease-out 0s 1 slideInFromBottom;
+  font-size: 2rem;
 }
 </style>
