@@ -1,5 +1,10 @@
 <template>
   <section id="table-section">
+    <input
+      type="text"
+      placeholder="Filter by game or username"
+      v-model="filter"
+    />
     <table class="table">
       <thead>
         <tr>
@@ -11,33 +16,69 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>BILD 1</td>
-          <td>Hans</td>
-          <td>Memory</td>
-          <td>TIME XY</td>
-          <td>01.01.01</td>
-        </tr>
-        <tr>
-          <td>BILD 2</td>
-          <td>Wurst</td>
-          <td>Tetris</td>
-          <td>500 Punkte</td>
-          <td>01.01.01</td>
-        </tr>
-        <tr>
-          <td>BILD 3</td>
-          <td>Gisela</td>
-          <td>RPS</td>
-          <td>1 Punkt</td>
-          <td>11.11.11</td>
+        <tr v-for="userScores in filteredRows" :key="userScores.id">
+          <td>{{ userScores.profilePic }}</td>
+          <td>{{ userScores.username }}</td>
+          <td>{{ userScores.game }}</td>
+          <td>{{ userScores.score }}</td>
+          <td>{{ userScores.dateOfScore }}</td>
         </tr>
       </tbody>
     </table>
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, computed } from "vue";
+
+const userScores = ref([
+  {
+    id: 1,
+    profilePic: "⚡",
+    username: "Harry",
+    game: "Memory",
+    score: "00:40.23",
+    dateOfScore: "01.01.01",
+  },
+  {
+    id: 2,
+    profilePic: "🐭",
+    username: "Mouse",
+    game: "RPS",
+    score: "5 Punkte",
+    dateOfScore: "02.02.02",
+  },
+  {
+    id: 3,
+    profilePic: "🧔🏻",
+    username: "Hagrid",
+    game: "Tetris",
+    score: "100 Punkte",
+    dateOfScore: "03.03.03",
+  },
+  {
+    id: 4,
+    profilePic: "<(°.°)>",
+    username: "Baby-Yoda",
+    game: "Tetris",
+    score: "500 Punkte",
+    dateOfScore: "04.04.04",
+  },
+]);
+
+const filter = ref("");
+
+const filteredRows = computed(() => {
+  return userScores.value.filter((userScores) => {
+    const username = userScores.username.toLowerCase();
+    const game = userScores.game.toLowerCase();
+    const searchTerm = filter.value.toLowerCase();
+
+    return username.includes(searchTerm) || game.includes(searchTerm);
+  });
+});
+</script>
+
 <style>
 #table-section {
   display: flex;
