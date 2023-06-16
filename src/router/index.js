@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import("@/views/AllGamesView.vue"),
     },
     {
+      path: "/highscores",
+      name: "Highscores",
+      component: () => import("@/views/HighscoresAllView.vue"),
+    },
+    {
       path: "/games/memory",
       name: "memoryGame",
       component: () => import("@/views/MemoryView.vue"),
@@ -25,11 +30,11 @@ const router = createRouter({
       component: () => import("@/views/RPSView.vue"),
     },
     {
-
       path: "/games/hangman",
       name: "hangmanGame",
       component: () => import("@/views/HangmanView.vue"),
-    }, {
+    },
+    {
       path: "/games/tetris",
       name: "TetrisGame",
       component: () => import("@/views/TetrisView.vue"),
