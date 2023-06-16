@@ -1,42 +1,36 @@
 <template>
-  <section>
-    <div
-      v-if="showPopup"
-      class="popup"
-      :class="{ popup: true, show: showPopup }"
-    >
-      <button id="popupStartBtn" @click="startGamePopup">Start Now!</button>
-    </div>
-  </section>
-  <section id="memory">
-    <header>
-      <!-- <div>Click-Count</div> -->
-      <div id="gameState">
-        <p id="gameStatus">{{ gameStatus }}</p>
-        <p id="stopwatch">{{ stopwatch }}</p>
-      </div>
-      <h1>Memory</h1>
-      <button id="newGame" @click="startNewGame">New Game</button>
-    </header>
+  <div id="wrapper">
+    <section id="memory">
+      <header>
+        <div id="gameState">
+          <p id="gameStatus">{{ gameStatus }}</p>
+          <p id="stopwatch">{{ stopwatch }}</p>
+        </div>
+        <h1>Memory</h1>
+        <button id="newGame" @click="startNewGame">New Game</button>
+      </header>
 
-    <main id="gameContainer">
-      <div
-        class="memory_card"
-        v-for="card in shuffledCards"
-        :key="card.index"
-        @click="showImage(card)"
-      >
-        <img
-          v-if="card.status === 'hidden'"
-          class="card-image"
-          :src="card.defaultImg"
-        />
-        <img v-else class="card-image" :src="card.img" />
-      </div>
-      <!-- <div>{{ duplicatedCards }}</div>
-      <div>{{ shuffledCards }}</div> -->
-    </main>
-  </section>
+      <main id="gameContainer">
+        <div
+          v-if="gameStatus === 'ACTIVE'"
+          class="memory_card"
+          v-for="card in shuffledCards"
+          :key="card.index"
+          @click="showImage(card)"
+        >
+          <img
+            v-if="card.status === 'hidden'"
+            class="card-image"
+            :src="card.defaultImg"
+          />
+          <img v-else class="card-image" :src="card.img" />
+        </div>
+        <div v-else id="startCover">
+          <button id="popupStartBtn" @click="startNewGame">Start Now!</button>
+        </div>
+      </main>
+    </section>
+  </div>
 </template>
 
 <script setup>
@@ -170,11 +164,6 @@ const stopStopwatch = () => {
 
 // Start Game
 
-const startGamePopup = () => {
-  showPopup.value = false;
-  startNewGame();
-};
-
 const startNewGame = () => {
   //count null
   isGameStarted.value = true;
@@ -196,10 +185,6 @@ const startNewGame = () => {
 const clickedCards = computed(() => {
   return shuffledCards.value.filter((card) => card.clicked);
 });
-
-// const cardStatus = computed((card) => {
-//   return (card) => card.status === 'shown'
-// })
 
 const showImage = (card) => {
   clickedCards.value = [];
@@ -254,18 +239,24 @@ const setGameStatus = () => {
 
 <style>
 #memory {
+  position: relative;
   display: flex;
+  max-width: 1500px;
+  height: 900px;
   flex-direction: column;
   align-items: center;
   z-index: 1;
+  background-image: url(https://images.pexels.com/photos/110854/pexels-photo-110854.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 header {
-  width: 100vw;
-
+  width: 100%;
   color: white;
   display: flex;
   gap: 2rem;
-  padding: 2rem 0rem;
+  padding: 2rem 0rem 1rem 0rem;
   justify-content: space-around;
 }
 
@@ -292,10 +283,10 @@ header {
 }
 
 h1 {
-  /* font-family: 'bungee'; / GIBTS NOCH NICHT */
+  font-family: "bungee-shade";
   position: absolute;
   font-weight: 900;
-  font-size: 2rem;
+  font-size: 3rem;
   color: white;
 }
 
@@ -322,15 +313,19 @@ h1 {
 }
 
 #gameContainer {
+  position: relative;
   display: grid;
   justify-content: center;
   gap: 2rem;
+  min-width: 500px;
+  min-height: 500px;
   max-width: 1000px;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   grid-template-rows: repeat(auto-fit);
-  background-image: url(https://images.pexels.com/photos/110854/pexels-photo-110854.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
-  padding: 3rem 5rem;
+
+  padding: 1rem 4rem;
 }
+
 .memory_card {
   border: 3px solid black;
   height: 10rem;
@@ -347,24 +342,20 @@ h1 {
   height: 100%;
 }
 
-.popup {
-  height: 50rem;
-  width: 50rem;
-  background-color: rgba(12, 0, 24, 0.806);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#startCover {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  opacity: 1;
-  transition: opacity 1s ease-out;
-  z-index: 2;
+  top: 7rem;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-.popup button {
+#popupStartBtn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   all: unset;
   border: 0.1rem solid var(--primary-dark);
   background-color: var(--accent-color-two);
@@ -376,13 +367,13 @@ h1 {
   cursor: pointer;
   transition: transform 0.3s;
 }
-.popup button:active {
+#popupStartBtn:active {
   color: var(--primary-light);
   background-color: var(--primary-dark);
 }
 
-.popup button:hover {
-  box-shadow: 0px 0px 5px 3px black;
+#popupStartBtn:hover {
+  box-shadow: 0px 0px 50px 15px black;
   transform: scale(1.5);
 }
 </style>
