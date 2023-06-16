@@ -159,7 +159,6 @@ select option {
 
 table.table td,
 table.table th {
-  border: 0px solid #ffffff;
   padding: 5px 4px;
 }
 table.table tbody td {
@@ -167,20 +166,16 @@ table.table tbody td {
 }
 table.table thead {
   background: #ffffff;
-  border-bottom: 4px solid #333333;
+  border-bottom: 4px solid var(--primary-dark);
 }
 table.table thead th {
   font-size: 1rem;
   font-weight: bold;
   color: var(--primary-dark);
   text-align: center;
-  border-left: 2px solid #333333;
+  border-left: 2px solid var(--primary-dark);
 }
 table.table thead th:first-child {
   border-left: none;
-}
-
-table.table tfoot td {
-  font-size: 14px;
 }
 </style>
