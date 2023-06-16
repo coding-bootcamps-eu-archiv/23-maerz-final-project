@@ -15,9 +15,9 @@
     </nav>
     <input type="search" placeholder="Search" class="base-input-field" />
     <div class="action">
-      <!-- a tags are later changed to router links -->
-      <a href="#" class="base-btn"> Sign Up </a>
-      <a href="#" class="base-btn"> Log In </a>
+      <RouterLink :to="{ name: 'accountPage' }" class="base-btn">
+        User Settings
+      </RouterLink>
       <a href="#" title="Your profile">
         <button class="account-btn"></button>
       </a>
