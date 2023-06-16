@@ -1,6 +1,6 @@
 <template>
   <div class="bg-color">
-    <!-- <RotatingGallery></RotatingGallery> -->
+    <RotatingGallery></RotatingGallery>
     <HiddenGallery></HiddenGallery>
   </div>
 </template>

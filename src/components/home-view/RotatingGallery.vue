@@ -33,22 +33,22 @@ import { RouterLink } from "vue-router";
 const games = ref([
   {
     name: "tetris",
-    picture: "https://picsum.photos/260/210",
+    picture: "src/assets/img/preview/tetris-preview.png",
     route: "/games/tetris",
   },
   {
     name: "hangman",
-    picture: "https://picsum.photos/261/211",
+    picture: "src/assets/img/preview/tetris-preview.png",
     route: "/games/hangman",
   },
   {
     name: "memory",
-    picture: "https://picsum.photos/262/212",
+    picture: "src/assets/img/preview/tetris-preview.png",
     route: "/games/memory",
   },
   {
     name: "RPS",
-    picture: "https://picsum.photos/263/213",
+    picture: "src/assets/img/preview/tetris-preview.png",
     route: "/games/rock-paper-scissors",
   },
 ]);
@@ -89,6 +89,8 @@ function randomPic() {
   z-index: 2;
   position: absolute;
   top: 10%;
+  height: 210px;
+  width: 250px;
 }
 
 .gallery-wrapper {
@@ -130,12 +132,11 @@ function randomPic() {
 }
 
 .arrow:hover {
-  color: red;
+  color: var(--accent-color-three);
 }
 
 .gameboy {
   color: white;
-  _background-color: white;
   z-index: 5;
   margin-top: 1rem;
 }
