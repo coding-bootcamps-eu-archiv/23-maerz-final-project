@@ -4,6 +4,7 @@
       v-for="game in games"
       :name="game.name"
       :route="game.route"
+      :img="game.img"
     ></GameCard>
   </div>
 </template>
@@ -35,7 +36,7 @@ const games = ref([
   {
     id: 4,
     name: "Tetris",
-    img: "",
+    img: "src/assets/img/preview/tetris-preview.png",
     route: "/games/tetris",
   },
 ]);
