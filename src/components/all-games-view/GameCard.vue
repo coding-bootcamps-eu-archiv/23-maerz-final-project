@@ -2,10 +2,10 @@
   <div class="game-card-wrapper">
     <RouterLink :to="route">
       <div class="img-wrapper">
-        <img class="game-img" src="https://picsum.photos/400" alt="bild" />
+        <img class="game-img" :src="img" alt="bild" />
       </div>
     </RouterLink>
-    <p class="title">{{ name }}</p>
+    <p class="title">&#9655; Play {{ name }}</p>
   </div>
 </template>
 
@@ -14,6 +14,7 @@ import { RouterLink } from "vue-router";
 defineProps({
   name: { type: String, required: true },
   route: { type: String, required: true },
+  img: { type: String, required: false },
 });
 </script>
 

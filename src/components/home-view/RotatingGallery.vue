@@ -1,16 +1,7 @@
 <template>
   <div class="gallery-wrapper">
-    <!-- <button @click="prevPic()" class="arrow">&#8249;</button>
+    <img :src="gameBoy" alt="gameboy" class="gameboy" />
     <img :src="picture" :alt="name" class="preview-picture" />
-    <button @click="nextPic()" class="arrow">&#8250;</button> -->
-    <object
-      data="src\assets\img\rotating-gallery\noun-gameboy-2486655.svg"
-      width="800"
-      height="800"
-      class="gameboy"
-    ></object
-    ><img :src="picture" :alt="name" class="preview-picture" />
-
     <div class="gameboy-background">
       <button @click="nextPic()" class="arrow" id="arrow-right">
         &#8250;&#8250;
@@ -29,26 +20,31 @@
 <script setup>
 import { computed, ref } from "vue";
 import { RouterLink } from "vue-router";
+import gameBoy from "/src/assets/img/icons/noun-gameboy-2486655.png";
+import tetrisImg from "/src/assets/img/preview/tetris-preview.png";
+import hangmanImg from "/src/assets/img/preview/hangman-preview.png";
+import rpsImg from "/src/assets/img/preview/rps-preview.png";
+import memoryImg from "/src/assets/img/preview/memory-preview.png";
 
 const games = ref([
   {
     name: "tetris",
-    picture: "https://picsum.photos/260/210",
+    picture: tetrisImg,
     route: "/games/tetris",
   },
   {
     name: "hangman",
-    picture: "https://picsum.photos/261/211",
+    picture: hangmanImg,
     route: "/games/hangman",
   },
   {
     name: "memory",
-    picture: "https://picsum.photos/262/212",
+    picture: memoryImg,
     route: "/games/memory",
   },
   {
     name: "RPS",
-    picture: "https://picsum.photos/263/213",
+    picture: rpsImg,
     route: "/games/rock-paper-scissors",
   },
 ]);
@@ -79,7 +75,12 @@ function nextPic() {
 }
 
 function randomPic() {
-  index.value = Math.floor(Math.random() * games.value.length);
+  let newRandom = Math.floor(Math.random() * games.value.length);
+  if (newRandom === index.value) {
+    randomPic();
+  } else {
+    index.value = newRandom;
+  }
 }
 </script>
 
@@ -88,7 +89,10 @@ function randomPic() {
   border: solid black 2px;
   z-index: 2;
   position: absolute;
-  top: 10%;
+  top: 11%;
+  height: 210px;
+  width: 250px;
+  border-bottom-right-radius: 20%;
 }
 
 .gallery-wrapper {
@@ -98,6 +102,7 @@ function randomPic() {
   align-items: center;
   position: relative;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .arrow {
@@ -109,43 +114,44 @@ function randomPic() {
 }
 
 #arrow-right {
-  left: 26.5%;
-  top: 60%;
+  left: 24%;
+  top: 59%;
 }
 #arrow-left {
-  left: 5%;
-  top: 60%;
+  left: 2%;
+  top: 59%;
 }
 
 #random {
-  left: 63%;
-  top: 58%;
+  left: 62.5%;
+  top: 57%;
 }
 
 #router-link {
   all: unset;
   position: relative;
-  left: 45.5%;
-  top: 64%;
+  left: 43.5%;
+  top: 63%;
 }
 
 .arrow:hover {
-  color: red;
+  color: var(--accent-color-three);
 }
 
 .gameboy {
   color: white;
-  _background-color: white;
   z-index: 5;
-  margin-top: 1rem;
+  _margin-top: 1rem;
+  width: 600px;
+  height: 600px;
 }
 
 .gameboy-background {
   background-color: var(--accent-color-two);
   position: absolute;
-  top: 5%;
-  width: 400px;
-  height: 600px;
+  top: 4%;
+  width: 350px;
+  height: 570px;
   border-bottom-right-radius: 20%;
 }
 </style>
