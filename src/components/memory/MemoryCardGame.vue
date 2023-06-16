@@ -292,10 +292,10 @@ header {
 }
 
 h1 {
-  /* font-family: 'bungee'; / GIBTS NOCH NICHT */
+  font-family: "bungee-shade";
   position: absolute;
   font-weight: 900;
-  font-size: 2rem;
+  font-size: 3rem;
   color: white;
 }
 
