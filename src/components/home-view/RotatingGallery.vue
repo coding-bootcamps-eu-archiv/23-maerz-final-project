@@ -97,6 +97,7 @@ function randomPic() {
   justify-content: center;
   align-items: center;
   position: relative;
+  margin-top: 2rem;
 }
 
 .arrow {
@@ -135,8 +136,8 @@ function randomPic() {
 .gameboy {
   color: white;
   _background-color: white;
-  margin-top: 1rem;
   z-index: 5;
+  margin-top: 1rem;
 }
 
 .gameboy-background {
