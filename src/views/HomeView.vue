@@ -1,7 +1,7 @@
 <template>
   <div class="bg-color">
     <RotatingGallery></RotatingGallery>
-    <HiddenGallery></HiddenGallery>
+    <!-- <HiddenGallery></HiddenGallery> -->
   </div>
 </template>
 

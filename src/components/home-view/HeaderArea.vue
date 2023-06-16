@@ -1,14 +1,7 @@
 <template>
   <div class="header-wrapper">
     <div class="logo-name-wrapper">
-      <object
-        data="src\assets\img\noun-arcade-game-20195.svg"
-        width="50"
-        height="50"
-        class="logo"
-      ></object>
-      <!-- <div class="logo">Logo</div> -->
-
+      <img :src="logoUrl" class="logo" alt="arcade logo" />
       <RouterLink class="home-link" :to="{ name: 'home' }"
         ><p class="app-name">GameBox</p></RouterLink
       >
@@ -34,6 +27,7 @@
 
 <script setup>
 import { RouterLink } from "vue-router";
+import logoUrl from "/src/assets/img/icons/noun-arcade-game-5563937-1F1C2B.png";
 </script>
 
 <style scoped>

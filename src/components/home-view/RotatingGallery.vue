@@ -1,16 +1,7 @@
 <template>
   <div class="gallery-wrapper">
-    <!-- <button @click="prevPic()" class="arrow">&#8249;</button>
+    <img :src="gameBoy" alt="gameboy" class="gameboy" />
     <img :src="picture" :alt="name" class="preview-picture" />
-    <button @click="nextPic()" class="arrow">&#8250;</button> -->
-    <object
-      data="src\assets\img\rotating-gallery\noun-gameboy-2486655.svg"
-      width="800"
-      height="800"
-      class="gameboy"
-    ></object
-    ><img :src="picture" :alt="name" class="preview-picture" />
-
     <div class="gameboy-background">
       <button @click="nextPic()" class="arrow" id="arrow-right">
         &#8250;&#8250;
@@ -29,6 +20,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { RouterLink } from "vue-router";
+import gameBoy from "/src/assets/img/icons/noun-gameboy-2486655.png";
 
 const games = ref([
   {
@@ -88,9 +80,10 @@ function randomPic() {
   border: solid black 2px;
   z-index: 2;
   position: absolute;
-  top: 10%;
+  top: 11%;
   height: 210px;
   width: 250px;
+  border-bottom-right-radius: 20%;
 }
 
 .gallery-wrapper {
@@ -111,24 +104,24 @@ function randomPic() {
 }
 
 #arrow-right {
-  left: 26.5%;
-  top: 60%;
+  left: 24%;
+  top: 59%;
 }
 #arrow-left {
-  left: 5%;
-  top: 60%;
+  left: 2%;
+  top: 59%;
 }
 
 #random {
-  left: 63%;
-  top: 58%;
+  left: 62.5%;
+  top: 57%;
 }
 
 #router-link {
   all: unset;
   position: relative;
-  left: 45.5%;
-  top: 64%;
+  left: 43.5%;
+  top: 63%;
 }
 
 .arrow:hover {
@@ -138,15 +131,17 @@ function randomPic() {
 .gameboy {
   color: white;
   z-index: 5;
-  margin-top: 1rem;
+  _margin-top: 1rem;
+  width: 600px;
+  height: 600px;
 }
 
 .gameboy-background {
   background-color: var(--accent-color-two);
   position: absolute;
-  top: 5%;
-  width: 400px;
-  height: 600px;
+  top: 4%;
+  width: 350px;
+  height: 570px;
   border-bottom-right-radius: 20%;
 }
 </style>

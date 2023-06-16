@@ -3,7 +3,7 @@
     <div class="preview">
       <h1>TETRIS</h1>
       <img
-        src="src\assets\img\icons\noun-tetris-4402336-1f1c2b.png"
+        src="\src\assets\img\icons\noun-tetris-4402336-1f1c2b.png"
         class="icon"
       />
       <!-- <object data=""></object> -->
