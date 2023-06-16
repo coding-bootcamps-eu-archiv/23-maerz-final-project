@@ -11,6 +11,8 @@
       </header>
       <main>
         <div id="fails">Fails {{ fails }}/10</div>
+        <div id="points">Points: {{ points }}</div>
+        <div id="pointsRules">(-10 Points for every Fail)</div>
         <section id="outputArea">
           <div id="output" :class="{ winner: isWinner }">{{ hiddenWord }}</div>
         </section>
@@ -34,6 +36,8 @@ import { ref, computed, onMounted } from "vue";
 
 //Data Attributes
 const fails = ref(0);
+const points = ref(100);
+
 const searchWords = ref([
   "Regex",
   "Boolean",
@@ -63,6 +67,7 @@ const setInitialStatusActive = () => {
 
 const startingNewGame = () => {
   fails.value = 0;
+  points.value = 100;
   toBeDisabled.value = {};
   newWord.value = searchWords.value[
     Math.floor(Math.random() * searchWords.value.length)
@@ -98,6 +103,7 @@ const searchAndReplaceLetter = () => {
 
   if (found === false) {
     fails.value++;
+    points.value -= 10;
     disableAllAt10Fails();
   }
 };
@@ -190,6 +196,13 @@ header {
     transform: rotate(-10deg);
   }
 }
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
 
 #fails {
   font-size: 2.5rem;
@@ -199,6 +212,21 @@ header {
   text-shadow: 2px 2px var(--accent-color-two);
   text-align: center;
   font-family: "Pacifico";
+}
+
+#points {
+  position: absolute;
+  top: -9rem;
+  right: 2rem;
+  color: var(--accent-color-three);
+  font-size: 2rem;
+}
+#pointsRules {
+  position: absolute;
+  top: -7rem;
+  right: 2rem;
+  color: var(--accent-color-three);
+  font-size: 1.3rem;
 }
 #newGameBtn {
   all: unset;
@@ -221,12 +249,6 @@ header {
 #newGameBtn:hover {
   box-shadow: 0px 0px 5px 3px var(--accent-color-three);
   transform: scale(1.1);
-}
-main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 #outputArea {
