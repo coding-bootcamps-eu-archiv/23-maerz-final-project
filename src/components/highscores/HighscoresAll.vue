@@ -12,11 +12,10 @@
           <th>ProfilePic</th>
           <th>User</th>
           <th>
-            Game
-            <select v-on:change="filterMember">
-              <option value="">Alle Spiele</option>
-              <option v-for="userScore in userScores" :value="userScore.game">
-                {{ userScores.games }}
+            <select v-model="selectedGame" :class="no - border">
+              <option value="all">All Games</option>
+              <option v-for="game in uniqueGames" :value="game" :key="game">
+                {{ game }}
               </option>
             </select>
           </th>
@@ -25,7 +24,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="userScores in filteredRows" :key="userScores.id">
+        <tr v-for="userScores in filteredRowsByGame" :key="game">
           <td>{{ userScores.profilePic }}</td>
           <td>{{ userScores.username }}</td>
           <td>{{ userScores.game }}</td>
@@ -75,6 +74,7 @@ const userScores = ref([
   },
 ]);
 
+//Filter by Input-Search
 const filter = ref("");
 
 const filteredRows = computed(() => {
@@ -85,6 +85,31 @@ const filteredRows = computed(() => {
 
     return username.includes(searchTerm) || game.includes(searchTerm);
   });
+});
+
+//Filter by Dorp-Down Games
+const uniqueGames = computed(() => {
+  const gamesSet = new Set();
+  userScores.value.forEach((score) => {
+    gamesSet.add(score.game);
+  });
+  return Array.from(gamesSet);
+});
+
+const selectedGame = ref("all");
+
+const filterGames = (event) => {
+  selectedGame.value = event.target.value;
+};
+
+const filteredRowsByGame = computed(() => {
+  if (selectedGame.value === "all") {
+    return filteredRows.value;
+  } else {
+    return filteredRows.value.filter(
+      (userScores) => userScores.game === selectedGame.value
+    );
+  }
 });
 </script>
 
@@ -108,9 +133,20 @@ const filteredRows = computed(() => {
   height: 100%;
   gap: 1rem;
 }
-option {
-  color: black;
+
+select {
+  font-family: unset;
+  font-size: unset;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--primary-dark);
 }
+
+select option {
+  border: 0px;
+}
+
 .table {
   width: 50rem;
   border-radius: 0.5rem;
@@ -127,16 +163,16 @@ table.table th {
   padding: 5px 4px;
 }
 table.table tbody td {
-  font-size: 16px;
+  font-size: 0.9rem;
 }
 table.table thead {
   background: #ffffff;
   border-bottom: 4px solid #333333;
 }
 table.table thead th {
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: bold;
-  color: #333333;
+  color: var(--primary-dark);
   text-align: center;
   border-left: 2px solid #333333;
 }
