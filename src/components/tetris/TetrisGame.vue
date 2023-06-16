@@ -33,7 +33,6 @@
 
 <script setup>
 import { ref } from "vue";
-import kremlinImg from "/src/assets/img/icons/noun-kremlin-210018-FFFFFF.png";
 
 // this creates the game grid
 const grid = ref([]);
