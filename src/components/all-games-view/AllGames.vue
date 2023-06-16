@@ -18,19 +18,19 @@ const games = ref([
   {
     id: 1,
     name: "Memory",
-    img: "",
+    img: "src/assets/img/preview/memory-preview.png",
     route: "/games/memory",
   },
   {
     id: 2,
-    name: "Rock Paper Scissors",
-    img: "",
+    name: "R-P-S",
+    img: "src/assets/img/preview/rps-preview.png",
     route: "/games/rock-paper-scissors",
   },
   {
     id: 3,
     name: "Hangman",
-    img: "",
+    img: "src/assets/img/preview/hangman-preview.png",
     route: "/games/hangman",
   },
   {

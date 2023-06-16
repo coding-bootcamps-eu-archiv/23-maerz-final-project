@@ -30,17 +30,17 @@ const games = ref([
   },
   {
     name: "hangman",
-    picture: "src/assets/img/preview/tetris-preview.png",
+    picture: "src/assets/img/preview/hangman-preview.png",
     route: "/games/hangman",
   },
   {
     name: "memory",
-    picture: "src/assets/img/preview/tetris-preview.png",
+    picture: "src/assets/img/preview/memory-preview.png",
     route: "/games/memory",
   },
   {
     name: "RPS",
-    picture: "src/assets/img/preview/tetris-preview.png",
+    picture: "src/assets/img/preview/rps-preview.png",
     route: "/games/rock-paper-scissors",
   },
 ]);
@@ -71,7 +71,12 @@ function nextPic() {
 }
 
 function randomPic() {
-  index.value = Math.floor(Math.random() * games.value.length);
+  let newRandom = Math.floor(Math.random() * games.value.length);
+  if (newRandom === index.value) {
+    randomPic();
+  } else {
+    index.value = newRandom;
+  }
 }
 </script>
 
@@ -93,6 +98,7 @@ function randomPic() {
   align-items: center;
   position: relative;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .arrow {
