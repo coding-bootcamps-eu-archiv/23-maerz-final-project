@@ -1,10 +1,17 @@
 <template>
   <div class="header-wrapper">
     <div class="logo-name-wrapper">
-      <RouterLink :to="{ name: 'home' }">
-        <div class="logo">Logo</div>
-      </RouterLink>
-      <p class="app-name">Arcade - GameBox</p>
+      <object
+        data="src\assets\img\noun-arcade-game-20195.svg"
+        width="50"
+        height="50"
+        class="logo"
+      ></object>
+      <!-- <div class="logo">Logo</div> -->
+
+      <RouterLink class="home-link" :to="{ name: 'home' }"
+        ><p class="app-name">GameBox</p></RouterLink
+      >
     </div>
     <nav class="navigation">
       <!-- a tags are later changed to router links -->
@@ -41,19 +48,24 @@ import { RouterLink } from "vue-router";
 
 .logo-name-wrapper {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 .logo {
-  width: 3rem;
-  height: 3rem;
-  background-color: black;
-  color: white;
+  width: 5rem;
+  height: 5rem;
   text-align: center;
+  border: solid black 3px;
+  padding: 0.3rem;
+  border-radius: 50%;
+  background-color: var(--accent-color-three);
 }
 
 .app-name {
+  display: flex;
+  align-items: center;
   text-transform: uppercase;
+  font-size: 4rem;
+  font-weight: bold;
 }
 
 .navigation {
@@ -83,5 +95,15 @@ import { RouterLink } from "vue-router";
 .bi-person-fill {
   height: 50%;
   width: 50%;
+}
+
+.home-link {
+  all: unset;
+  display: flex;
+  cursor: pointer;
+}
+
+.home-link:hover {
+  color: var(--accent-color-two);
 }
 </style>
