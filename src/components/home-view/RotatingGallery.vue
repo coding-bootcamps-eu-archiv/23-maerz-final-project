@@ -21,26 +21,30 @@
 import { computed, ref } from "vue";
 import { RouterLink } from "vue-router";
 import gameBoy from "/src/assets/img/icons/noun-gameboy-2486655.png";
+import tetrisImg from "/src/assets/img/preview/tetris-preview.png";
+import hangmanImg from "/src/assets/img/preview/hangman-preview.png";
+import rpsImg from "/src/assets/img/preview/rps-preview.png";
+import memoryImg from "/src/assets/img/preview/memory-preview.png";
 
 const games = ref([
   {
     name: "tetris",
-    picture: "src/assets/img/preview/tetris-preview.png",
+    picture: tetrisImg,
     route: "/games/tetris",
   },
   {
     name: "hangman",
-    picture: "src/assets/img/preview/hangman-preview.png",
+    picture: hangmanImg,
     route: "/games/hangman",
   },
   {
     name: "memory",
-    picture: "src/assets/img/preview/memory-preview.png",
+    picture: memoryImg,
     route: "/games/memory",
   },
   {
     name: "RPS",
-    picture: "src/assets/img/preview/rps-preview.png",
+    picture: rpsImg,
     route: "/games/rock-paper-scissors",
   },
 ]);

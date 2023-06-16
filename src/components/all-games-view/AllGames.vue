@@ -13,30 +13,35 @@
 import GameCard from "@/components/all-games-view/GameCard.vue";
 import { ref } from "vue";
 
+import tetrisImg from "/src/assets/img/preview/tetris-preview.png";
+import hangmanImg from "/src/assets/img/preview/hangman-preview.png";
+import rpsImg from "/src/assets/img/preview/rps-preview.png";
+import memoryImg from "/src/assets/img/preview/memory-preview.png";
+
 // data
 const games = ref([
   {
     id: 1,
     name: "Memory",
-    img: "src/assets/img/preview/memory-preview.png",
+    img: memoryImg,
     route: "/games/memory",
   },
   {
     id: 2,
     name: "R-P-S",
-    img: "src/assets/img/preview/rps-preview.png",
+    img: rpsImg,
     route: "/games/rock-paper-scissors",
   },
   {
     id: 3,
     name: "Hangman",
-    img: "src/assets/img/preview/hangman-preview.png",
+    img: hangmanImg,
     route: "/games/hangman",
   },
   {
     id: 4,
     name: "Tetris",
-    img: "src/assets/img/preview/tetris-preview.png",
+    img: tetrisImg,
     route: "/games/tetris",
   },
 ]);
