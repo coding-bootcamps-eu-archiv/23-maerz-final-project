@@ -33,6 +33,7 @@
 </template>
 <script setup>
 import { ref, computed, onMounted } from "vue";
+import { safeHighscore } from "../../stores/safeHighscore.js";
 
 //Data Attributes
 const fails = ref(0);
@@ -131,11 +132,23 @@ const setStatus = computed(() => {
   if (fails.value === 10) {
     return "You Lose!";
   } else if (winner.value === true) {
+    safeScore();
+
     return "WINNER";
   } else {
     return initialStatus.value;
   }
 });
+
+// safe highscore
+
+const safeScore = () => {
+  const game = "Hangman";
+  const score = points.value;
+  console.log(game);
+  console.log(score);
+  safeHighscore.getHighscore(game, score);
+};
 </script>
 <style scoped>
 /* #wrapper {

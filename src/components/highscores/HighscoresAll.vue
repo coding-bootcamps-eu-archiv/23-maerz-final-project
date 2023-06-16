@@ -12,7 +12,7 @@
           <th>ProfilePic</th>
           <th>User</th>
           <th>
-            <select v-model="selectedGame" :class="no - border">
+            <select v-model="selectedGame">
               <option value="all">All Games</option>
               <option v-for="game in uniqueGames" :value="game" :key="game">
                 {{ game }}
@@ -24,20 +24,35 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="userScores in filteredRowsByGame" :key="game">
+        <tr v-for="userScores in filteredRowsByGame">
           <td>{{ userScores.profilePic }}</td>
           <td>{{ userScores.username }}</td>
           <td>{{ userScores.game }}</td>
-          <td>{{ userScores.score }}</td>
+          <td>{{ highscore.gameValue }}</td>
+          <td>{{ highscore.scoreValue }}</td>
           <td>{{ userScores.dateOfScore }}</td>
         </tr>
       </tbody>
     </table>
+    <div style="color: aliceblue">
+      {{ highscore }}
+      <input v-model="highscoreData.gameValue" placeholder="Game" />
+      <input
+        v-model="highscoreData.scoreValue"
+        type="number"
+        placeholder="Score"
+      />
+    </div>
   </section>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, reactive, onMounted } from "vue";
+import { safeHighscore } from "../../stores/safeHighscore.js";
+
+onMounted(() => {
+  addHighscore();
+});
 
 const userScores = ref([
   {
@@ -111,6 +126,36 @@ const filteredRowsByGame = computed(() => {
     );
   }
 });
+//Highscore Values
+const highscore = computed(() => {
+  return safeHighscore.getHighscore(
+    highscoreData.gameValue,
+    highscoreData.scoreValue
+  );
+});
+const newHighscore = reactive({
+  id: 0,
+  profilePic: "",
+  username: "",
+  game: "",
+  score: "",
+  dateOfScore: "",
+});
+const addHighscore = () => {
+  const newId = userScores.value.length + 1;
+  newHighscore.id = newId;
+  userScores.value.push({ ...newHighscore });
+  resetNewHighscore();
+};
+
+const resetNewHighscore = () => {
+  newHighscore.id = 0;
+  newHighscore.profilePic = "";
+  newHighscore.username = "";
+  newHighscore.game = "";
+  newHighscore.score = "";
+  newHighscore.dateOfScore = "";
+};
 </script>
 
 <style>
