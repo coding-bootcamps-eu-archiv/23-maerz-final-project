@@ -4,7 +4,7 @@
       <header>
         <h1>Hangman</h1>
         <section id="top">
-          <div id="status">{{ setStatus }}</div>
+          <div id="status" :class="{ winner: isWinner }">{{ setStatus }}</div>
 
           <button id="newGameBtn" @click="startingNewGame">NEW GAME</button>
         </section>
@@ -12,7 +12,7 @@
       <main>
         <div id="fails">Fails {{ fails }}/10</div>
         <section id="outputArea">
-          <div id="output">{{ hiddenWord }}</div>
+          <div id="output" :class="{ winner: isWinner }">{{ hiddenWord }}</div>
         </section>
         <section id="keyboardArea">
           <button
@@ -110,9 +110,14 @@ const disableAllAt10Fails = (alphabet) => {
 };
 
 // Computed Properties//
+
+const isWinner = ref(false);
+
 const winner = computed(() => {
   if (hiddenWord.value.length > 0) {
-    return newWord.value.join("") === hiddenWord.value;
+    const isWordMatched = newWord.value.join("") === hiddenWord.value;
+    isWinner.value = isWordMatched;
+    return isWordMatched;
   }
   return false;
 });
@@ -149,7 +154,7 @@ h1 {
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 5rem;
+  font-size: 5.5rem;
   font-weight: 1000;
   letter-spacing: 0.7rem;
   text-align: left;
@@ -167,8 +172,23 @@ header {
 #status {
   -webkit-text-stroke: 1px var(--primary-light);
   -webkit-text-fill-color: transparent;
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: 800;
+  animation: blink 1s infinite;
+}
+#status.winner {
+  animation: wiggle 0.5s ease-in-out 10;
+}
+@keyframes wiggle {
+  0% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
+  }
 }
 
 #fails {
@@ -202,6 +222,12 @@ header {
   box-shadow: 0px 0px 5px 3px var(--accent-color-three);
   transform: scale(1.1);
 }
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 #outputArea {
   font-size: 4rem;
@@ -216,17 +242,33 @@ header {
 }
 #output {
   margin-top: 6.5rem;
-  background-color: rgba(var(--accent-color-two), 0.8);
-  /* hier im Optimalfall wieder die VariablenFarbe eintragen */
+  backdrop-filter: blur(8px);
   color: var(--primary-light);
   padding: 1rem;
   border-radius: 10px;
+  font-size: 5rem;
+}
+#output.winner {
+  animation: zoom 1s ease-in-out 1;
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 #keyboardArea {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  max-width: 68rem;
   flex-wrap: wrap;
   gap: 0.7rem;
   padding: 2rem 9rem;
@@ -239,5 +281,10 @@ header {
   padding: 0.6rem 0.6rem;
   width: 3rem;
   box-shadow: 3px 4px 5px #ee00ff;
+  cursor: pointer;
+}
+
+#keyboardBtns:hover {
+  transform: scale(1.1);
 }
 </style>
