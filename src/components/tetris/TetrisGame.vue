@@ -17,7 +17,15 @@
       </div>
       <nav class="menu-wrapper">
         <div class="menu-item">Score: {{ score }}</div>
-        <button @click="autoMove()" class="menu-item">Start</button>
+        <div class="menu-item" id="manual">
+          <div>&#9651; Rotate</div>
+          <div>&#9655; Move Right</div>
+          <div>&#9665; Move Left</div>
+          <div>&#9661; Move Down</div>
+        </div>
+        <button @click="autoMove()" class="menu-item" id="start-button">
+          Start
+        </button>
       </nav>
     </div>
   </div>
@@ -355,17 +363,30 @@ function gameOver() {
 button {
   all: unset;
   border-radius: 5px;
+  width: 80%;
 }
 
 button:hover {
   background-color: #8d86c9;
   color: #242038;
 }
+
+#start-button {
+  text-align: center;
+  width: 50%;
+}
 .menu-item {
   background-color: #8d86c93b;
   color: white;
   padding: 0.5rem;
   border: solid #8d86c9 2px;
+  width: 100%;
+}
+
+#manual {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 
 @keyframes slideInFromTop {
