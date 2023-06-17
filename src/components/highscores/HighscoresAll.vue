@@ -28,30 +28,31 @@
           <td>{{ userScores.profilePic }}</td>
           <td>{{ userScores.username }}</td>
           <td>{{ userScores.game }}</td>
-          <td>{{ highscore.gameValue }}</td>
-          <td>{{ highscore.scoreValue }}</td>
+          <td>{{ userScores.score }}</td>
           <td>{{ userScores.dateOfScore }}</td>
         </tr>
       </tbody>
     </table>
-    <div style="color: aliceblue">
+    <!-- <div style="color: aliceblue">
       {{ highscore }}
-      <input v-model="highscoreData.gameValue" placeholder="Game" />
+      <input v-model="getHighscore.gameValue" placeholder="Game" />
       <input
-        v-model="highscoreData.scoreValue"
+        v-model="getHighscore.scoreValue"
         type="number"
         placeholder="Score"
       />
-    </div>
+    </div> -->
   </section>
 </template>
 
 <script setup>
-import { ref, computed, reactive, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { safeHighscore } from "../../stores/safeHighscore.js";
 
 onMounted(() => {
   addHighscore();
+  console.log(highscore.game);
+  console.log(highscore.game);
 });
 
 const userScores = ref([
@@ -113,9 +114,9 @@ const uniqueGames = computed(() => {
 
 const selectedGame = ref("all");
 
-const filterGames = (event) => {
-  selectedGame.value = event.target.value;
-};
+// const filterGames = (event) => {
+//   selectedGame.value = event.target.value;
+// };
 
 const filteredRowsByGame = computed(() => {
   if (selectedGame.value === "all") {
@@ -127,13 +128,8 @@ const filteredRowsByGame = computed(() => {
   }
 });
 //Highscore Values
-const highscore = computed(() => {
-  return safeHighscore.getHighscore(
-    highscoreData.gameValue,
-    highscoreData.scoreValue
-  );
-});
-const newHighscore = reactive({
+
+const newHighscore = ref({
   id: 0,
   profilePic: "",
   username: "",
@@ -141,20 +137,28 @@ const newHighscore = reactive({
   score: "",
   dateOfScore: "",
 });
+const highscore = computed(() => safeHighscore.getHighscore());
+
 const addHighscore = () => {
   const newId = userScores.value.length + 1;
-  newHighscore.id = newId;
-  userScores.value.push({ ...newHighscore });
+  const newHighscoreValue = {
+    id: newId,
+    profilePic: "newHighscore.value.profilePic",
+    username: "newHighscore.value.username",
+    game: newHighscore.value.game,
+    score: newHighscore.value.score,
+    dateOfScore: Date.toString(),
+  };
+  userScores.value.push(newHighscoreValue);
   resetNewHighscore();
 };
-
 const resetNewHighscore = () => {
-  newHighscore.id = 0;
-  newHighscore.profilePic = "";
-  newHighscore.username = "";
-  newHighscore.game = "";
-  newHighscore.score = "";
-  newHighscore.dateOfScore = "";
+  newHighscore.value.id = 0;
+  newHighscore.value.profilePic = "";
+  newHighscore.value.username = "";
+  newHighscore.value.game = "";
+  newHighscore.value.score = "";
+  newHighscore.value.dateOfScore = "";
 };
 </script>
 

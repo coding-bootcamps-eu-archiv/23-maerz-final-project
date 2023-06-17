@@ -13,6 +13,13 @@
         <div id="fails">Fails {{ fails }}/10</div>
         <div id="points">Points: {{ points }}</div>
         <div id="pointsRules">(-10 Points for every Fail)</div>
+        <button
+          id="safeScoreBtn"
+          v-if="showSafeHighscoreButton"
+          @click="safeScore"
+        >
+          Safe Highscore
+        </button>
         <section id="outputArea">
           <div id="output" :class="{ winner: isWinner }">{{ hiddenWord }}</div>
         </section>
@@ -119,11 +126,13 @@ const disableAllAt10Fails = (alphabet) => {
 // Computed Properties//
 
 const isWinner = ref(false);
+const showSafeHighscoreButton = ref(false);
 
 const winner = computed(() => {
   if (hiddenWord.value.length > 0) {
     const isWordMatched = newWord.value.join("") === hiddenWord.value;
     isWinner.value = isWordMatched;
+    showSafeHighscoreButton.value = isWordMatched;
     return isWordMatched;
   }
   return false;
@@ -132,8 +141,6 @@ const setStatus = computed(() => {
   if (fails.value === 10) {
     return "You Lose!";
   } else if (winner.value === true) {
-    safeScore();
-
     return "WINNER";
   } else {
     return initialStatus.value;
@@ -240,6 +247,18 @@ main {
   right: 2rem;
   color: var(--accent-color-three);
   font-size: 1.3rem;
+}
+#safeScoreBtn {
+  all: unset;
+  border: 0.1rem solid var(--primary-dark);
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  box-shadow: -0.25rem 0.25rem var(--accent-color-three);
 }
 #newGameBtn {
   all: unset;
