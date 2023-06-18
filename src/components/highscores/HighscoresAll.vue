@@ -42,8 +42,6 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { safeHighscore } from "../../stores/safeHighscore.js";
-import { game, score } from "../../stores/safeHighscore.js";
 
 onMounted(() => {
   addHighscore();
@@ -113,7 +111,7 @@ const selectedGame = ref("all");
 
 const filteredRowsByGame = computed(() => {
   if (selectedGame.value === "all") {
-    return filteredRows.value;
+    return userScores.value;
   } else {
     return filteredRows.value.filter(
       (userScores) => userScores.gameName === selectedGame.value
@@ -122,6 +120,8 @@ const filteredRowsByGame = computed(() => {
 });
 
 // _____________________Highscore___________________________________________________________
+import { safeHighscore } from "../../stores/safeHighscore.js";
+import { game, score } from "../../stores/safeHighscore.js";
 
 const newHighscore = ref({
   id: 0,
@@ -134,9 +134,9 @@ const newHighscore = ref({
 const highscore = computed(() =>
   safeHighscore.getHighscore(game.value, score.value)
 );
-const newHighscoreCopy = ref({});
 
 const addHighscore = () => {
+  resetNewHighscore();
   const newId = userScores.value.length + 1;
   const currentDate = new Date();
   const dateOptions = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -145,17 +145,17 @@ const addHighscore = () => {
   const timeOfScore = currentDate.toLocaleTimeString(undefined, timeOptions);
   newHighscore.value = {
     id: newId,
-    profilePic: "",
-    username: "",
+    profilePic: "cba",
+    username: "abc",
     game: game.value,
     score: score.value,
     dateOfScore: dateOfScore + " " + timeOfScore,
   };
-
-  newHighscoreCopy.value = { ...newHighscore.value };
+  console.log(newHighscore);
+  const newHighscoreCopy = { ...newHighscore.value };
   userScores.value.push(newHighscoreCopy);
-
-  resetNewHighscore();
+  console.log(newHighscoreCopy);
+  console.log(userScores);
 };
 const resetNewHighscore = () => {
   newHighscore.value.id = 0;
