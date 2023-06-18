@@ -27,6 +27,13 @@
         </div>
         <div v-else id="startCover">
           <button id="popupStartBtn" @click="startNewGame">Start Now!</button>
+          <button
+            id="safeScoreBtn"
+            v-if="showSafeHighscoreButton"
+            @click="safeScore"
+          >
+            Safe Highscore
+          </button>
         </div>
       </main>
     </section>
@@ -35,6 +42,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeMount } from "vue";
+import { safeHighscore } from "../../stores/safeHighscore.js";
 
 const memoryCards = ref([
   {
@@ -46,69 +54,69 @@ const memoryCards = ref([
       "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
     status: "hidden",
   },
-  {
-    id: "cat2",
-    img: "https://cdn.pixabay.com/photo/2018/08/13/08/59/cat-3602554_1280.jpg",
-    clicked: false,
-    shownCardSite: "back",
-    defaultImg:
-      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-    status: "hidden",
-  },
-  {
-    id: "cat3",
-    img: "https://cdn.pixabay.com/photo/2017/02/24/01/30/cat-2093639_1280.jpg",
-    clicked: false,
-    shownCardSite: "back",
-    defaultImg:
-      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-    status: "hidden",
-  },
-  {
-    id: "cat4",
-    img: "https://cdn.pixabay.com/photo/2018/05/09/21/47/cat-3386220_1280.jpg",
-    clicked: false,
-    shownCardSite: "back",
-    defaultImg:
-      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-    status: "hidden",
-  },
-  {
-    id: "cat5",
-    img: "https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg",
-    clicked: false,
-    shownCardSite: "back",
-    defaultImg:
-      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-    status: "hidden",
-  },
-  {
-    id: "cat6",
-    img: "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    clicked: false,
-    shownCardSite: "back",
-    defaultImg:
-      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-    status: "hidden",
-  },
-  {
-    id: "cat7",
-    img: "https://images.pexels.com/photos/162104/cat-british-shorthair-mieze-blue-eye-162104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    clicked: false,
-    shownCardSite: "back",
-    defaultImg:
-      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-    status: "hidden",
-  },
-  {
-    id: "cat8",
-    img: "https://images.pexels.com/photos/991831/pexels-photo-991831.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    clicked: false,
-    shownCardSite: "back",
-    defaultImg:
-      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-    status: "hidden",
-  },
+  // {
+  //   id: "cat2",
+  //   img: "https://cdn.pixabay.com/photo/2018/08/13/08/59/cat-3602554_1280.jpg",
+  //   clicked: false,
+  //   shownCardSite: "back",
+  //   defaultImg:
+  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+  //   status: "hidden",
+  // },
+  // {
+  //   id: "cat3",
+  //   img: "https://cdn.pixabay.com/photo/2017/02/24/01/30/cat-2093639_1280.jpg",
+  //   clicked: false,
+  //   shownCardSite: "back",
+  //   defaultImg:
+  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+  //   status: "hidden",
+  // },
+  // {
+  //   id: "cat4",
+  //   img: "https://cdn.pixabay.com/photo/2018/05/09/21/47/cat-3386220_1280.jpg",
+  //   clicked: false,
+  //   shownCardSite: "back",
+  //   defaultImg:
+  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+  //   status: "hidden",
+  // },
+  // {
+  //   id: "cat5",
+  //   img: "https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg",
+  //   clicked: false,
+  //   shownCardSite: "back",
+  //   defaultImg:
+  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+  //   status: "hidden",
+  // },
+  // {
+  //   id: "cat6",
+  //   img: "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //   clicked: false,
+  //   shownCardSite: "back",
+  //   defaultImg:
+  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+  //   status: "hidden",
+  // },
+  // {
+  //   id: "cat7",
+  //   img: "https://images.pexels.com/photos/162104/cat-british-shorthair-mieze-blue-eye-162104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //   clicked: false,
+  //   shownCardSite: "back",
+  //   defaultImg:
+  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+  //   status: "hidden",
+  // },
+  // {
+  //   id: "cat8",
+  //   img: "https://images.pexels.com/photos/991831/pexels-photo-991831.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //   clicked: false,
+  //   shownCardSite: "back",
+  //   defaultImg:
+  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+  //   status: "hidden",
+  // },
 ]);
 
 //Game-Setup
@@ -219,6 +227,7 @@ const comparePairs = () => {
 
 //  Game Status
 const gameStatus = ref("");
+const showSafeHighscoreButton = ref(false);
 
 const setGameStatus = () => {
   const foundAll = shuffledCards.value.filter(
@@ -226,6 +235,7 @@ const setGameStatus = () => {
   );
   if (foundAll.length === 0) {
     gameStatus.value = "WINNER";
+    showSafeHighscoreButton.value = true;
     stopStopwatch();
     return;
   }
@@ -234,6 +244,16 @@ const setGameStatus = () => {
   } else {
     gameStatus.value = "ACTIVE";
   }
+};
+
+// Safe Highscore
+
+const safeScore = () => {
+  const game = "Memory";
+  const score = stopwatch.value;
+  console.log(game);
+  console.log(score);
+  safeHighscore.getHighscore(game, score);
 };
 </script>
 
@@ -373,6 +393,30 @@ h1 {
 }
 
 #popupStartBtn:hover {
+  box-shadow: 0px 0px 50px 15px black;
+  transform: scale(1.5);
+}
+
+#safeScoreBtn {
+  position: absolute;
+  left: 60%;
+  top: 60%;
+  all: unset;
+  border: 0.1rem solid var(--primary-dark);
+  background-color: var(--accent-color-two);
+  color: var(--primary-light);
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+#safeScoreBtn:active {
+  color: var(--primary-light);
+  background-color: var(--primary-dark);
+}
+#safeScoreBtn:hover {
   box-shadow: 0px 0px 50px 15px black;
   transform: scale(1.5);
 }

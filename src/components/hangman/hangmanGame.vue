@@ -153,8 +153,6 @@ const setStatus = computed(() => {
 const safeScore = () => {
   const game = "Hangman";
   const score = points.value;
-  console.log(game);
-  console.log(score);
   safeHighscore.getHighscore(game, score);
 };
 </script>

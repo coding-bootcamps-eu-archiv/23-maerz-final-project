@@ -33,10 +33,6 @@
         </tr>
       </tbody>
     </table>
-    <div style="color: aliceblue">{{ newHighscore }}</div>
-    <div style="color: aliceblue">{{ newHighscoreCopy }}</div>
-    <div style="color: aliceblue">{{ game }}{{ score }}</div>
-    <div style="color: aliceblue">{{ highscore }}</div>
   </section>
 </template>
 
@@ -120,7 +116,6 @@ const filteredRowsByGame = computed(() => {
 });
 
 // _____________________Highscore___________________________________________________________
-import { safeHighscore } from "../../stores/safeHighscore.js";
 import { game, score } from "../../stores/safeHighscore.js";
 
 const newHighscore = ref({
@@ -131,9 +126,6 @@ const newHighscore = ref({
   score: "",
   dateOfScore: "",
 });
-const highscore = computed(() =>
-  safeHighscore.getHighscore(game.value, score.value)
-);
 
 const addHighscore = () => {
   resetNewHighscore();
