@@ -127,7 +127,7 @@ const newHighscore = ref({
   id: 0,
   profilePic: "",
   username: "",
-  game: "",
+  gameName: "",
   score: "",
   dateOfScore: "",
 });
@@ -147,7 +147,7 @@ const addHighscore = () => {
     id: newId,
     profilePic: "cba",
     username: "abc",
-    game: game.value,
+    gameName: game.value,
     score: score.value,
     dateOfScore: dateOfScore + " " + timeOfScore,
   };
