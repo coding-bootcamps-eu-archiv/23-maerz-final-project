@@ -40,7 +40,9 @@
 import { ref, computed, onMounted } from "vue";
 
 onMounted(() => {
-  addHighscore();
+  if (game.value !== "" && score.value !== "") {
+    addHighscore();
+  }
 });
 
 const userScores = ref([
