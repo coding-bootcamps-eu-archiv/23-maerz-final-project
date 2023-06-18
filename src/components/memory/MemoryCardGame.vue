@@ -1,12 +1,14 @@
 <template>
   <div id="wrapper">
     <section id="memory">
-      <header>
-        <div id="gameState">
-          <p id="gameStatus">{{ gameStatus }}</p>
-          <p id="stopwatch">{{ stopwatch }}</p>
+      <header id="header">
+        <h1 id="h1">Memory</h1>
+        <div id="gameInfoBox">
+          <div id="gameState">
+            <p id="gameStatus">{{ gameStatus }}</p>
+            <p id="stopwatch">{{ stopwatch }}</p>
+          </div>
         </div>
-        <h1>Memory</h1>
         <button id="newGame" @click="startNewGame">New Game</button>
       </header>
 
@@ -54,69 +56,69 @@ const memoryCards = ref([
       "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
     status: "hidden",
   },
-  // {
-  //   id: "cat2",
-  //   img: "https://cdn.pixabay.com/photo/2018/08/13/08/59/cat-3602554_1280.jpg",
-  //   clicked: false,
-  //   shownCardSite: "back",
-  //   defaultImg:
-  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-  //   status: "hidden",
-  // },
-  // {
-  //   id: "cat3",
-  //   img: "https://cdn.pixabay.com/photo/2017/02/24/01/30/cat-2093639_1280.jpg",
-  //   clicked: false,
-  //   shownCardSite: "back",
-  //   defaultImg:
-  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-  //   status: "hidden",
-  // },
-  // {
-  //   id: "cat4",
-  //   img: "https://cdn.pixabay.com/photo/2018/05/09/21/47/cat-3386220_1280.jpg",
-  //   clicked: false,
-  //   shownCardSite: "back",
-  //   defaultImg:
-  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-  //   status: "hidden",
-  // },
-  // {
-  //   id: "cat5",
-  //   img: "https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg",
-  //   clicked: false,
-  //   shownCardSite: "back",
-  //   defaultImg:
-  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-  //   status: "hidden",
-  // },
-  // {
-  //   id: "cat6",
-  //   img: "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  //   clicked: false,
-  //   shownCardSite: "back",
-  //   defaultImg:
-  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-  //   status: "hidden",
-  // },
-  // {
-  //   id: "cat7",
-  //   img: "https://images.pexels.com/photos/162104/cat-british-shorthair-mieze-blue-eye-162104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  //   clicked: false,
-  //   shownCardSite: "back",
-  //   defaultImg:
-  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-  //   status: "hidden",
-  // },
-  // {
-  //   id: "cat8",
-  //   img: "https://images.pexels.com/photos/991831/pexels-photo-991831.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  //   clicked: false,
-  //   shownCardSite: "back",
-  //   defaultImg:
-  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-  //   status: "hidden",
-  // },
+  {
+    id: "cat2",
+    img: "https://cdn.pixabay.com/photo/2018/08/13/08/59/cat-3602554_1280.jpg",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat3",
+    img: "https://cdn.pixabay.com/photo/2017/02/24/01/30/cat-2093639_1280.jpg",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat4",
+    img: "https://cdn.pixabay.com/photo/2018/05/09/21/47/cat-3386220_1280.jpg",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat5",
+    img: "https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat6",
+    img: "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat7",
+    img: "https://images.pexels.com/photos/162104/cat-british-shorthair-mieze-blue-eye-162104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat8",
+    img: "https://images.pexels.com/photos/991831/pexels-photo-991831.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
 ]);
 
 //Game-Setup
@@ -257,7 +259,7 @@ const safeScore = () => {
 };
 </script>
 
-<style>
+<style scoped>
 #memory {
   position: relative;
   display: flex;
@@ -271,21 +273,32 @@ const safeScore = () => {
   background-position: center;
   background-size: cover;
 }
-header {
-  width: 100%;
-  color: white;
+#header {
+  min-width: 500px;
   display: flex;
-  gap: 2rem;
-  padding: 2rem 0rem 1rem 0rem;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
+  grid-template-columns: auto 1fr auto;
+  justify-content: center;
+  align-items: center;
 }
 
-#gameState {
+#h1 {
+  grid-column: 1 / 2;
+  font-family: "bungee-shade";
+  font-weight: 900;
+  font-size: 3rem;
+  color: white;
+}
+#gameInfoBox {
+  min-width: 800px;
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
+  grid-column: 2/3;
+}
+#gameState {
   gap: 2rem;
-  align-content: center;
-  justify-content: center;
 }
 
 #gameStatus {
@@ -302,15 +315,8 @@ header {
   font-weight: 700;
 }
 
-h1 {
-  font-family: "bungee-shade";
-  position: absolute;
-  font-weight: 900;
-  font-size: 3rem;
-  color: white;
-}
-
 #newGame {
+  grid-column: 3/4;
   all: unset;
   border: 0.1rem solid var(--primary-dark);
   background-color: var(--primary-light);
