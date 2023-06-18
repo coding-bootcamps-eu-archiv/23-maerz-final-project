@@ -141,7 +141,7 @@ const addHighscore = () => {
     username: "abc",
     gameName: game.value,
     score: score.value,
-    dateOfScore: dateOfScore + " " + timeOfScore,
+    dateOfScore: dateOfScore,
   };
   console.log(newHighscore);
   const newHighscoreCopy = { ...newHighscore.value };
