@@ -134,9 +134,7 @@ const addHighscore = () => {
   const newId = userScores.value.length + 1;
   const currentDate = new Date();
   const dateOptions = { year: "numeric", month: "2-digit", day: "2-digit" };
-  const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: false };
   const dateOfScore = currentDate.toLocaleDateString(undefined, dateOptions);
-  const timeOfScore = currentDate.toLocaleTimeString(undefined, timeOptions);
   newHighscore.value = {
     id: newId,
     profilePic: "cba",
