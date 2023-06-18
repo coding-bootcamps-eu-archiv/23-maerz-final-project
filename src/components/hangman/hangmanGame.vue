@@ -47,16 +47,17 @@ const fails = ref(0);
 const points = ref(100);
 
 const searchWords = ref([
-  "Regex",
-  "Boolean",
-  "hotpink",
-  "dodgerblue",
-  "shallowcopy",
-  "createTextNode",
-  "localStorage",
-  "papayawhip",
-  "watcher",
-  "flexbox",
+  // "Regex",
+  "k",
+  // "Boolean",
+  // "hotpink",
+  // "dodgerblue",
+  // "shallowcopy",
+  // "createTextNode",
+  // "localStorage",
+  // "papayawhip",
+  // "watcher",
+  // "flexbox",
 ]);
 const newWord = ref([]);
 const toBeDisabled = ref({});
@@ -260,6 +261,16 @@ main {
   cursor: pointer;
   box-shadow: -0.25rem 0.25rem var(--accent-color-three);
 }
+#safeScoreBtn:active {
+  color: var(--accent-color-three);
+  background-color: var(--primary-dark);
+}
+
+#safeScoreBtn:hover {
+  box-shadow: 0px 0px 5px 3px var(--accent-color-three);
+  transform: scale(1.1);
+}
+
 #newGameBtn {
   all: unset;
   border: 0.1rem solid var(--primary-dark);

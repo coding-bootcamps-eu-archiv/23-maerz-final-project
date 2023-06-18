@@ -27,32 +27,26 @@
         <tr v-for="userScores in filteredRowsByGame">
           <td>{{ userScores.profilePic }}</td>
           <td>{{ userScores.username }}</td>
-          <td>{{ userScores.game }}</td>
+          <td>{{ userScores.gameName }}</td>
           <td>{{ userScores.score }}</td>
           <td>{{ userScores.dateOfScore }}</td>
         </tr>
       </tbody>
     </table>
-    <!-- <div style="color: aliceblue">
-      {{ highscore }}
-      <input v-model="getHighscore.gameValue" placeholder="Game" />
-      <input
-        v-model="getHighscore.scoreValue"
-        type="number"
-        placeholder="Score"
-      />
-    </div> -->
+    <div style="color: aliceblue">{{ newHighscore }}</div>
+    <div style="color: aliceblue">{{ newHighscoreCopy }}</div>
+    <div style="color: aliceblue">{{ game }}{{ score }}</div>
+    <div style="color: aliceblue">{{ highscore }}</div>
   </section>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { safeHighscore } from "../../stores/safeHighscore.js";
+import { game, score } from "../../stores/safeHighscore.js";
 
 onMounted(() => {
   addHighscore();
-  console.log(highscore.game);
-  console.log(highscore.game);
 });
 
 const userScores = ref([
@@ -60,7 +54,7 @@ const userScores = ref([
     id: 1,
     profilePic: "⚡",
     username: "Harry",
-    game: "Memory",
+    gameName: "Memory",
     score: "00:40.23",
     dateOfScore: "01.01.01",
   },
@@ -68,7 +62,7 @@ const userScores = ref([
     id: 2,
     profilePic: "🐭",
     username: "Mouse",
-    game: "RPS",
+    gameName: "RPS",
     score: "5 Punkte",
     dateOfScore: "02.02.02",
   },
@@ -76,7 +70,7 @@ const userScores = ref([
     id: 3,
     profilePic: "🧔🏻",
     username: "Hagrid",
-    game: "Tetris",
+    gameName: "Tetris",
     score: "100 Punkte",
     dateOfScore: "03.03.03",
   },
@@ -84,7 +78,7 @@ const userScores = ref([
     id: 4,
     profilePic: "<(°.°)>",
     username: "Baby-Yoda",
-    game: "Tetris",
+    gameName: "Tetris",
     score: "500 Punkte",
     dateOfScore: "04.04.04",
   },
@@ -95,39 +89,39 @@ const filter = ref("");
 
 const filteredRows = computed(() => {
   return userScores.value.filter((userScores) => {
-    const username = userScores.username.toLowerCase();
-    const game = userScores.game.toLowerCase();
-    const searchTerm = filter.value.toLowerCase();
+    const usernameFilter = userScores.username.toLowerCase();
+    const gameFilter = userScores.gameName.toLowerCase();
+    const searchTermFilter = filter.value.toLowerCase();
 
-    return username.includes(searchTerm) || game.includes(searchTerm);
+    return (
+      usernameFilter.includes(searchTermFilter) ||
+      gameFilter.includes(searchTermFilter)
+    );
   });
 });
 
 //Filter by Dorp-Down Games
 const uniqueGames = computed(() => {
   const gamesSet = new Set();
-  userScores.value.forEach((score) => {
-    gamesSet.add(score.game);
+  userScores.value.forEach((entry) => {
+    gamesSet.add(entry.gameName);
   });
   return Array.from(gamesSet);
 });
 
 const selectedGame = ref("all");
 
-// const filterGames = (event) => {
-//   selectedGame.value = event.target.value;
-// };
-
 const filteredRowsByGame = computed(() => {
   if (selectedGame.value === "all") {
     return filteredRows.value;
   } else {
     return filteredRows.value.filter(
-      (userScores) => userScores.game === selectedGame.value
+      (userScores) => userScores.gameName === selectedGame.value
     );
   }
 });
-//Highscore Values
+
+// _____________________Highscore___________________________________________________________
 
 const newHighscore = ref({
   id: 0,
@@ -137,19 +131,30 @@ const newHighscore = ref({
   score: "",
   dateOfScore: "",
 });
-const highscore = computed(() => safeHighscore.getHighscore());
+const highscore = computed(() =>
+  safeHighscore.getHighscore(game.value, score.value)
+);
+const newHighscoreCopy = ref({});
 
 const addHighscore = () => {
   const newId = userScores.value.length + 1;
-  const newHighscoreValue = {
+  const currentDate = new Date();
+  const dateOptions = { year: "numeric", month: "2-digit", day: "2-digit" };
+  const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: false };
+  const dateOfScore = currentDate.toLocaleDateString(undefined, dateOptions);
+  const timeOfScore = currentDate.toLocaleTimeString(undefined, timeOptions);
+  newHighscore.value = {
     id: newId,
-    profilePic: "newHighscore.value.profilePic",
-    username: "newHighscore.value.username",
-    game: newHighscore.value.game,
-    score: newHighscore.value.score,
-    dateOfScore: Date.toString(),
+    profilePic: "",
+    username: "",
+    game: game.value,
+    score: score.value,
+    dateOfScore: dateOfScore + " " + timeOfScore,
   };
-  userScores.value.push(newHighscoreValue);
+
+  newHighscoreCopy.value = { ...newHighscore.value };
+  userScores.value.push(newHighscoreCopy);
+
   resetNewHighscore();
 };
 const resetNewHighscore = () => {
