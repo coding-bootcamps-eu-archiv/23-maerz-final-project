@@ -18,10 +18,10 @@
       <nav class="menu-wrapper">
         <div class="menu-item">Score: {{ score }}</div>
         <div class="menu-item" id="manual">
-          <div>&#9651; Rotate</div>
-          <div>&#9655; Move Right</div>
-          <div>&#9665; Move Left</div>
-          <div>&#9661; Move Down</div>
+          <button :class="keyPressed">&#9651; Rotate</button>
+          <button :class="keyPressed">&#9655; Move Right</button>
+          <button :class="keyPressed">&#9665; Move Left</button>
+          <button :class="keyPressed">&#9661; Move Down</button>
         </div>
         <button @click="autoMove()" class="menu-item" id="start-button">
           Start
@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 // this creates the game grid
 const grid = ref([]);
@@ -222,6 +222,7 @@ function rotate() {
 function keyControl(input) {
   if (input.keyCode === 37) {
     moveLeft();
+    toggleHighlight();
   } else if (input.keyCode === 38) {
     rotate();
   } else if (input.keyCode === 39) {
@@ -232,6 +233,22 @@ function keyControl(input) {
 }
 
 document.addEventListener("keydown", keyControl);
+
+//highlight class for the manual area
+
+const isHighlighted = ref(false);
+
+const keyPressed = computed(() => {
+  if (isHighlighted.value) {
+    return "move-button-highlight";
+  } else {
+    return "move-button";
+  }
+});
+
+function toggleHighlight() {
+  isHighlighted.value = !isHighlighted.value;
+}
 
 // removes filled lines and adds score
 function addScore() {
@@ -360,13 +377,27 @@ function gameOver() {
   background-color: #8d86c93b;
 }
 
+.move-button {
+  all: unset;
+  color: white;
+}
+
+.move-button-highlight {
+  all: unset;
+  color: var(--accent-color-three);
+}
+
+.move-button:hover {
+  color: var(--accent-color-three);
+}
+
 button {
   all: unset;
   border-radius: 5px;
   width: 80%;
 }
 
-button:hover {
+#start-button:hover {
   background-color: #8d86c9;
   color: #242038;
 }
