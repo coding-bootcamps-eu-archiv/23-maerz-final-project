@@ -5,35 +5,52 @@
       <RouterLink class="home-link" :to="{ name: 'home' }"
         ><p class="app-name">GameBox</p></RouterLink
       >
+      <nav class="navigation">
+        <!-- a tags are later changed to router links -->
+        <RouterLink class="nav-link" :to="{ name: 'allGames' }"
+          >All Games</RouterLink
+        >
+        <RouterLink class="nav-link" :to="{ name: 'Highscores' }"
+          >Highscores</RouterLink
+        >
+      </nav>
     </div>
-    <nav class="navigation">
-      <!-- a tags are later changed to router links -->
-      <RouterLink class="nav-link" :to="{ name: 'allGames' }"
-        >All Games</RouterLink
-      >
-      <RouterLink class="nav-link" :to="{ name: 'Highscores' }"
-        >Highscores</RouterLink
-      >
-    </nav>
-    <input type="search" placeholder="Search" class="base-input-field" />
+
     <div class="action">
+      <button class="account-btn" @click="toggleProfile()">
+        <img :src="profileImg" class="profile-img" />
+      </button>
+    </div>
+    <article class="profile" v-show="showProfile">
+      <div class="profile-name-wrapper">
+        <button class="account-btn">
+          <img :src="profileImg" class="profile-img" />
+        </button>
+        <div>NAME</div>
+      </div>
       <RouterLink :to="{ name: 'accountPage' }" class="base-btn">
         User Settings
       </RouterLink>
-      <a href="#" title="Your profile">
-        <button class="account-btn"></button>
-      </a>
-    </div>
+    </article>
   </div>
 </template>
 
 <script setup>
 import { RouterLink } from "vue-router";
 import logoUrl from "/src/assets/img/icons/noun-arcade-game-5563937-1F1C2B.png";
+import { ref } from "vue";
+import profileImg from "/src/assets/img/icons/noun-profile-1052598-ece3d9.png";
+
+const showProfile = ref(false);
+
+function toggleProfile() {
+  showProfile.value = !showProfile.value;
+}
 </script>
 
 <style scoped>
 .header-wrapper {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -66,8 +83,10 @@ import logoUrl from "/src/assets/img/icons/noun-arcade-game-5563937-1F1C2B.png";
 
 .navigation {
   display: flex;
+  align-items: center;
   position: relative;
   gap: 2rem;
+  padding-left: 2rem;
 }
 
 .action {
@@ -75,6 +94,41 @@ import logoUrl from "/src/assets/img/icons/noun-arcade-game-5563937-1F1C2B.png";
   align-items: center;
   justify-content: right;
   gap: 0.5rem;
+}
+
+.profile {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  top: 110%;
+  right: 1%;
+  background-color: var(--primary-light);
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  z-index: 101;
+  animation: 0.5s ease-out 0s 1 slideInFromRight;
+}
+
+.profile-img {
+  width: 80%;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(10%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.profile-name-wrapper {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
 }
 
 .account-btn {
