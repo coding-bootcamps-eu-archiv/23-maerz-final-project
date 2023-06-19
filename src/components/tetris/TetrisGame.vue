@@ -70,7 +70,9 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import { supabase } from "../../supabase.js";
 import themeMusic from "/src/assets/audio/tetris-soundtrack.mp3";
+import { session } from "../../stores/auth.js";
 
 // handles the music loading and toggle
 
