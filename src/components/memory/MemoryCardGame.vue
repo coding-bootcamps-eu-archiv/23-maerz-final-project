@@ -28,14 +28,20 @@
           <img v-else class="card-image" :src="card.img" />
         </div>
         <div v-else id="startCover">
-          <button id="popupStartBtn" @click="startNewGame">Start Now!</button>
           <button
             id="safeScoreBtn"
             v-if="showSafeHighscoreButton"
             @click="safeScore"
           >
-            Safe Highscore
+            {{ highscoreBtnText }}
           </button>
+          <button v-else id="popupStartBtn" @click="startNewGame">
+            Start Game!
+          </button>
+
+          <RouterLink v-if="highscoreSaved" :to="{ name: 'Highscores' }">
+            <button id="safeScoreBtn">Go to Highscores!</button></RouterLink
+          >
         </div>
       </main>
     </section>
@@ -45,6 +51,7 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeMount } from "vue";
 import { safeHighscore } from "../../stores/safeHighscore.js";
+import { RouterLink } from "vue-router";
 
 const memoryCards = ref([
   {
@@ -56,69 +63,69 @@ const memoryCards = ref([
       "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
     status: "hidden",
   },
-  {
-    id: "cat2",
-    img: "https://cdn.pixabay.com/photo/2018/08/13/08/59/cat-3602554_1280.jpg",
-    clicked: false,
-    shownCardSite: "back",
-    defaultImg:
-      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-    status: "hidden",
-  },
-  {
-    id: "cat3",
-    img: "https://cdn.pixabay.com/photo/2017/02/24/01/30/cat-2093639_1280.jpg",
-    clicked: false,
-    shownCardSite: "back",
-    defaultImg:
-      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-    status: "hidden",
-  },
-  {
-    id: "cat4",
-    img: "https://cdn.pixabay.com/photo/2018/05/09/21/47/cat-3386220_1280.jpg",
-    clicked: false,
-    shownCardSite: "back",
-    defaultImg:
-      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-    status: "hidden",
-  },
-  {
-    id: "cat5",
-    img: "https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg",
-    clicked: false,
-    shownCardSite: "back",
-    defaultImg:
-      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-    status: "hidden",
-  },
-  {
-    id: "cat6",
-    img: "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    clicked: false,
-    shownCardSite: "back",
-    defaultImg:
-      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-    status: "hidden",
-  },
-  {
-    id: "cat7",
-    img: "https://images.pexels.com/photos/162104/cat-british-shorthair-mieze-blue-eye-162104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    clicked: false,
-    shownCardSite: "back",
-    defaultImg:
-      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-    status: "hidden",
-  },
-  {
-    id: "cat8",
-    img: "https://images.pexels.com/photos/991831/pexels-photo-991831.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    clicked: false,
-    shownCardSite: "back",
-    defaultImg:
-      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-    status: "hidden",
-  },
+  // {
+  //   id: "cat2",
+  //   img: "https://cdn.pixabay.com/photo/2018/08/13/08/59/cat-3602554_1280.jpg",
+  //   clicked: false,
+  //   shownCardSite: "back",
+  //   defaultImg:
+  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+  //   status: "hidden",
+  // },
+  // {
+  //   id: "cat3",
+  //   img: "https://cdn.pixabay.com/photo/2017/02/24/01/30/cat-2093639_1280.jpg",
+  //   clicked: false,
+  //   shownCardSite: "back",
+  //   defaultImg:
+  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+  //   status: "hidden",
+  // },
+  // {
+  //   id: "cat4",
+  //   img: "https://cdn.pixabay.com/photo/2018/05/09/21/47/cat-3386220_1280.jpg",
+  //   clicked: false,
+  //   shownCardSite: "back",
+  //   defaultImg:
+  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+  //   status: "hidden",
+  // },
+  // {
+  //   id: "cat5",
+  //   img: "https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg",
+  //   clicked: false,
+  //   shownCardSite: "back",
+  //   defaultImg:
+  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+  //   status: "hidden",
+  // },
+  // {
+  //   id: "cat6",
+  //   img: "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //   clicked: false,
+  //   shownCardSite: "back",
+  //   defaultImg:
+  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+  //   status: "hidden",
+  // },
+  // {
+  //   id: "cat7",
+  //   img: "https://images.pexels.com/photos/162104/cat-british-shorthair-mieze-blue-eye-162104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //   clicked: false,
+  //   shownCardSite: "back",
+  //   defaultImg:
+  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+  //   status: "hidden",
+  // },
+  // {
+  //   id: "cat8",
+  //   img: "https://images.pexels.com/photos/991831/pexels-photo-991831.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //   clicked: false,
+  //   shownCardSite: "back",
+  //   defaultImg:
+  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+  //   status: "hidden",
+  // },
 ]);
 
 //Game-Setup
@@ -175,8 +182,8 @@ const stopStopwatch = () => {
 // Start Game
 
 const startNewGame = () => {
-  //count null
   isGameStarted.value = true;
+  highscoreSaved.value = false;
 
   clickedCards.value = [];
   stopStopwatch();
@@ -249,8 +256,13 @@ const setGameStatus = () => {
 };
 
 // Safe Highscore
+const highscoreSaved = ref(false);
+const highscoreBtnText = computed(() => {
+  return highscoreSaved.value ? "Highscore saved!" : "Safe Highscore";
+});
 
 const safeScore = () => {
+  highscoreSaved.value = true;
   const game = "Memory";
   const score = stopwatch.value;
   console.log(game);
@@ -379,9 +391,10 @@ const safeScore = () => {
   align-items: center;
 }
 #popupStartBtn {
-  position: absolute;
-  left: 50%;
-  top: 50%;
+  text-decoration: none;
+  /* position: absolute;
+  left: 1rem;
+  top: 1rem; */
   all: unset;
   border: 0.1rem solid var(--primary-dark);
   background-color: var(--accent-color-two);
