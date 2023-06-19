@@ -13,6 +13,13 @@
         <div id="fails">Fails {{ fails }}/10</div>
         <div id="points">Points: {{ points }}</div>
         <div id="pointsRules">(-10 Points for every Fail)</div>
+        <button
+          id="safeScoreBtn"
+          v-if="showSafeHighscoreButton"
+          @click="safeScore"
+        >
+          Safe Highscore
+        </button>
         <section id="outputArea">
           <div id="output" :class="{ winner: isWinner }">{{ hiddenWord }}</div>
         </section>
@@ -33,22 +40,24 @@
 </template>
 <script setup>
 import { ref, computed, onMounted } from "vue";
+import { safeHighscore } from "../../stores/safeHighscore.js";
 
 //Data Attributes
 const fails = ref(0);
 const points = ref(100);
 
 const searchWords = ref([
-  "Regex",
-  "Boolean",
-  "hotpink",
-  "dodgerblue",
-  "shallowcopy",
-  "createTextNode",
-  "localStorage",
-  "papayawhip",
-  "watcher",
-  "flexbox",
+  // "Regex",
+  "k",
+  // "Boolean",
+  // "hotpink",
+  // "dodgerblue",
+  // "shallowcopy",
+  // "createTextNode",
+  // "localStorage",
+  // "papayawhip",
+  // "watcher",
+  // "flexbox",
 ]);
 const newWord = ref([]);
 const toBeDisabled = ref({});
@@ -118,11 +127,13 @@ const disableAllAt10Fails = (alphabet) => {
 // Computed Properties//
 
 const isWinner = ref(false);
+const showSafeHighscoreButton = ref(false);
 
 const winner = computed(() => {
   if (hiddenWord.value.length > 0) {
     const isWordMatched = newWord.value.join("") === hiddenWord.value;
     isWinner.value = isWordMatched;
+    showSafeHighscoreButton.value = isWordMatched;
     return isWordMatched;
   }
   return false;
@@ -136,6 +147,14 @@ const setStatus = computed(() => {
     return initialStatus.value;
   }
 });
+
+// safe highscore
+
+const safeScore = () => {
+  const game = "Hangman";
+  const score = points.value;
+  safeHighscore.getHighscore(game, score);
+};
 </script>
 <style scoped>
 /* #wrapper {
@@ -228,6 +247,28 @@ main {
   color: var(--accent-color-three);
   font-size: 1.3rem;
 }
+#safeScoreBtn {
+  all: unset;
+  border: 0.1rem solid var(--primary-dark);
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  box-shadow: -0.25rem 0.25rem var(--accent-color-three);
+}
+#safeScoreBtn:active {
+  color: var(--accent-color-three);
+  background-color: var(--primary-dark);
+}
+
+#safeScoreBtn:hover {
+  box-shadow: 0px 0px 5px 3px var(--accent-color-three);
+  transform: scale(1.1);
+}
+
 #newGameBtn {
   all: unset;
   border: 0.1rem solid var(--primary-dark);

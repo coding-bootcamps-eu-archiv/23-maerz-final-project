@@ -12,7 +12,7 @@
           <th>ProfilePic</th>
           <th>User</th>
           <th>
-            <select v-model="selectedGame" :class="no - border">
+            <select v-model="selectedGame">
               <option value="all">All Games</option>
               <option v-for="game in uniqueGames" :value="game" :key="game">
                 {{ game }}
@@ -24,10 +24,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="userScores in filteredRowsByGame" :key="game">
+        <tr v-for="userScores in filteredRowsByGame">
           <td>{{ userScores.profilePic }}</td>
           <td>{{ userScores.username }}</td>
-          <td>{{ userScores.game }}</td>
+          <td>{{ userScores.gameName }}</td>
           <td>{{ userScores.score }}</td>
           <td>{{ userScores.dateOfScore }}</td>
         </tr>
@@ -37,14 +37,20 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
+
+onMounted(() => {
+  if (game.value !== "" && score.value !== "") {
+    addHighscore();
+  }
+});
 
 const userScores = ref([
   {
     id: 1,
     profilePic: "⚡",
     username: "Harry",
-    game: "Memory",
+    gameName: "Memory",
     score: "00:40.23",
     dateOfScore: "01.01.01",
   },
@@ -52,7 +58,7 @@ const userScores = ref([
     id: 2,
     profilePic: "🐭",
     username: "Mouse",
-    game: "RPS",
+    gameName: "RPS",
     score: "5 Punkte",
     dateOfScore: "02.02.02",
   },
@@ -60,7 +66,7 @@ const userScores = ref([
     id: 3,
     profilePic: "🧔🏻",
     username: "Hagrid",
-    game: "Tetris",
+    gameName: "Tetris",
     score: "100 Punkte",
     dateOfScore: "03.03.03",
   },
@@ -68,7 +74,7 @@ const userScores = ref([
     id: 4,
     profilePic: "<(°.°)>",
     username: "Baby-Yoda",
-    game: "Tetris",
+    gameName: "Tetris",
     score: "500 Punkte",
     dateOfScore: "04.04.04",
   },
@@ -79,38 +85,78 @@ const filter = ref("");
 
 const filteredRows = computed(() => {
   return userScores.value.filter((userScores) => {
-    const username = userScores.username.toLowerCase();
-    const game = userScores.game.toLowerCase();
-    const searchTerm = filter.value.toLowerCase();
+    const usernameFilter = userScores.username.toLowerCase();
+    const gameFilter = userScores.gameName.toLowerCase();
+    const searchTermFilter = filter.value.toLowerCase();
 
-    return username.includes(searchTerm) || game.includes(searchTerm);
+    return (
+      usernameFilter.includes(searchTermFilter) ||
+      gameFilter.includes(searchTermFilter)
+    );
   });
 });
 
 //Filter by Dorp-Down Games
 const uniqueGames = computed(() => {
   const gamesSet = new Set();
-  userScores.value.forEach((score) => {
-    gamesSet.add(score.game);
+  userScores.value.forEach((entry) => {
+    gamesSet.add(entry.gameName);
   });
   return Array.from(gamesSet);
 });
 
 const selectedGame = ref("all");
 
-const filterGames = (event) => {
-  selectedGame.value = event.target.value;
-};
-
 const filteredRowsByGame = computed(() => {
   if (selectedGame.value === "all") {
-    return filteredRows.value;
+    return userScores.value;
   } else {
     return filteredRows.value.filter(
-      (userScores) => userScores.game === selectedGame.value
+      (userScores) => userScores.gameName === selectedGame.value
     );
   }
 });
+
+// _____________________Highscore___________________________________________________________
+import { game, score } from "../../stores/safeHighscore.js";
+
+const newHighscore = ref({
+  id: 0,
+  profilePic: "",
+  username: "",
+  gameName: "",
+  score: "",
+  dateOfScore: "",
+});
+
+const addHighscore = () => {
+  resetNewHighscore();
+  const newId = userScores.value.length + 1;
+  const currentDate = new Date();
+  const dateOptions = { year: "numeric", month: "2-digit", day: "2-digit" };
+  const dateOfScore = currentDate.toLocaleDateString(undefined, dateOptions);
+  newHighscore.value = {
+    id: newId,
+    profilePic: "cba",
+    username: "abc",
+    gameName: game.value,
+    score: score.value,
+    dateOfScore: dateOfScore,
+  };
+  console.log(newHighscore);
+  const newHighscoreCopy = { ...newHighscore.value };
+  userScores.value.push(newHighscoreCopy);
+  console.log(newHighscoreCopy);
+  console.log(userScores);
+};
+const resetNewHighscore = () => {
+  newHighscore.value.id = 0;
+  newHighscore.value.profilePic = "";
+  newHighscore.value.username = "";
+  newHighscore.value.game = "";
+  newHighscore.value.score = "";
+  newHighscore.value.dateOfScore = "";
+};
 </script>
 
 <style>

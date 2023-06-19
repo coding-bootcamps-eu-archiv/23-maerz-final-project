@@ -1,12 +1,14 @@
 <template>
   <div id="wrapper">
     <section id="memory">
-      <header>
-        <div id="gameState">
-          <p id="gameStatus">{{ gameStatus }}</p>
-          <p id="stopwatch">{{ stopwatch }}</p>
+      <header id="header">
+        <h1 id="h1">Memory</h1>
+        <div id="gameInfoBox">
+          <div id="gameState">
+            <p id="gameStatus">{{ gameStatus }}</p>
+            <p id="stopwatch">{{ stopwatch }}</p>
+          </div>
         </div>
-        <h1>Memory</h1>
         <button id="newGame" @click="startNewGame">New Game</button>
       </header>
 
@@ -27,6 +29,13 @@
         </div>
         <div v-else id="startCover">
           <button id="popupStartBtn" @click="startNewGame">Start Now!</button>
+          <button
+            id="safeScoreBtn"
+            v-if="showSafeHighscoreButton"
+            @click="safeScore"
+          >
+            Safe Highscore
+          </button>
         </div>
       </main>
     </section>
@@ -35,6 +44,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeMount } from "vue";
+import { safeHighscore } from "../../stores/safeHighscore.js";
 
 const memoryCards = ref([
   {
@@ -219,6 +229,7 @@ const comparePairs = () => {
 
 //  Game Status
 const gameStatus = ref("");
+const showSafeHighscoreButton = ref(false);
 
 const setGameStatus = () => {
   const foundAll = shuffledCards.value.filter(
@@ -226,6 +237,7 @@ const setGameStatus = () => {
   );
   if (foundAll.length === 0) {
     gameStatus.value = "WINNER";
+    showSafeHighscoreButton.value = true;
     stopStopwatch();
     return;
   }
@@ -235,9 +247,19 @@ const setGameStatus = () => {
     gameStatus.value = "ACTIVE";
   }
 };
+
+// Safe Highscore
+
+const safeScore = () => {
+  const game = "Memory";
+  const score = stopwatch.value;
+  console.log(game);
+  console.log(score);
+  safeHighscore.getHighscore(game, score);
+};
 </script>
 
-<style>
+<style scoped>
 #memory {
   position: relative;
   display: flex;
@@ -251,21 +273,32 @@ const setGameStatus = () => {
   background-position: center;
   background-size: cover;
 }
-header {
-  width: 100%;
-  color: white;
+#header {
+  min-width: 500px;
   display: flex;
-  gap: 2rem;
-  padding: 2rem 0rem 1rem 0rem;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
+  grid-template-columns: auto 1fr auto;
+  justify-content: center;
+  align-items: center;
 }
 
-#gameState {
+#h1 {
+  grid-column: 1 / 2;
+  font-family: "bungee-shade";
+  font-weight: 900;
+  font-size: 3rem;
+  color: white;
+}
+#gameInfoBox {
+  min-width: 800px;
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
+  grid-column: 2/3;
+}
+#gameState {
   gap: 2rem;
-  align-content: center;
-  justify-content: center;
 }
 
 #gameStatus {
@@ -282,15 +315,8 @@ header {
   font-weight: 700;
 }
 
-h1 {
-  font-family: "bungee-shade";
-  position: absolute;
-  font-weight: 900;
-  font-size: 3rem;
-  color: white;
-}
-
 #newGame {
+  grid-column: 3/4;
   all: unset;
   border: 0.1rem solid var(--primary-dark);
   background-color: var(--primary-light);
@@ -373,6 +399,30 @@ h1 {
 }
 
 #popupStartBtn:hover {
+  box-shadow: 0px 0px 50px 15px black;
+  transform: scale(1.5);
+}
+
+#safeScoreBtn {
+  position: absolute;
+  left: 60%;
+  top: 60%;
+  all: unset;
+  border: 0.1rem solid var(--primary-dark);
+  background-color: var(--accent-color-two);
+  color: var(--primary-light);
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+#safeScoreBtn:active {
+  color: var(--primary-light);
+  background-color: var(--primary-dark);
+}
+#safeScoreBtn:hover {
   box-shadow: 0px 0px 50px 15px black;
   transform: scale(1.5);
 }
