@@ -44,7 +44,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeMount } from "vue";
-import { safeHighscore } from "../../stores/safeHighscore.js";
+// import { safeHighscore } from "../../stores/safeHighscore.js";
 
 const memoryCards = ref([
   {

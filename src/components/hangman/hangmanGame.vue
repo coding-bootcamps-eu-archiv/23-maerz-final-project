@@ -44,7 +44,7 @@
 </template>
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { safeHighscore } from "../../stores/safeHighscore.js";
+import { saveHighscore } from "../../stores/saveHighscore.js";
 import { RouterLink } from "vue-router";
 
 //Data Attributes
@@ -164,7 +164,7 @@ const safeScore = () => {
   highscoreSaved.value = true;
   const game = "Hangman";
   const score = displayedPoints.value;
-  safeHighscore.getHighscore(game, score);
+  saveHighscore(game, score);
 };
 </script>
 <style scoped>
