@@ -3,13 +3,16 @@
     <section id="memory">
       <header id="header">
         <h1 id="h1">Memory</h1>
-        <div id="gameInfoBox">
-          <div id="gameState">
-            <p id="gameStatus">{{ gameStatus }}</p>
+        <div id="subHeader">
+          <div id="gameInfoBox" :class="{ winner: showSafeHighscoreButton }">
+            <p id="gameStatus">
+              {{ gameStatus }}
+            </p>
             <p id="stopwatch">{{ stopwatch }}</p>
           </div>
+
+          <button id="newGame" @click="startNewGame">New Game</button>
         </div>
-        <button id="newGame" @click="startNewGame">New Game</button>
       </header>
 
       <main id="gameContainer">
@@ -184,6 +187,7 @@ const stopStopwatch = () => {
 const startNewGame = () => {
   isGameStarted.value = true;
   highscoreSaved.value = false;
+  showSafeHighscoreButton.value = false;
 
   clickedCards.value = [];
   stopStopwatch();
@@ -236,7 +240,7 @@ const comparePairs = () => {
 
 //  Game Status
 const gameStatus = ref("");
-const showSafeHighscoreButton = ref(false);
+let showSafeHighscoreButton = ref(false);
 
 const setGameStatus = () => {
   const foundAll = shuffledCards.value.filter(
@@ -275,6 +279,7 @@ const safeScore = () => {
 #memory {
   position: relative;
   display: flex;
+  min-width: 500px;
   max-width: 1500px;
   height: 900px;
   flex-direction: column;
@@ -285,10 +290,11 @@ const safeScore = () => {
   background-position: center;
   background-size: cover;
 }
-#header {
-  min-width: 500px;
+header {
+  margin: 2rem;
+  gap: 0.5rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   grid-template-columns: auto 1fr auto;
   justify-content: center;
@@ -296,44 +302,59 @@ const safeScore = () => {
 }
 
 #h1 {
-  grid-column: 1 / 2;
   font-family: "bungee-shade";
   font-weight: 900;
   font-size: 3rem;
   color: white;
 }
-#gameInfoBox {
-  min-width: 800px;
+
+#subHeader {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  grid-column: 2/3;
+  justify-content: space-between;
+  gap: 30rem;
 }
-#gameState {
-  gap: 2rem;
+#gameInfoBox {
+  display: flex;
+  flex-direction: column;
+}
+#gameInfoBox.winner {
+  animation: zoom 1s ease-in-out 3;
+}
+@keyframes zoom {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.scale {
+  animation: scaleAnimation 1s linear;
 }
 
 #gameStatus {
-  -webkit-text-stroke: 1px var(--primary-light);
-  -webkit-text-fill-color: transparent;
-  font-size: 2rem;
+  color: var(--primary-light);
+  font-size: 2.5rem;
   font-weight: 800;
+  animation: blink 1s infinite;
 }
 
 #stopwatch {
-  -webkit-text-stroke: 1px var(--primary-light);
-  -webkit-text-fill-color: transparent;
+  color: var(--primary-light);
   font-size: 2rem;
   font-weight: 700;
 }
 
 #newGame {
-  grid-column: 3/4;
   all: unset;
   border: 0.1rem solid var(--primary-dark);
   background-color: var(--primary-light);
   color: var(--primary-dark);
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   font-weight: 700;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
@@ -355,7 +376,7 @@ const safeScore = () => {
   display: grid;
   justify-content: center;
   gap: 2rem;
-  min-width: 500px;
+  min-width: 30rem;
   min-height: 500px;
   max-width: 1000px;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
@@ -392,9 +413,6 @@ const safeScore = () => {
 }
 #popupStartBtn {
   text-decoration: none;
-  /* position: absolute;
-  left: 1rem;
-  top: 1rem; */
   all: unset;
   border: 0.1rem solid var(--primary-dark);
   background-color: var(--accent-color-two);
