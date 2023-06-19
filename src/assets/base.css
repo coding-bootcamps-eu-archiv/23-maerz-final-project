@@ -37,13 +37,21 @@ body {
 }
 
 .base-btn:hover {
-  color: var(--primary-light);
-  background-color: var(--primary-dark);
+  color: white;
+  background-color: var(--accent-color-two);
 }
 
 .base-btn:active {
   box-shadow: none;
   transform: translate(-0.25rem, 0.25rem);
+}
+
+.base-btn:disabled {
+  box-shadow: none;
+  transform: translate(-0.25rem, 0.25rem);
+  color: grey;
+  border: 0.1rem solid grey;
+  background-color: none;
 }
 
 .nav-link {
