@@ -18,10 +18,10 @@
       <nav class="menu-wrapper">
         <div class="menu-item">Score: {{ score }}</div>
         <div class="menu-item" id="manual">
-          <button :class="keyPressed">&#9651; Rotate</button>
-          <button :class="keyPressed">&#9655; Move Right</button>
-          <button :class="keyPressed">&#9665; Move Left</button>
-          <button :class="keyPressed">&#9661; Move Down</button>
+          <button :class="upArrow">&#9651; Rotate</button>
+          <button :class="upArrow">&#9655; Move Right</button>
+          <button :class="upArrow">&#9665; Move Left</button>
+          <button :class="upArrow">&#9661; Move Down</button>
         </div>
         <button @click="autoMove()" class="menu-item" id="start-button">
           Start
@@ -276,14 +276,14 @@ document.addEventListener("keydown", keyControl);
 //highlight class for the manual area
 
 const isHighlighted = ref(false);
-
-const keyPressed = computed(() => {
-  if (isHighlighted.value) {
-    return "move-button-highlight";
-  } else {
-    return "move-button";
-  }
-});
+const upArrow = ref("move-button");
+// const keyPressed = computed(() => {
+//   if (isHighlighted.value) {
+//     return "move-button-highlight";
+//   } else {
+//     return "move-button";
+//   }
+// });
 
 function toggleHighlight() {
   isHighlighted.value = !isHighlighted.value;
