@@ -1,15 +1,12 @@
 <script setup>
 import { supabase } from "../supabase";
 import { onMounted, ref, toRefs } from "vue";
-import Avatar from "./Avatar.vue";
+import { session } from "../stores/auth";
 
 const props = defineProps(["session"]);
-const { session } = toRefs(props);
 
 const loading = ref(true);
 const username = ref("");
-const website = ref("");
-const avatar_url = ref("");
 
 onMounted(() => {
   getProfile();
@@ -22,7 +19,7 @@ async function getProfile() {
 
     let { data, error, status } = await supabase
       .from("profiles")
-      .select(`username, website, avatar_url`)
+      .select(`username`)
       .eq("id", user.id)
       .single();
 
@@ -30,8 +27,6 @@ async function getProfile() {
 
     if (data) {
       username.value = data.username;
-      website.value = data.website;
-      avatar_url.value = data.avatar_url;
     }
   } catch (error) {
     alert(error.message);
@@ -48,8 +43,6 @@ async function updateProfile() {
     const updates = {
       id: user.id,
       username: username.value,
-      website: website.value,
-      avatar_url: avatar_url.value,
       updated_at: new Date(),
     };
 
@@ -62,36 +55,18 @@ async function updateProfile() {
     loading.value = false;
   }
 }
-
-async function signOut() {
-  try {
-    loading.value = true;
-    let { error } = await supabase.auth.signOut();
-    if (error) throw error;
-  } catch (error) {
-    alert(error.message);
-  } finally {
-    loading.value = false;
-  }
-}
 </script>
 
 <template>
   <form class="form-widget acc-wrapper" @submit.prevent="updateProfile">
-    <Avatar v-model:path="avatar_url" @upload="updateProfile" size="10" />
-    <div>
+    <p>
+      Hello <span class="username-style">{{ username }}</span
+      >! You are currently logged in.
+    </p>
+    <div class="log-info">
+      <p>change your name here:</p>
       <div class="input-data-fields">
-        <label for="email">Email</label>
-        <input
-          class="base-input-field"
-          id="email"
-          type="text"
-          :value="session.user.email"
-          disabled
-        />
-      </div>
-      <div class="input-data-fields">
-        <label for="username">Name</label>
+        <label for="username">username</label>
         <input
           class="base-input-field"
           id="username"
@@ -110,21 +85,14 @@ async function signOut() {
           :disabled="loading"
         />
       </div>
-
-      <div>
-        <button
-          class="button block base-btn"
-          @click="signOut"
-          :disabled="loading"
-        >
-          Sign Out
-        </button>
-      </div>
     </div>
   </form>
 </template>
 
 <style scoped>
+.username-style {
+  text-decoration: underline;
+}
 .input-data-fields {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -139,6 +107,11 @@ async function signOut() {
   padding: 2rem;
 }
 
+.log-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 .action-btns {
   display: flex;
   gap: 2rem;
