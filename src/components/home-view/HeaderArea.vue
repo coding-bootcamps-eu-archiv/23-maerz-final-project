@@ -6,7 +6,6 @@
         ><p class="app-name">GameBox</p></RouterLink
       >
       <nav class="navigation">
-        <!-- a tags are later changed to router links -->
         <RouterLink class="nav-link" :to="{ name: 'allGames' }"
           >All Games</RouterLink
         >
@@ -17,34 +16,42 @@
     </div>
 
     <div class="action">
-      <button class="account-btn" @click="toggleProfile()">
-        <img :src="profileImg" class="profile-img" />
+      <button v-if="!session" @click="login" class="base-btn">
+        Login with GitHub
       </button>
-    </div>
-    <article class="profile" v-show="showProfile">
-      <div class="profile-name-wrapper">
-        <button class="account-btn">
-          <img :src="profileImg" class="profile-img" />
+      <button v-if="session" @click="logout" class="base-btn">Logout</button>
+      <RouterLink :to="{ name: 'accountPage' }">
+        <button v-if="session" class="account-btn">
+          <img v-if="session.user" :src="avatarImg" class="profile-img" />
         </button>
-        <div>NAME</div>
-      </div>
-      <RouterLink :to="{ name: 'accountPage' }" class="base-btn">
-        User Settings
       </RouterLink>
-    </article>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { RouterLink } from "vue-router";
 import logoUrl from "/src/assets/img/icons/noun-arcade-game-5563937-1F1C2B.png";
-import { ref } from "vue";
-import profileImg from "/src/assets/img/icons/noun-profile-1052598-ece3d9.png";
+import { computed } from "vue";
+import { session } from "../../stores/auth";
+import { supabase } from "../../supabase";
 
-const showProfile = ref(false);
+const avatarImg = computed(() => {
+  if (session.value !== null) {
+    return session.value.user.user_metadata.avatar_url;
+  } else {
+    return "";
+  }
+});
 
-function toggleProfile() {
-  showProfile.value = !showProfile.value;
+async function login() {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "github",
+  });
+}
+
+async function logout() {
+  const { error } = await supabase.auth.signOut();
 }
 </script>
 
@@ -93,42 +100,7 @@ function toggleProfile() {
   display: flex;
   align-items: center;
   justify-content: right;
-  gap: 0.5rem;
-}
-
-.profile {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  top: 110%;
-  right: 1%;
-  background-color: var(--primary-light);
-  margin-top: 1rem;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  z-index: 101;
-  animation: 0.5s ease-out 0s 1 slideInFromRight;
-}
-
-.profile-img {
-  width: 80%;
-}
-
-@keyframes slideInFromRight {
-  0% {
-    transform: translateX(10%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.profile-name-wrapper {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .account-btn {
@@ -142,9 +114,11 @@ function toggleProfile() {
   cursor: pointer;
 }
 
-.bi-person-fill {
-  height: 50%;
-  width: 50%;
+.profile-img {
+  height: inherit;
+  overflow: hidden;
+  border-radius: inherit;
+  outline: 0.2rem solid var(--primary-dark);
 }
 
 .home-link {
