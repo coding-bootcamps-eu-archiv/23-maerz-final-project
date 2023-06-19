@@ -15,5 +15,8 @@ import FooterArea from "@/components/home-view/FooterArea.vue";
 <style scoped>
 .router-view {
   background-color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

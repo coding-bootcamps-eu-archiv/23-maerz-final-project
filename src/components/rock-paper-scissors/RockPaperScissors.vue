@@ -1,86 +1,91 @@
 <template>
-  <header class="header">
-    <h1>Rock Paper Scissors</h1>
-    <section class="game-state">
-      <p>games won: {{ allGamesWon }}</p>
-      <p>games lost: {{ allGamesLost }}</p>
-    </section>
-  </header>
-  <div class="game-wrapper">
-    <div v-if="!gameHasEnded">
-      <section class="score-wrapper">
-        <h2>current game:</h2>
-        <div>you won {{ userPoints }}x</div>
-        <div>your opponent won {{ opponentPoints }}x</div>
+  <div id="rps-container">
+    <header class="game-header">
+      <h1>Rock Paper Scissors</h1>
+      <section class="game-state">
+        <p>games won: {{ allGamesWon }}</p>
+        <p>games lost: {{ allGamesLost }}</p>
       </section>
+    </header>
+    <main class="game-wrapper">
+      <div v-if="!gameHasEnded">
+        <section class="score-wrapper">
+          <h2>current game:</h2>
+          <div>you won {{ userPoints }}x</div>
+          <div>your opponent won {{ opponentPoints }}x</div>
+        </section>
 
-      <div v-if="choiceIsNotSet" class="start-game">
-        <h3>choose your tool:</h3>
-        <section class="choices-wrapper">
-          <label class="choice-wrapper rock-btn">
-            <input
-              class="radio-btn"
-              type="radio"
-              name="choosing"
-              id="rock"
-              value="rock"
-              v-model="userChoice"
-            />
-            rock
-          </label>
-          <label class="choice-wrapper paper-btn">
-            <input
-              class="radio-btn"
-              type="radio"
-              name="choosing"
-              id="paper"
-              value="paper"
-              v-model="userChoice"
-            />
-            paper
-          </label>
-          <label class="choice-wrapper scissors-btn">
-            <input
-              class="radio-btn"
-              type="radio"
-              name="choosing"
-              id="scissors"
-              value="scissors"
-              v-model="userChoice"
-            />
-            scissors
-          </label>
+        <div v-if="choiceIsNotSet" class="start-game">
+          <h3>choose your tool:</h3>
+          <section class="choices-wrapper">
+            <label class="choice-wrapper rock-btn">
+              <input
+                class="radio-btn"
+                type="radio"
+                name="choosing"
+                id="rock"
+                value="rock"
+                v-model="userChoice"
+              />
+              rock
+            </label>
+            <label class="choice-wrapper paper-btn">
+              <input
+                class="radio-btn"
+                type="radio"
+                name="choosing"
+                id="paper"
+                value="paper"
+                v-model="userChoice"
+              />
+              paper
+            </label>
+            <label class="choice-wrapper scissors-btn">
+              <input
+                class="radio-btn"
+                type="radio"
+                name="choosing"
+                id="scissors"
+                value="scissors"
+                v-model="userChoice"
+              />
+              scissors
+            </label>
+          </section>
+        </div>
+
+        <section v-else class="choices-display-wrapper">
+          <div
+            class="user-choice-wrapper choice-display"
+            :class="setStylingUser"
+          >
+            {{ userChoice }}
+          </div>
+          <div>vs.</div>
+          <div
+            class="choice-display opponent-choice-wrapper"
+            :class="setStylingOpponent"
+          >
+            {{ opponentChoice }}
+          </div>
+        </section>
+        <p class="game-msg">{{ message }}</p>
+        <section class="bottom-wrap" v-if="!choiceIsNotSet">
+          <button class="btn" :disabled="!isCompared" @click="compareChoices">
+            Compare
+          </button>
+
+          <button class="btn" @click="playAgain" :disabled="isCompared">
+            New Round
+          </button>
         </section>
       </div>
 
-      <section v-else class="choices-display-wrapper">
-        <div class="user-choice-wrapper choice-display" :class="setStylingUser">
-          {{ userChoice }}
-        </div>
-        <div>vs.</div>
-        <div
-          class="choice-display opponent-choice-wrapper"
-          :class="setStylingOpponent"
-        >
-          {{ opponentChoice }}
-        </div>
-      </section>
-      <p class="game-msg">{{ message }}</p>
-      <section class="bottom-wrap" v-if="!choiceIsNotSet">
-        <button class="btn" :disabled="!isCompared" @click="compareChoices">
-          Compare
-        </button>
-
-        <button class="btn" @click="playAgain" :disabled="isCompared">
-          New Round
-        </button>
-      </section>
-    </div>
-
-    <div v-else class="end-of-game">
-      <p>{{ winningLosingMsg }}</p>
-      <button class="btn" @click="startNewGame">Start new game</button>
-    </div>
+      <div v-else class="end-of-game">
+        <p>{{ winningLosingMsg }}</p>
+        <button class="btn" @click="startNewGame">Start new game</button>
+      </div>
+    </main>
   </div>
 </template>
 
@@ -209,21 +214,18 @@ h1 {
   font-family: "sigmar-one", cursive;
   font-size: 4rem;
 }
-.header {
+.game-header {
   font-size: 1.5rem;
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-  width: max-content;
-  height: 15rem;
-  margin: 0 auto;
+  gap: 2rem;
+  margin: 2rem;
+  color: var(--primary-light);
 }
 
 .game-wrapper {
   font-size: 1.5rem;
-  margin: 0 auto;
   border: 0.25rem solid black;
   border-radius: 1rem;
   width: 100ch;
