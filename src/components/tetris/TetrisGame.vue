@@ -26,6 +26,23 @@
         <button @click="autoMove()" class="menu-item" id="start-button">
           Start
         </button>
+
+        <button
+          v-if="audioOn"
+          @click="toggleMusic()"
+          class="menu-item"
+          id="start-button"
+        >
+          Music: On
+        </button>
+        <button
+          v-else
+          @click="toggleMusic()"
+          class="menu-item"
+          id="start-button"
+        >
+          Music: Off
+        </button>
       </nav>
     </div>
   </div>
@@ -33,6 +50,34 @@
 
 <script setup>
 import { ref } from "vue";
+import themeMusic from "/src/assets/audio/tetris-soundtrack.mp3";
+
+// handles the music loading and toggle
+
+const audioOn = ref(false);
+
+function toggleMusic() {
+  audioOn.value = !audioOn.value;
+
+  if (audioOn.value) {
+    playMusic();
+  } else {
+    stopMusic();
+  }
+}
+
+const audio = new Audio(themeMusic);
+
+function playMusic() {
+  audio.muted = false;
+  audio.volume = 0.05;
+  audio.loop = true;
+  audio.play();
+}
+
+function stopMusic() {
+  audio.muted = true;
+}
 
 // this creates the game grid
 const grid = ref([]);
