@@ -9,6 +9,7 @@
           <button id="newGameBtn" @click="startingNewGame">NEW GAME</button>
         </section>
       </header>
+
       <main>
         <div id="fails">Fails {{ fails }}/10</div>
         <div id="points">Points: {{ points }}</div>
