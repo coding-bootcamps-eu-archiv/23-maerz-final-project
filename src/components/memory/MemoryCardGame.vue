@@ -66,69 +66,69 @@ const memoryCards = ref([
       "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
     status: "hidden",
   },
-  // {
-  //   id: "cat2",
-  //   img: "https://cdn.pixabay.com/photo/2018/08/13/08/59/cat-3602554_1280.jpg",
-  //   clicked: false,
-  //   shownCardSite: "back",
-  //   defaultImg:
-  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-  //   status: "hidden",
-  // },
-  // {
-  //   id: "cat3",
-  //   img: "https://cdn.pixabay.com/photo/2017/02/24/01/30/cat-2093639_1280.jpg",
-  //   clicked: false,
-  //   shownCardSite: "back",
-  //   defaultImg:
-  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-  //   status: "hidden",
-  // },
-  // {
-  //   id: "cat4",
-  //   img: "https://cdn.pixabay.com/photo/2018/05/09/21/47/cat-3386220_1280.jpg",
-  //   clicked: false,
-  //   shownCardSite: "back",
-  //   defaultImg:
-  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-  //   status: "hidden",
-  // },
-  // {
-  //   id: "cat5",
-  //   img: "https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg",
-  //   clicked: false,
-  //   shownCardSite: "back",
-  //   defaultImg:
-  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-  //   status: "hidden",
-  // },
-  // {
-  //   id: "cat6",
-  //   img: "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  //   clicked: false,
-  //   shownCardSite: "back",
-  //   defaultImg:
-  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-  //   status: "hidden",
-  // },
-  // {
-  //   id: "cat7",
-  //   img: "https://images.pexels.com/photos/162104/cat-british-shorthair-mieze-blue-eye-162104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  //   clicked: false,
-  //   shownCardSite: "back",
-  //   defaultImg:
-  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-  //   status: "hidden",
-  // },
-  // {
-  //   id: "cat8",
-  //   img: "https://images.pexels.com/photos/991831/pexels-photo-991831.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  //   clicked: false,
-  //   shownCardSite: "back",
-  //   defaultImg:
-  //     "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
-  //   status: "hidden",
-  // },
+  {
+    id: "cat2",
+    img: "https://cdn.pixabay.com/photo/2018/08/13/08/59/cat-3602554_1280.jpg",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat3",
+    img: "https://cdn.pixabay.com/photo/2017/02/24/01/30/cat-2093639_1280.jpg",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat4",
+    img: "https://cdn.pixabay.com/photo/2018/05/09/21/47/cat-3386220_1280.jpg",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat5",
+    img: "https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat6",
+    img: "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat7",
+    img: "https://images.pexels.com/photos/162104/cat-british-shorthair-mieze-blue-eye-162104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
+  {
+    id: "cat8",
+    img: "https://images.pexels.com/photos/991831/pexels-photo-991831.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    clicked: false,
+    shownCardSite: "back",
+    defaultImg:
+      "https://cdn.pixabay.com/photo/2018/05/21/19/54/wallpaper-3419273_1280.jpg",
+    status: "hidden",
+  },
 ]);
 
 //Game-Setup
@@ -291,8 +291,7 @@ const safeScore = () => {
   background-size: cover;
 }
 header {
-  margin: 2rem;
-  gap: 0.5rem;
+  margin: 2rem 2rem 1rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -338,7 +337,7 @@ header {
 
 #gameStatus {
   color: var(--primary-light);
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 800;
   animation: blink 1s infinite;
 }
@@ -354,7 +353,7 @@ header {
   border: 0.1rem solid var(--primary-dark);
   background-color: var(--primary-light);
   color: var(--primary-dark);
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
@@ -375,7 +374,7 @@ header {
   position: relative;
   display: grid;
   justify-content: center;
-  gap: 2rem;
+  gap: 1.5rem;
   min-width: 30rem;
   min-height: 500px;
   max-width: 1000px;
@@ -403,7 +402,7 @@ header {
 
 #startCover {
   position: absolute;
-  top: 7rem;
+  top: 5rem;
   left: 0;
   width: 100%;
   height: 100%;
