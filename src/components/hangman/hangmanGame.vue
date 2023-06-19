@@ -45,6 +45,7 @@ import { safeHighscore } from "../../stores/safeHighscore.js";
 //Data Attributes
 const fails = ref(0);
 const points = ref(100);
+const displayedPoints = computed(() => `${points.value} Points`); //zur Übergabe an die SafeHighscore.js
 
 const searchWords = ref([
   // "Regex",
@@ -152,16 +153,11 @@ const setStatus = computed(() => {
 
 const safeScore = () => {
   const game = "Hangman";
-  const score = points.value;
+  const score = displayedPoints.value;
   safeHighscore.getHighscore(game, score);
 };
 </script>
 <style scoped>
-/* #wrapper {
-  display: flex;
-  justify-content: center;
-} */
-
 #body {
   max-width: 1300px;
   height: 750px;
