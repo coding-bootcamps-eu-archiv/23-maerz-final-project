@@ -305,13 +305,21 @@ function keyPress(input) {
 
 function keyRelease(input) {
   if (input.keyCode === 37) {
-    leftArrow.value = "move-button";
+    setTimeout(() => {
+      leftArrow.value = "move-button";
+    }, 200);
   } else if (input.keyCode === 38) {
-    upArrow.value = "move-button";
+    setTimeout(() => {
+      upArrow.value = "move-button";
+    }, 200);
   } else if (input.keyCode === 39) {
-    rightArrow.value = "move-button";
+    setTimeout(() => {
+      rightArrow.value = "move-button";
+    }, 200);
   } else if (input.keyCode === 40) {
-    downArrow.value = "move-button";
+    setTimeout(() => {
+      downArrow.value = "move-button";
+    }, 200);
   }
 }
 
@@ -464,7 +472,7 @@ function gameOver() {
 .move-button-highlight {
   all: unset;
   color: var(--accent-color-three);
-  _transition: color 1s ease-in;
+  transition: color 0.1s ease-in;
 }
 
 .move-button:hover {
