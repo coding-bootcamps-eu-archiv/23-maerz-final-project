@@ -17,6 +17,7 @@
       </div>
       <nav class="menu-wrapper">
         <div class="menu-item">Score: {{ score }}</div>
+        <div class="menu-item">Level: {{ level }}</div>
         <div class="menu-item" id="manual">
           <button :class="upArrow" @click="rotate()">&#9651; Rotate</button>
           <button :class="rightArrow" @click="moveRight()">
@@ -51,7 +52,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 
 // this creates the game grid
 const grid = ref([]);
@@ -77,6 +78,17 @@ onMounted(() => {
 
 // keeps score
 const score = ref(0);
+
+// keeps level
+const level = computed(() => {
+  if (score.value < 500) {
+    return 1;
+  } else if (score.value < 1000) {
+    return 2;
+  } else if (score.value < 1500) {
+    return 3;
+  }
+});
 
 // tetrominos
 const width = ref(10);
@@ -158,7 +170,13 @@ let timerId;
 let nextRandom = 0;
 
 function autoMove() {
-  timerId = setInterval(moveDown, 300);
+  if (level.value === 1) {
+    timerId = setInterval(moveDown, 400);
+  } else if (level.value === 2) {
+    timerId = setInterval(moveDown, 300);
+  } else if (level.value === 3) {
+    timerId = setInterval(moveDown, 200);
+  }
 }
 
 // freezes the tetrominos if they touch a grid cell that is taken
