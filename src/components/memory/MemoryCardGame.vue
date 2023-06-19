@@ -44,7 +44,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeMount } from "vue";
-// import { safeHighscore } from "../../stores/safeHighscore.js";
+import { saveHighscore } from "../../stores/saveHighscore.js";
 
 const memoryCards = ref([
   {
@@ -255,7 +255,7 @@ const safeScore = () => {
   const score = stopwatch.value;
   console.log(game);
   console.log(score);
-  safeHighscore.getHighscore(game, score);
+  saveHighscore(game, score);
 };
 </script>
 
