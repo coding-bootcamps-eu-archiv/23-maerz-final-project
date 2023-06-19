@@ -51,17 +51,16 @@ const fails = ref(0);
 const points = ref(100);
 
 const searchWords = ref([
-  "k",
-  // "Regex",
-  // "Boolean",
-  // "hotpink",
-  // "dodgerblue",
-  // "shallowcopy",
-  // "header",
-  // "padding",
-  // "papayawhip",
-  // "watcher",
-  // "flexbox",
+  "Regex",
+  "Boolean",
+  "hotpink",
+  "dodgerblue",
+  "shallowcopy",
+  "header",
+  "padding",
+  "papayawhip",
+  "watcher",
+  "flexbox",
 ]);
 const newWord = ref([]);
 const toBeDisabled = ref({});
@@ -154,6 +153,7 @@ const setStatus = computed(() => {
 });
 
 // safe highscore
+const displayedPoints = computed(() => `${points.value} Points`);
 const highscoreSaved = ref(false);
 const highscoreBtnText = computed(() => {
   return highscoreSaved.value ? "Highscore saved!" : "Safe Highscore";
@@ -162,7 +162,7 @@ const highscoreBtnText = computed(() => {
 const safeScore = () => {
   highscoreSaved.value = true;
   const game = "Hangman";
-  const score = points.value;
+  const score = displayedPoints.value;
   safeHighscore.getHighscore(game, score);
 };
 </script>
