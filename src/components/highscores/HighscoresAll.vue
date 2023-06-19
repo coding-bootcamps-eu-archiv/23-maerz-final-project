@@ -20,16 +20,14 @@
             </select>
           </th>
           <th>Score</th>
-          <th>Date</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="userScores in filteredRowsByGame">
-          <td>{{ userScores.profilePic }}</td>
+          <td><img :src="userScores.profilePic" class="profile-pic" /></td>
           <td>{{ userScores.username }}</td>
           <td>{{ userScores.gameName }}</td>
           <td>{{ userScores.score }}</td>
-          <td>{{ userScores.dateOfScore }}</td>
         </tr>
       </tbody>
     </table>
@@ -38,47 +36,66 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
+import { supabase } from "../../supabase";
 
 onMounted(() => {
-  if (game.value !== "" && score.value !== "") {
-    addHighscore();
-  }
+  // if (game.value !== "" && score.value !== "") {
+  //   addHighscore();
+  // }
+  getHighscores();
 });
 
-const userScores = ref([
-  {
-    id: 1,
-    profilePic: "⚡",
-    username: "Harry",
-    gameName: "Memory",
-    score: "00:40.23",
-    dateOfScore: "01.01.01",
-  },
-  {
-    id: 2,
-    profilePic: "🐭",
-    username: "Mouse",
-    gameName: "RPS",
-    score: "5 Punkte",
-    dateOfScore: "02.02.02",
-  },
-  {
-    id: 3,
-    profilePic: "🧔🏻",
-    username: "Hagrid",
-    gameName: "Tetris",
-    score: "100 Punkte",
-    dateOfScore: "03.03.03",
-  },
-  {
-    id: 4,
-    profilePic: "<(°.°)>",
-    username: "Baby-Yoda",
-    gameName: "Tetris",
-    score: "500 Punkte",
-    dateOfScore: "04.04.04",
-  },
-]);
+async function getHighscores() {
+  let { data, error } = await supabase.from("highscores").select("*");
+
+  console.log(data[0]);
+  data.forEach((element) => {
+    userScores.value.push({
+      id: 1,
+      profilePic: element.profile_pic,
+      username: element.user_name,
+      gameName: element.game,
+      score: element.score,
+    });
+  });
+}
+
+const userScores = ref([]);
+
+// const userScores = ref([
+//   {
+//     id: 1,
+//     profilePic: "⚡",
+//     username: "Harry",
+//     gameName: "Memory",
+//     score: "00:40.23",
+//     dateOfScore: "01.01.01",
+//   },
+//   {
+//     id: 2,
+//     profilePic: "🐭",
+//     username: "Mouse",
+//     gameName: "RPS",
+//     score: "5 Punkte",
+//     dateOfScore: "02.02.02",
+//   },
+//   {
+//     id: 3,
+//     profilePic: "🧔🏻",
+//     username: "Hagrid",
+//     gameName: "Tetris",
+//     score: "100 Punkte",
+//     dateOfScore: "03.03.03",
+//   },
+//   {
+//     id: 4,
+//     profilePic: "<(°.°)>",
+//     username: "Baby-Yoda",
+//     gameName: "Tetris",
+//     score: "500 Punkte",
+//     dateOfScore: "04.04.04",
+//   },
+// ]);
 
 //Filter by Input-Search
 const filter = ref("");
@@ -118,7 +135,7 @@ const filteredRowsByGame = computed(() => {
 });
 
 // _____________________Highscore___________________________________________________________
-import { game, score } from "../../stores/safeHighscore.js";
+// import { game, score } from "../../stores/safeHighscore.js";
 
 const newHighscore = ref({
   id: 0,
@@ -223,5 +240,11 @@ table.table thead th {
 }
 table.table thead th:first-child {
   border-left: none;
+}
+
+.profile-pic {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
 }
 </style>
