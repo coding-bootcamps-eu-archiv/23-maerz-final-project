@@ -37,7 +37,6 @@ defineProps({
 .img-wrapper {
   height: 15rem;
   width: 15rem;
-
   z-index: 1;
   position: relative;
 }
