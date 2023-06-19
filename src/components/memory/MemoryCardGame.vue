@@ -1,48 +1,54 @@
 <template>
-  <section id="memory">
-    <header id="header">
-      <h1 id="h1">Memory</h1>
-      <div id="gameInfoBox">
-        <div id="gameState">
-          <p id="gameStatus">{{ gameStatus }}</p>
-          <p id="stopwatch">{{ stopwatch }}</p>
-        </div>
-      </div>
-      <button id="newGame" @click="startNewGame">New Game</button>
-    </header>
+  <div id="wrapper">
+    <section id="memory">
+      <header id="header">
+        <h1 id="h1">Memory</h1>
+        <div id="subHeader">
+          <div id="gameInfoBox" :class="{ winner: showSafeHighscoreButton }">
+            <p id="gameStatus">
+              {{ gameStatus }}
+            </p>
+            <p id="stopwatch">{{ stopwatch }}</p>
+          </div>
 
-    <main id="gameContainer">
-      <div
-        v-if="gameStatus === 'ACTIVE'"
-        class="memory_card"
-        v-for="card in shuffledCards"
-        :key="card.index"
-        @click="showImage(card)"
-      >
-        <img
-          v-if="card.status === 'hidden'"
-          class="card-image"
-          :src="card.defaultImg"
-        />
-        <img v-else class="card-image" :src="card.img" />
-      </div>
-      <div v-else id="startCover">
-        <button id="popupStartBtn" @click="startNewGame">Start Now!</button>
-        <button
-          id="safeScoreBtn"
-          v-if="showSafeHighscoreButton"
-          @click="safeScore"
+          <button id="newGame" @click="startNewGame">New Game</button>
+        </div>
+      </header>
+
+      <main id="gameContainer">
+        <div
+          v-if="gameStatus === 'ACTIVE'"
+          class="memory_card"
+          v-for="card in shuffledCards"
+          :key="card.index"
+          @click="showImage(card)"
         >
-          Safe Highscore
-        </button>
-      </div>
-    </main>
-  </section>
+          <img
+            v-if="card.status === 'hidden'"
+            class="card-image"
+            :src="card.defaultImg"
+          />
+          <img v-else class="card-image" :src="card.img" />
+        </div>
+        <div v-else id="startCover">
+          <button id="popupStartBtn" @click="startNewGame">Start Now!</button>
+          <button
+            id="safeScoreBtn"
+            v-if="showSafeHighscoreButton"
+            @click="safeScore"
+          >
+            Safe Highscore
+          </button>
+        </div>
+      </main>
+    </section>
+  </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onBeforeMount } from "vue";
 import { safeHighscore } from "../../stores/safeHighscore.js";
+import { RouterLink } from "vue-router";
 
 const memoryCards = ref([
   {
@@ -65,7 +71,7 @@ const memoryCards = ref([
   },
   {
     id: "cat3",
-    img: "https://cdn.pixabay.com/photo/2017/02/24/01/30/cat-2093639_1280.jpg",
+    img: "https://images.pexels.com/photos/6133176/pexels-photo-6133176.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     clicked: false,
     shownCardSite: "back",
     defaultImg:
@@ -92,7 +98,7 @@ const memoryCards = ref([
   },
   {
     id: "cat6",
-    img: "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    img: "https://images.pexels.com/photos/6441474/pexels-photo-6441474.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     clicked: false,
     shownCardSite: "back",
     defaultImg:
@@ -110,7 +116,7 @@ const memoryCards = ref([
   },
   {
     id: "cat8",
-    img: "https://images.pexels.com/photos/991831/pexels-photo-991831.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    img: "https://images.pexels.com/photos/16482823/pexels-photo-16482823/free-photo-of-tier-haustier-niedlich-grau.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     clicked: false,
     shownCardSite: "back",
     defaultImg:
@@ -173,8 +179,9 @@ const stopStopwatch = () => {
 // Start Game
 
 const startNewGame = () => {
-  //count null
   isGameStarted.value = true;
+  highscoreSaved.value = false;
+  showSafeHighscoreButton.value = false;
 
   clickedCards.value = [];
   stopStopwatch();
@@ -227,7 +234,7 @@ const comparePairs = () => {
 
 //  Game Status
 const gameStatus = ref("");
-const showSafeHighscoreButton = ref(false);
+let showSafeHighscoreButton = ref(false);
 
 const setGameStatus = () => {
   const foundAll = shuffledCards.value.filter(
@@ -247,12 +254,15 @@ const setGameStatus = () => {
 };
 
 // Safe Highscore
+const highscoreSaved = ref(false);
+const highscoreBtnText = computed(() => {
+  return highscoreSaved.value ? "Highscore saved!" : "Safe Highscore";
+});
 
 const safeScore = () => {
+  highscoreSaved.value = true;
   const game = "Memory";
   const score = stopwatch.value;
-  console.log(game);
-  console.log(score);
   safeHighscore.getHighscore(game, score);
 };
 </script>
@@ -261,6 +271,7 @@ const safeScore = () => {
 #memory {
   position: relative;
   display: flex;
+  min-width: 500px;
   max-width: 1500px;
   height: 900px;
   flex-direction: column;
@@ -273,10 +284,10 @@ const safeScore = () => {
   border: 2px solid var(--primary-light);
   border-radius: 1rem;
 }
-#header {
-  min-width: 500px;
+header {
+  margin: 2rem 2rem 1rem 2rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   grid-template-columns: auto 1fr auto;
   justify-content: center;
@@ -284,44 +295,59 @@ const safeScore = () => {
 }
 
 #h1 {
-  grid-column: 1 / 2;
   font-family: "bungee-shade";
   font-weight: 900;
   font-size: 3rem;
   color: white;
 }
-#gameInfoBox {
-  min-width: 800px;
+
+#subHeader {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  grid-column: 2/3;
+  justify-content: space-between;
+  gap: 30rem;
 }
-#gameState {
-  gap: 2rem;
+#gameInfoBox {
+  display: flex;
+  flex-direction: column;
+}
+#gameInfoBox.winner {
+  animation: zoom 1s ease-in-out 3;
+}
+@keyframes zoom {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.scale {
+  animation: scaleAnimation 1s linear;
 }
 
 #gameStatus {
-  -webkit-text-stroke: 1px var(--primary-light);
-  -webkit-text-fill-color: transparent;
+  color: var(--primary-light);
   font-size: 2rem;
   font-weight: 800;
+  animation: blink 1s infinite;
 }
 
 #stopwatch {
-  -webkit-text-stroke: 1px var(--primary-light);
-  -webkit-text-fill-color: transparent;
+  color: var(--primary-light);
   font-size: 2rem;
   font-weight: 700;
 }
 
 #newGame {
-  grid-column: 3/4;
   all: unset;
   border: 0.1rem solid var(--primary-dark);
   background-color: var(--primary-light);
   color: var(--primary-dark);
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 700;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
@@ -342,8 +368,8 @@ const safeScore = () => {
   position: relative;
   display: grid;
   justify-content: center;
-  gap: 2rem;
-  min-width: 500px;
+  gap: 1.5rem;
+  min-width: 30rem;
   min-height: 500px;
   max-width: 1000px;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
@@ -370,7 +396,7 @@ const safeScore = () => {
 
 #startCover {
   position: absolute;
-  top: 7rem;
+  top: 5rem;
   left: 0;
   width: 100%;
   height: 100%;
@@ -379,9 +405,7 @@ const safeScore = () => {
   align-items: center;
 }
 #popupStartBtn {
-  position: absolute;
-  left: 50%;
-  top: 50%;
+  text-decoration: none;
   all: unset;
   border: 0.1rem solid var(--primary-dark);
   background-color: var(--accent-color-two);
