@@ -18,8 +18,11 @@
           v-if="showSafeHighscoreButton"
           @click="safeScore"
         >
-          Safe Highscore
+          {{ highscoreBtnText }}
         </button>
+        <RouterLink v-if="highscoreSaved" :to="{ name: 'Highscores' }">
+          <button id="safeScoreBtn">Go to Highscores!</button></RouterLink
+        >
         <section id="outputArea">
           <div id="output" :class="{ winner: isWinner }">{{ hiddenWord }}</div>
         </section>
@@ -41,21 +44,21 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { safeHighscore } from "../../stores/safeHighscore.js";
+import { RouterLink } from "vue-router";
 
 //Data Attributes
 const fails = ref(0);
 const points = ref(100);
-const displayedPoints = computed(() => `${points.value} Points`); //zur Übergabe an die SafeHighscore.js
 
 const searchWords = ref([
-  // "Regex",
   "k",
+  // "Regex",
   // "Boolean",
   // "hotpink",
   // "dodgerblue",
   // "shallowcopy",
-  // "createTextNode",
-  // "localStorage",
+  // "header",
+  // "padding",
   // "papayawhip",
   // "watcher",
   // "flexbox",
@@ -76,6 +79,7 @@ const setInitialStatusActive = () => {
 };
 
 const startingNewGame = () => {
+  highscoreSaved.value = false;
   fails.value = 0;
   points.value = 100;
   toBeDisabled.value = {};
@@ -150,10 +154,15 @@ const setStatus = computed(() => {
 });
 
 // safe highscore
+const highscoreSaved = ref(false);
+const highscoreBtnText = computed(() => {
+  return highscoreSaved.value ? "Highscore saved!" : "Safe Highscore";
+});
 
 const safeScore = () => {
+  highscoreSaved.value = true;
   const game = "Hangman";
-  const score = displayedPoints.value;
+  const score = points.value;
   safeHighscore.getHighscore(game, score);
 };
 </script>
@@ -245,11 +254,14 @@ main {
 }
 #safeScoreBtn {
   all: unset;
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
   border: 0.1rem solid var(--primary-dark);
   background-color: var(--primary-light);
   color: var(--primary-dark);
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 1.5rem;
+  font-weight: 500;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
   cursor: pointer;
