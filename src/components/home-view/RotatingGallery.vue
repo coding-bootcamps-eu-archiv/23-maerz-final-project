@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { RouterLink } from "vue-router";
 import gameBoy from "/src/assets/img/icons/noun-gameboy-2486655.png";
 import tetrisImg from "/src/assets/img/preview/tetris-preview.png";
@@ -50,6 +50,10 @@ const games = ref([
 ]);
 
 const index = ref(0);
+
+onMounted(() => {
+  index.value = Math.floor(Math.random() * games.value.length);
+});
 
 const name = computed(() => {
   return games.value[index.value].name;
@@ -93,6 +97,17 @@ function randomPic() {
   height: 210px;
   width: 250px;
   border-bottom-right-radius: 20%;
+  animation: 1s ease-out 0s 1 slideInFromTop;
+  opacity: 0.9;
+}
+
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-10%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .gallery-wrapper {
