@@ -77,7 +77,7 @@ const memoryCards = ref([
   },
   {
     id: "cat3",
-    img: "https://cdn.pixabay.com/photo/2017/02/24/01/30/cat-2093639_1280.jpg",
+    img: "https://images.pexels.com/photos/6133176/pexels-photo-6133176.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     clicked: false,
     shownCardSite: "back",
     defaultImg:
@@ -104,7 +104,7 @@ const memoryCards = ref([
   },
   {
     id: "cat6",
-    img: "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    img: "https://images.pexels.com/photos/6441474/pexels-photo-6441474.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     clicked: false,
     shownCardSite: "back",
     defaultImg:
@@ -122,7 +122,7 @@ const memoryCards = ref([
   },
   {
     id: "cat8",
-    img: "https://images.pexels.com/photos/991831/pexels-photo-991831.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    img: "https://images.pexels.com/photos/16482823/pexels-photo-16482823/free-photo-of-tier-haustier-niedlich-grau.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     clicked: false,
     shownCardSite: "back",
     defaultImg:
