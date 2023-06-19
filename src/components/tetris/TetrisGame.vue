@@ -17,14 +17,34 @@
       </div>
       <nav class="menu-wrapper">
         <div class="menu-item">Score: {{ score }}</div>
+        <div class="menu-item">Level: {{ level }}</div>
         <div class="menu-item" id="manual">
-          <div>&#9651; Rotate</div>
-          <div>&#9655; Move Right</div>
-          <div>&#9665; Move Left</div>
-          <div>&#9661; Move Down</div>
+          <button :class="upArrow" @click="rotate()">&#9651; Rotate</button>
+          <button :class="rightArrow" @click="moveRight()">
+            &#9655; Move Right
+          </button>
+          <button :class="leftArrow" @click="moveLeft()">
+            &#9665; Move Left
+          </button>
+          <button :class="downArrow" @click="moveDown()">
+            &#9661; Move Down
+          </button>
         </div>
-        <button @click="autoMove()" class="menu-item" id="start-button">
+        <button
+          v-if="gameActive"
+          @click="autoMove()"
+          class="menu-item"
+          id="start-button"
+        >
           Start
+        </button>
+        <button
+          v-else
+          @click="autoMove(), startGame()"
+          class="menu-item"
+          id="start-button"
+        >
+          Restart
         </button>
 
         <button
@@ -49,7 +69,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
 import themeMusic from "/src/assets/audio/tetris-soundtrack.mp3";
 
 // handles the music loading and toggle
@@ -82,19 +102,38 @@ function stopMusic() {
 // this creates the game grid
 const grid = ref([]);
 
-function createGrid() {
-  for (let i = 0; i < 200; i++) {
-    grid.value.push({ id: i, class: "grid-cell", isTaken: false });
+function startGame() {
+  grid.value = [];
+  gameActive.value = true;
+  function createGrid() {
+    for (let i = 0; i < 200; i++) {
+      grid.value.push({ id: i, class: "grid-cell", isTaken: false });
+    }
+    for (let i = 0; i < 10; i++) {
+      grid.value.push({ id: i + 199, class: "end", isTaken: true });
+    }
   }
-  for (let i = 0; i < 10; i++) {
-    grid.value.push({ id: i + 199, class: "end", isTaken: true });
-  }
+
+  createGrid();
 }
 
-createGrid();
+onMounted(() => {
+  startGame();
+});
 
 // keeps score
 const score = ref(0);
+
+// keeps level
+const level = computed(() => {
+  if (score.value < 500) {
+    return 1;
+  } else if (score.value < 1000) {
+    return 2;
+  } else if (score.value < 1500) {
+    return 3;
+  }
+});
 
 // tetrominos
 const width = ref(10);
@@ -176,7 +215,13 @@ let timerId;
 let nextRandom = 0;
 
 function autoMove() {
-  timerId = setInterval(moveDown, 200);
+  if (level.value === 1) {
+    timerId = setInterval(moveDown, 400);
+  } else if (level.value === 2) {
+    timerId = setInterval(moveDown, 300);
+  } else if (level.value === 3) {
+    timerId = setInterval(moveDown, 200);
+  }
 }
 
 // freezes the tetrominos if they touch a grid cell that is taken
@@ -199,7 +244,9 @@ function freeze() {
     clearInterval(timerId);
     addScore();
     gameOver();
-    autoMove();
+    if (gameActive.value) {
+      autoMove();
+    }
   }
 }
 
@@ -303,19 +350,55 @@ function rotate() {
 }
 
 // event listener for key controls
-function keyControl(input) {
+function keyPress(input) {
   if (input.keyCode === 37) {
+    leftArrow.value = "move-button-highlight";
     moveLeft();
   } else if (input.keyCode === 38) {
+    upArrow.value = "move-button-highlight";
     rotate();
   } else if (input.keyCode === 39) {
+    rightArrow.value = "move-button-highlight";
     moveRight();
   } else if (input.keyCode === 40) {
+    downArrow.value = "move-button-highlight";
     moveDown();
   }
 }
 
-document.addEventListener("keydown", keyControl);
+function keyRelease(input) {
+  if (input.keyCode === 37) {
+    setTimeout(() => {
+      leftArrow.value = "move-button";
+    }, 200);
+  } else if (input.keyCode === 38) {
+    setTimeout(() => {
+      upArrow.value = "move-button";
+    }, 200);
+  } else if (input.keyCode === 39) {
+    setTimeout(() => {
+      rightArrow.value = "move-button";
+    }, 200);
+  } else if (input.keyCode === 40) {
+    setTimeout(() => {
+      downArrow.value = "move-button";
+    }, 200);
+  }
+}
+
+document.addEventListener("keydown", keyPress);
+document.addEventListener("keyup", keyRelease);
+
+//highlight class for the manual area
+
+const upArrow = ref("move-button");
+const leftArrow = ref("move-button");
+const rightArrow = ref("move-button");
+const downArrow = ref("move-button");
+
+function toggleHighlight() {
+  isHighlighted.value = !isHighlighted.value;
+}
 
 // removes filled lines and adds score
 function addScore() {
@@ -444,13 +527,28 @@ function gameOver() {
   background-color: #8d86c93b;
 }
 
+.move-button {
+  all: unset;
+  color: white;
+}
+
+.move-button-highlight {
+  all: unset;
+  color: var(--accent-color-three);
+  transition: color 0.1s ease-in;
+}
+
+.move-button:hover {
+  color: var(--accent-color-three);
+}
+
 button {
   all: unset;
   border-radius: 5px;
   width: 80%;
 }
 
-button:hover {
+#start-button:hover {
   background-color: #8d86c9;
   color: #242038;
 }
