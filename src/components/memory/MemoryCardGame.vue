@@ -1,45 +1,43 @@
 <template>
-  <div id="wrapper">
-    <section id="memory">
-      <header id="header">
-        <h1 id="h1">Memory</h1>
-        <div id="gameInfoBox">
-          <div id="gameState">
-            <p id="gameStatus">{{ gameStatus }}</p>
-            <p id="stopwatch">{{ stopwatch }}</p>
-          </div>
+  <section id="memory">
+    <header id="header">
+      <h1 id="h1">Memory</h1>
+      <div id="gameInfoBox">
+        <div id="gameState">
+          <p id="gameStatus">{{ gameStatus }}</p>
+          <p id="stopwatch">{{ stopwatch }}</p>
         </div>
-        <button id="newGame" @click="startNewGame">New Game</button>
-      </header>
+      </div>
+      <button id="newGame" @click="startNewGame">New Game</button>
+    </header>
 
-      <main id="gameContainer">
-        <div
-          v-if="gameStatus === 'ACTIVE'"
-          class="memory_card"
-          v-for="card in shuffledCards"
-          :key="card.index"
-          @click="showImage(card)"
+    <main id="gameContainer">
+      <div
+        v-if="gameStatus === 'ACTIVE'"
+        class="memory_card"
+        v-for="card in shuffledCards"
+        :key="card.index"
+        @click="showImage(card)"
+      >
+        <img
+          v-if="card.status === 'hidden'"
+          class="card-image"
+          :src="card.defaultImg"
+        />
+        <img v-else class="card-image" :src="card.img" />
+      </div>
+      <div v-else id="startCover">
+        <button id="popupStartBtn" @click="startNewGame">Start Now!</button>
+        <button
+          id="safeScoreBtn"
+          v-if="showSafeHighscoreButton"
+          @click="safeScore"
         >
-          <img
-            v-if="card.status === 'hidden'"
-            class="card-image"
-            :src="card.defaultImg"
-          />
-          <img v-else class="card-image" :src="card.img" />
-        </div>
-        <div v-else id="startCover">
-          <button id="popupStartBtn" @click="startNewGame">Start Now!</button>
-          <button
-            id="safeScoreBtn"
-            v-if="showSafeHighscoreButton"
-            @click="safeScore"
-          >
-            Safe Highscore
-          </button>
-        </div>
-      </main>
-    </section>
-  </div>
+          Safe Highscore
+        </button>
+      </div>
+    </main>
+  </section>
 </template>
 
 <script setup>
@@ -272,6 +270,8 @@ const safeScore = () => {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  border: 2px solid var(--primary-light);
+  border-radius: 1rem;
 }
 #header {
   min-width: 500px;
