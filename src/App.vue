@@ -8,23 +8,21 @@ import FooterArea from "@/components/home-view/FooterArea.vue";
 import { session } from "./stores/auth.js";
 
 onMounted(() => {
-  supabase.auth.onAuthStateChange(async (_, _session) => {
-    session.value = _session;
+  supabase.auth.onAuthStateChange((authEvent, authSession) => {
+    session.value = authSession;
 
     if (session.value !== null) {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      const githubUsername = user.user_metadata.user_name;
-      const avatarUrl = user.user_metadata.avatar_url;
+      const githubUsername = session.value.user.user_metadata.user_name;
+      const avatarUrl = session.value.user.user_metadata.avatar_url;
+      const user = session.value.user;
 
-      const { error } = await supabase
-        .from("profiles")
-        .update({
-          github_username: githubUsername,
-          avatar_url: avatarUrl,
-        })
-        .eq("id", user.id);
+      const updates = {
+        id: user.id,
+        github_username: githubUsername,
+        avatar_url: avatarUrl,
+      };
+
+      supabase.from("profiles").upsert(updates);
     }
   });
 });
