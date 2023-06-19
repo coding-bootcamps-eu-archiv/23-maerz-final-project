@@ -206,15 +206,54 @@ function moveRight() {
   drawTetromino();
 }
 
+// left and right checks for the rotation
+function isAtRight() {
+  return currentTetromino.value.some(
+    (index) => (currentPosition.value + index + 1) % width.value === 0
+  );
+}
+
+function isAtLeft() {
+  return currentTetromino.value.some(
+    (index) => (currentPosition.value + index) % width.value === 0
+  );
+}
+
+// checks the rotated position
+
+function checkRotation(position) {
+  position = position || currentPosition.value;
+  if ((position + 1) % width < 4) {
+    if (isAtRight()) {
+      currentPosition.value += 1;
+      checkRotation(position);
+    }
+  } else if (position % width > 5) {
+    if (isAtLeft()) {
+      currentPosition.value -= 1;
+      checkRotation(position);
+    }
+  }
+}
+
 // rotate tetromino
 function rotate() {
   undrawTetromino();
-  currentRotation.value++;
+  // checks if the position is taken by another tetromino
+  const isTaken = currentTetromino.value.some(
+    (index) => grid.value[currentPosition.value + 1 + index].isTaken === true
+  );
+
+  if (!isTaken) {
+    currentRotation.value++;
+  }
+
   // reset rotation to position one
   if (currentRotation.value === 4) {
     currentRotation.value = 0;
   }
   currentTetromino.value = theTetrominos.value[random][currentRotation.value];
+  checkRotation();
   drawTetromino();
 }
 
