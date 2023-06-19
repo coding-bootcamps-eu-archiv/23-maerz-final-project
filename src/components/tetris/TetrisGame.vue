@@ -460,7 +460,7 @@ function gameOver() {
     )
   ) {
     gameActive.value = false;
-    saveHighscore("Tetris", score.value);
+    saveHighscore("tetris", score.value);
   }
 }
 </script>

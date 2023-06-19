@@ -1,33 +1,50 @@
 <template>
   <section id="table-section">
-    <input
+    <!-- <input
       id="filter-input"
       type="text"
       placeholder="Filter by game or username ..."
       v-model="filter"
-    />
+    /> -->
     <table class="table">
       <thead>
         <tr>
-          <th>ProfilePic</th>
+          <th>Picture</th>
           <th>User</th>
           <th>
-            <select v-model="selectedGame">
+            <!-- <select v-model="selectedGame">
               <option value="all">All Games</option>
               <option v-for="game in uniqueGames" :value="game" :key="game">
                 {{ game }}
               </option>
-            </select>
+            </select> -->
+            Tetris
           </th>
-          <th>Score</th>
+          <th>Hangman</th>
+          <th>R-P-S</th>
+          <th>Memory</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="userScores in filteredRowsByGame">
-          <td><img :src="userScores.profilePic" class="profile-pic" /></td>
-          <td>{{ userScores.username }}</td>
-          <td>{{ userScores.gameName }}</td>
-          <td>{{ userScores.score }}</td>
+        <tr v-for="user in userScores">
+          <td>
+            <img :src="user.profilePic" class="profile-pic" />
+          </td>
+          <td>
+            {{ user.username }}
+          </td>
+          <td>
+            {{ user.tetris }}
+          </td>
+          <td>
+            {{ user.hangman }}
+          </td>
+          <td>
+            {{ user.rps }}
+          </td>
+          <td>
+            {{ user.memory }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -45,17 +62,19 @@ onMounted(() => {
   getHighscores();
 });
 
+// gets the highscores from the supabase database
+
 async function getHighscores() {
   let { data, error } = await supabase.from("highscores").select("*");
-
-  console.log(data[0]);
   data.forEach((element) => {
     userScores.value.push({
       id: 1,
       profilePic: element.profile_pic,
       username: element.user_name,
-      gameName: element.game,
-      score: element.score,
+      tetris: element.tetris,
+      hangman: element.hangman,
+      rps: element.rps,
+      memory: element.memory,
     });
   });
 }
@@ -225,7 +244,8 @@ table.table th {
   padding: 5px 4px;
 }
 table.table tbody td {
-  font-size: 0.9rem;
+  font-size: 1.5rem;
+  text-align: start;
 }
 table.table thead {
   background: #ffffff;
@@ -246,5 +266,11 @@ table.table thead th:first-child {
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
+}
+
+.td-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

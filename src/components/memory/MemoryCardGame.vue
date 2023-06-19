@@ -251,7 +251,7 @@ const setGameStatus = () => {
 // Safe Highscore
 
 const safeScore = () => {
-  const game = "Memory";
+  const game = "memory";
   const score = stopwatch.value;
   console.log(game);
   console.log(score);

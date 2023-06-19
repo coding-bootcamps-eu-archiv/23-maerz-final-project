@@ -162,7 +162,7 @@ const highscoreBtnText = computed(() => {
 
 const safeScore = () => {
   highscoreSaved.value = true;
-  const game = "Hangman";
+  const game = "hangman";
   const score = displayedPoints.value;
   saveHighscore(game, score);
 };

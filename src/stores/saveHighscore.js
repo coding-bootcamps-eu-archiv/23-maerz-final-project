@@ -8,8 +8,7 @@ import { supabase } from "../supabase.js";
 export async function saveHighscore(game, score) {
   const updates = {
     id: session.value.user.id,
-    game: game,
-    score: score,
+    [game]: score,
     user_name: session.value.user.user_metadata.user_name,
     profile_pic: session.value.user.user_metadata.avatar_url,
   };
