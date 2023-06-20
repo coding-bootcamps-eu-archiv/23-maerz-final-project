@@ -16,6 +16,10 @@
       <h1>MEMORY</h1>
       <img :src="memoryImg" class="icon" />
     </div>
+    <div class="preview">
+      <h1>W-A-M</h1>
+      <img :src="wamImg" class="icon" />
+    </div>
   </div>
 </template>
 
@@ -24,6 +28,7 @@ import tetrisImg from "/src/assets/img/icons/noun-tetris-4402336-1f1c2b.png";
 import hangmanImg from "/src/assets/img/icons/noun-hangman-3978390-1F1C2B.png";
 import rpsImg from "/src/assets/img/icons/noun-rps-3971461-1F1C2B.png";
 import memoryImg from "/src/assets/img/icons/noun-memory-game-4545700-1F1C2B.png";
+import wamImg from "/src/assets/img/icons/mole.png";
 </script>
 
 <style scoped>
