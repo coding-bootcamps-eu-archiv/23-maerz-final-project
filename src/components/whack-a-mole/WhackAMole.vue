@@ -23,6 +23,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import { saveHighscore } from "../../stores/saveHighscore.js";
 
 const score = ref(0);
 const column = ref(0);
@@ -47,6 +48,7 @@ function newGame() {
       showAfterGameStats.value = true;
       clearInterval(interval);
       clearTimeout(timeoutId.value);
+      saveHighscore("Whack-a-Mole", score.value);
     }
   }, 1000);
 }
