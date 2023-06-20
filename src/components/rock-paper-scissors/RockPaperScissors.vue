@@ -83,14 +83,23 @@
 
       <div v-else class="end-of-game">
         <p>{{ winningLosingMsg }}</p>
-        <button class="btn" @click="startNewGame">Start new game</button>
+        <button class="btn" @click="startNewGame" v-if="gameIsActive">
+          Start new game
+        </button>
+        <div v-else class="end-of-game">
+          <p>Game Over!</p>
+          <button class="btn" @click="endGame">
+            Add {{ allGamesWon }} to Highscore list
+          </button>
+        </div>
       </div>
     </main>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
+import { saveHighscore } from "../../stores/saveHighscore";
 
 // user choice of r, p or s
 const userChoice = ref("");
@@ -99,10 +108,6 @@ const userChoice = ref("");
 const message = ref("");
 const userPoints = ref(0);
 const opponentPoints = ref(0);
-
-// all games overall game state
-const allGamesWon = ref(0);
-const allGamesLost = ref(0);
 
 // displaying only 3 possible choices
 const choiceIsNotSet = computed(() => {
@@ -176,12 +181,32 @@ const playAgain = () => {
   setStylingOpponent.value = "";
 };
 
+const startNewGame = () => {
+  if (gameIsActive.value === false) {
+    allGamesLost.value = 0;
+    allGamesWon.value = 0;
+  }
+  userChoice.value = "";
+  opponentChoice.value = "";
+  message.value = "";
+  userPoints.value = 0;
+  opponentPoints.value = 0;
+  setStylingUser.value = "";
+  setStylingOpponent.value = "";
+};
+
 // end game
 const gameHasEnded = computed(() => {
-  if (userPoints.value === 2 || opponentPoints.value === 2) {
-    return true;
-  } else {
-    return false;
+  return userPoints.value === 2 || opponentPoints.value === 2;
+});
+
+watch(gameHasEnded, (hasEnded) => {
+  if (hasEnded) {
+    if (userPoints.value > opponentPoints.value) {
+      allGamesWon.value++;
+    } else {
+      allGamesLost.value++;
+    }
   }
 });
 
@@ -193,19 +218,23 @@ const winningLosingMsg = computed(() => {
   }
 });
 
-const startNewGame = () => {
-  if (userPoints.value > opponentPoints.value) {
-    allGamesWon.value++;
+// all games overall game state
+const allGamesWon = ref(0);
+const allGamesLost = ref(0);
+
+const gameIsActive = computed(() => {
+  if (allGamesLost.value === 3) {
+    return false;
   } else {
-    allGamesLost.value++;
+    return true;
   }
-  userChoice.value = "";
-  opponentChoice.value = "";
-  message.value = "";
-  userPoints.value = 0;
-  opponentPoints.value = 0;
-  setStylingUser.value = "";
-  setStylingOpponent.value = "";
+});
+
+const endGame = () => {
+  if (gameIsActive.value === false) {
+    saveHighscore("rps", allGamesWon.value);
+    startNewGame();
+  }
 };
 </script>
 
@@ -355,6 +384,8 @@ h1 {
 .btn:hover {
   box-shadow: -0.25rem 0.25rem black;
   transform: translate(0.25rem, -0.25rem);
+  background-color: white;
+  color: black;
 }
 
 .btn:disabled {
