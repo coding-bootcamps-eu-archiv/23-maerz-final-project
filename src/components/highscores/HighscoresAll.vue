@@ -1,35 +1,50 @@
 <template>
   <section id="table-section">
-    <input
+    <!-- <input
       id="filter-input"
       type="text"
       placeholder="Filter by game or username ..."
       v-model="filter"
-    />
+    /> -->
     <table class="table">
       <thead>
         <tr>
-          <th>ProfilePic</th>
+          <th>Picture</th>
           <th>User</th>
           <th>
-            <select v-model="selectedGame">
+            <!-- <select v-model="selectedGame">
               <option value="all">All Games</option>
               <option v-for="game in uniqueGames" :value="game" :key="game">
                 {{ game }}
               </option>
-            </select>
+            </select> -->
+            Tetris
           </th>
-          <th>Score</th>
-          <th>Date</th>
+          <th>Hangman</th>
+          <th>R-P-S</th>
+          <th>Memory</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="userScores in filteredRowsByGame">
-          <td>{{ userScores.profilePic }}</td>
-          <td>{{ userScores.username }}</td>
-          <td>{{ userScores.gameName }}</td>
-          <td>{{ userScores.score }}</td>
-          <td>{{ userScores.dateOfScore }}</td>
+        <tr v-for="user in userScores">
+          <td>
+            <img :src="user.profilePic" class="profile-pic" />
+          </td>
+          <td>
+            {{ user.username }}
+          </td>
+          <td>
+            {{ user.tetris }}
+          </td>
+          <td>
+            {{ user.hangman }}
+          </td>
+          <td>
+            {{ user.rps }}
+          </td>
+          <td>
+            {{ user.memory }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -38,47 +53,68 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
+import { supabase } from "../../supabase";
 
 onMounted(() => {
-  if (game.value !== "" && score.value !== "") {
-    addHighscore();
-  }
+  // if (game.value !== "" && score.value !== "") {
+  //   addHighscore();
+  // }
+  getHighscores();
 });
 
-const userScores = ref([
-  {
-    id: 1,
-    profilePic: "⚡",
-    username: "Harry",
-    gameName: "Memory",
-    score: "00:40.23",
-    dateOfScore: "01.01.01",
-  },
-  {
-    id: 2,
-    profilePic: "🐭",
-    username: "Mouse",
-    gameName: "RPS",
-    score: "5 Punkte",
-    dateOfScore: "02.02.02",
-  },
-  {
-    id: 3,
-    profilePic: "🧔🏻",
-    username: "Hagrid",
-    gameName: "Tetris",
-    score: "100 Punkte",
-    dateOfScore: "03.03.03",
-  },
-  {
-    id: 4,
-    profilePic: "<(°.°)>",
-    username: "Baby-Yoda",
-    gameName: "Tetris",
-    score: "500 Punkte",
-    dateOfScore: "04.04.04",
-  },
-]);
+// gets the highscores from the supabase database
+
+async function getHighscores() {
+  let { data, error } = await supabase.from("highscores").select("*");
+  data.forEach((element) => {
+    userScores.value.push({
+      id: 1,
+      profilePic: element.profile_pic,
+      username: element.user_name,
+      tetris: element.tetris,
+      hangman: element.hangman,
+      rps: element.rps,
+      memory: element.memory,
+    });
+  });
+}
+
+const userScores = ref([]);
+
+// const userScores = ref([
+//   {
+//     id: 1,
+//     profilePic: "⚡",
+//     username: "Harry",
+//     gameName: "Memory",
+//     score: "00:40.23",
+//     dateOfScore: "01.01.01",
+//   },
+//   {
+//     id: 2,
+//     profilePic: "🐭",
+//     username: "Mouse",
+//     gameName: "RPS",
+//     score: "5 Punkte",
+//     dateOfScore: "02.02.02",
+//   },
+//   {
+//     id: 3,
+//     profilePic: "🧔🏻",
+//     username: "Hagrid",
+//     gameName: "Tetris",
+//     score: "100 Punkte",
+//     dateOfScore: "03.03.03",
+//   },
+//   {
+//     id: 4,
+//     profilePic: "<(°.°)>",
+//     username: "Baby-Yoda",
+//     gameName: "Tetris",
+//     score: "500 Punkte",
+//     dateOfScore: "04.04.04",
+//   },
+// ]);
 
 //Filter by Input-Search
 const filter = ref("");
@@ -118,7 +154,7 @@ const filteredRowsByGame = computed(() => {
 });
 
 // _____________________Highscore___________________________________________________________
-import { game, score } from "../../stores/safeHighscore.js";
+// import { game, score } from "../../stores/safeHighscore.js";
 
 const newHighscore = ref({
   id: 0,
@@ -208,7 +244,8 @@ table.table th {
   padding: 5px 4px;
 }
 table.table tbody td {
-  font-size: 0.9rem;
+  font-size: 1.5rem;
+  text-align: start;
 }
 table.table thead {
   background: #ffffff;
@@ -223,5 +260,17 @@ table.table thead th {
 }
 table.table thead th:first-child {
   border-left: none;
+}
+
+.profile-pic {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+.td-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

@@ -71,6 +71,9 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import themeMusic from "/src/assets/audio/tetris-soundtrack.mp3";
+import { saveHighscore } from "../../stores/saveHighscore";
+
+// saveHighscore("Tetris", 400);
 
 // handles the music loading and toggle
 
@@ -131,6 +134,8 @@ const level = computed(() => {
   } else if (score.value < 1000) {
     return 2;
   } else if (score.value < 1500) {
+    return 3;
+  } else {
     return 3;
   }
 });
@@ -455,6 +460,7 @@ function gameOver() {
     )
   ) {
     gameActive.value = false;
+    saveHighscore("tetris", score.value);
   }
 }
 </script>

@@ -54,7 +54,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeMount } from "vue";
-import { safeHighscore } from "../../stores/safeHighscore.js";
+import { saveHighscore } from "../../stores/saveHighscore.js";
 import { RouterLink } from "vue-router";
 
 const memoryCards = ref([
@@ -265,6 +265,7 @@ const highscoreSaved = ref(false);
 const highscoreBtnText = computed(() => {
   return highscoreSaved.value ? "Highscore saved!" : "Save Score!";
 });
+
 
 const saveScore = () => {
   highscoreSaved.value = true;
