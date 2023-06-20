@@ -152,7 +152,7 @@ const setStatus = computed(() => {
 });
 
 // safe highscore
-const displayedPoints = computed(() => `${points.value} Points`);
+const displayedPoints = computed(() => points.value);
 const highscoreSaved = ref(false);
 const highscoreBtnText = computed(() => {
   return highscoreSaved.value ? "Highscore saved!" : "Safe Highscore";
