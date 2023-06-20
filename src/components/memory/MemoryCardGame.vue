@@ -266,10 +266,9 @@ const highscoreBtnText = computed(() => {
   return highscoreSaved.value ? "Highscore saved!" : "Save Score!";
 });
 
-
 const saveScore = () => {
   highscoreSaved.value = true;
-  const game = "Memory";
+  const game = "memory";
   const score = stopwatch.value;
   saveHighscore(game, score);
 };
