@@ -25,6 +25,7 @@ import tetrisImg from "/src/assets/img/preview/tetris-preview.png";
 import hangmanImg from "/src/assets/img/preview/hangman-preview.png";
 import rpsImg from "/src/assets/img/preview/rps-preview.png";
 import memoryImg from "/src/assets/img/preview/memory-preview.png";
+import moleImg from "/src/assets/img/icons/mole.png";
 
 const games = ref([
   {
@@ -46,6 +47,11 @@ const games = ref([
     name: "RPS",
     picture: rpsImg,
     route: "/games/rock-paper-scissors",
+  },
+  {
+    name: "Whack-A-Mole",
+    picture: moleImg,
+    route: "/games/whack-a-mole",
   },
 ]);
 
