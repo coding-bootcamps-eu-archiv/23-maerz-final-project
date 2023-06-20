@@ -40,6 +40,11 @@ const router = createRouter({
       component: () => import("@/views/TetrisView.vue"),
     },
     {
+      path: "/games/whack-a-mole",
+      name: "WhackAMole",
+      component: () => import("@/views/WhackAMoleView.vue"),
+    },
+    {
       path: "/account",
       name: "accountPage",
       component: () => import("@/views/AccountView.vue"),
