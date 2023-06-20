@@ -10,6 +10,8 @@ import RotatingGallery from "../components/home-view/RotatingGallery.vue";
 
 <style scoped>
 .bg-color {
-  background-color: var(--primary-dark);
+  /* background-color: var(--primary-dark); */
+  background-image: url(src/assets/img/background/background-2.png);
+  margin: 1.5rem;
 }
 </style>
