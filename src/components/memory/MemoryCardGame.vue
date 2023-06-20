@@ -1,54 +1,55 @@
 <template>
-  <div id="wrapper">
-    <section id="memory">
-      <header id="header">
-        <h1 id="h1">Memory</h1>
-        <div id="subHeader">
-          <div id="gameInfoBox" :class="{ winner: showSafeHighscoreButton }">
-            <p id="gameStatus">
-              {{ gameStatus }}
-            </p>
-            <p id="stopwatch">{{ stopwatch }}</p>
-          </div>
-
-          <button id="newGame" @click="startNewGame">New Game</button>
+  <section id="memory">
+    <header id="header">
+      <h1 id="h1">Memory</h1>
+      <div id="subHeader">
+        <div id="gameInfoBox" :class="{ winner: showSaveHighscoreButton }">
+          <p id="gameStatus">
+            {{ gameStatus }}
+          </p>
+          <p id="stopwatch">{{ stopwatch }}</p>
         </div>
-      </header>
 
-      <main id="gameContainer">
-        <div
-          v-if="gameStatus === 'ACTIVE'"
-          class="memory_card"
-          v-for="card in shuffledCards"
-          :key="card.index"
-          @click="showImage(card)"
+        <button id="newGame" @click="startNewGame">New Game</button>
+      </div>
+    </header>
+
+    <main id="gameContainer">
+      <div
+        v-if="gameStatus === 'ACTIVE'"
+        class="memory_card"
+        v-for="card in shuffledCards"
+        :key="card.index"
+        @click="showImage(card)"
+      >
+        <img
+          v-if="card.status === 'hidden'"
+          class="card-image"
+          :src="card.defaultImg"
+        />
+        <img v-else class="card-image" :src="card.img" />
+      </div>
+      <div v-else id="startCover">
+        <button
+          v-if="!showSaveHighscoreButton"
+          id="saveScoreBtn"
+          @click="startNewGame"
         >
-          <img
-            v-if="card.status === 'hidden'"
-            class="card-image"
-            :src="card.defaultImg"
-          />
-          <img v-else class="card-image" :src="card.img" />
-        </div>
-        <div v-else id="startCover">
-          <button
-            id="safeScoreBtn"
-            v-if="showSafeHighscoreButton"
-            @click="safeScore"
-          >
-            {{ highscoreBtnText }}
-          </button>
-          <button v-else id="popupStartBtn" @click="startNewGame">
-            Start Game!
-          </button>
-
-          <RouterLink v-if="highscoreSaved" :to="{ name: 'Highscores' }">
-            <button id="safeScoreBtn">Go to Highscores!</button></RouterLink
-          >
-        </div>
-      </main>
-    </section>
-  </div>
+          Start Game!
+        </button>
+        <button
+          id="saveScoreBtn"
+          v-if="showSaveHighscoreButton && !highscoreSaved"
+          @click="saveScore"
+        >
+          {{ highscoreBtnText }}
+        </button>
+        <RouterLink v-if="highscoreSaved" :to="{ name: 'Highscores' }">
+          <button id="saveScoreBtn">Go to Highscores!</button></RouterLink
+        >
+      </div>
+    </main>
+  </section>
 </template>
 
 <script setup>
@@ -187,7 +188,7 @@ const stopStopwatch = () => {
 const startNewGame = () => {
   isGameStarted.value = true;
   highscoreSaved.value = false;
-  showSafeHighscoreButton.value = false;
+  showSaveHighscoreButton.value = false;
 
   clickedCards.value = [];
   stopStopwatch();
@@ -240,7 +241,7 @@ const comparePairs = () => {
 
 //  Game Status
 const gameStatus = ref("");
-let showSafeHighscoreButton = ref(false);
+const showSaveHighscoreButton = ref(false);
 
 const setGameStatus = () => {
   const foundAll = shuffledCards.value.filter(
@@ -248,7 +249,7 @@ const setGameStatus = () => {
   );
   if (foundAll.length === 0) {
     gameStatus.value = "WINNER";
-    showSafeHighscoreButton.value = true;
+    showSaveHighscoreButton.value = true;
     stopStopwatch();
     return;
   }
@@ -259,17 +260,17 @@ const setGameStatus = () => {
   }
 };
 
-// Safe Highscore
+// Save Highscore
 const highscoreSaved = ref(false);
 const highscoreBtnText = computed(() => {
-  return highscoreSaved.value ? "Highscore saved!" : "Safe Highscore";
+  return highscoreSaved.value ? "Highscore saved!" : "Save Score!";
 });
 
-const safeScore = () => {
-  const game = "memory";
+
+const saveScore = () => {
+  highscoreSaved.value = true;
+  const game = "Memory";
   const score = stopwatch.value;
-  console.log(game);
-  console.log(score);
   saveHighscore(game, score);
 };
 </script>
@@ -280,7 +281,7 @@ const safeScore = () => {
   display: flex;
   min-width: 500px;
   max-width: 1500px;
-  height: 900px;
+  min-height: 51rem;
   flex-direction: column;
   align-items: center;
   z-index: 1;
@@ -288,9 +289,11 @@ const safeScore = () => {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  border: 2px solid var(--primary-light);
+  border-radius: 1rem;
 }
 header {
-  margin: 2rem 2rem 1rem 2rem;
+  margin: 1rem 2rem 1rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -373,7 +376,7 @@ header {
   position: relative;
   display: grid;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1.4rem;
   min-width: 30rem;
   min-height: 500px;
   max-width: 1000px;
@@ -385,8 +388,8 @@ header {
 
 .memory_card {
   border: 3px solid black;
-  height: 10rem;
-  width: 10rem;
+  height: 9rem;
+  width: 9rem;
   text-align: center;
   cursor: pointer;
 }
@@ -432,7 +435,7 @@ header {
   transform: scale(1.5);
 }
 
-#safeScoreBtn {
+#saveScoreBtn {
   position: absolute;
   left: 60%;
   top: 60%;
@@ -447,11 +450,11 @@ header {
   cursor: pointer;
   transition: transform 0.3s;
 }
-#safeScoreBtn:active {
+#saveScoreBtn:active {
   color: var(--primary-light);
   background-color: var(--primary-dark);
 }
-#safeScoreBtn:hover {
+#saveScoreBtn:hover {
   box-shadow: 0px 0px 50px 15px black;
   transform: scale(1.5);
 }

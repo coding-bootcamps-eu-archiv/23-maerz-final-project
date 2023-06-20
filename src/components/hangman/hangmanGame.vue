@@ -1,45 +1,43 @@
 <template>
-  <div id="wrapper">
-    <div id="body">
-      <header>
-        <h1>Hangman</h1>
-        <section id="top">
-          <div id="status" :class="{ winner: isWinner }">{{ setStatus }}</div>
+  <div id="body">
+    <header>
+      <h1>Hangman</h1>
+      <section id="top">
+        <div id="status" :class="{ winner: isWinner }">{{ setStatus }}</div>
 
-          <button id="newGameBtn" @click="startingNewGame">NEW GAME</button>
-        </section>
-      </header>
+        <button id="newGameBtn" @click="startingNewGame">NEW GAME</button>
+      </section>
+    </header>
 
-      <main>
-        <div id="fails">Fails {{ fails }}/10</div>
-        <div id="points">Points: {{ points }}</div>
-        <div id="pointsRules">(-10 Points for every Fail)</div>
+    <main>
+      <div id="fails">Fails {{ fails }}/10</div>
+      <div id="points">Points: {{ points }}</div>
+      <div id="pointsRules">(-10 Points for every Fail)</div>
+      <button
+        id="safeScoreBtn"
+        v-if="showSafeHighscoreButton"
+        @click="safeScore"
+      >
+        {{ highscoreBtnText }}
+      </button>
+      <RouterLink v-if="highscoreSaved" :to="{ name: 'Highscores' }">
+        <button id="safeScoreBtn">Go to Highscores!</button></RouterLink
+      >
+      <section id="outputArea">
+        <div id="output" :class="{ winner: isWinner }">{{ hiddenWord }}</div>
+      </section>
+      <section id="keyboardArea">
         <button
-          id="safeScoreBtn"
-          v-if="showSafeHighscoreButton"
-          @click="safeScore"
+          id="keyboardBtns"
+          v-for="char in alphabet"
+          :key="char"
+          @click="pickingLetter(char)"
+          :disabled="toBeDisabled[char]"
         >
-          {{ highscoreBtnText }}
+          {{ char }}
         </button>
-        <RouterLink v-if="highscoreSaved" :to="{ name: 'Highscores' }">
-          <button id="safeScoreBtn">Go to Highscores!</button></RouterLink
-        >
-        <section id="outputArea">
-          <div id="output" :class="{ winner: isWinner }">{{ hiddenWord }}</div>
-        </section>
-        <section id="keyboardArea">
-          <button
-            id="keyboardBtns"
-            v-for="char in alphabet"
-            :key="char"
-            @click="pickingLetter(char)"
-            :disabled="toBeDisabled[char]"
-          >
-            {{ char }}
-          </button>
-        </section>
-      </main>
-    </div>
+      </section>
+    </main>
   </div>
 </template>
 <script setup>
@@ -174,6 +172,8 @@ const safeScore = () => {
   background-image: url("https://cdn.pixabay.com/photo/2020/10/24/21/21/sun-5682667_1280.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  border: 3px solid var(--primary-light);
+  border-radius: 1rem;
 }
 
 h1 {
@@ -343,7 +343,7 @@ main {
   max-width: 68rem;
   flex-wrap: wrap;
   gap: 0.7rem;
-  padding: 2rem 9rem;
+  padding: 0rem 9rem 0rem 9rem;
 }
 #keyboardBtns {
   background: var(--primary-light);
