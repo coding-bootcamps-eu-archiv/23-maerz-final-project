@@ -23,6 +23,7 @@
           <th>Hangman</th>
           <th>R-P-S</th>
           <th>Memory</th>
+          <th>Whac-A-Mole</th>
         </tr>
       </thead>
       <tbody>
@@ -30,12 +31,8 @@
           <td class="picTd">
             <img :src="user.profilePic" class="profile-pic" />
           </td>
-          <td class="usernameTd">
-            {{ user.username }}
-          </td>
-          <td class="gameTd">
-            {{ user.tetris }}
-          </td>
+          <td class="usernameTd">{{ user.username }}</td>
+          <td class="gameTd">{{ user.tetris }}</td>
           <td class="gameTd">
             {{ user.hangman }}
           </td>
@@ -44,6 +41,9 @@
           </td>
           <td class="gameTd">
             {{ user.memory }}
+          </td>
+          <td class="gameTd">
+            {{ user.wam }}
           </td>
         </tr>
       </tbody>
@@ -75,6 +75,7 @@ async function getHighscores() {
       hangman: element.hangman,
       rps: element.rps,
       memory: element.memory,
+      wam: element.wam,
     });
   });
 }

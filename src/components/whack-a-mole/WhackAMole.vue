@@ -48,7 +48,7 @@ function newGame() {
       showAfterGameStats.value = true;
       clearInterval(interval);
       clearTimeout(timeoutId.value);
-      saveHighscore("Whack-a-Mole", score.value);
+      saveHighscore("wam", score.value);
     }
   }, 1000);
 }
@@ -149,7 +149,8 @@ main {
 
 .mole:hover {
   /* outline: 0.2rem dotted #772f1a; */
-  background-color: white;
+  background-color: var(--accent-color-two);
+  border-radius: 50%;
 }
 
 .menu {
