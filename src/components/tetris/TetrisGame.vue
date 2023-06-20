@@ -222,9 +222,12 @@ let nextRandom = 0;
 function autoMove() {
   if (level.value === 1) {
     timerId = setInterval(moveDown, 400);
+    audio.playbackRate = 1.0;
   } else if (level.value === 2) {
     timerId = setInterval(moveDown, 300);
+    audio.playbackRate = 1.2;
   } else if (level.value === 3) {
+    audio.playbackRate = 1.4;
     timerId = setInterval(moveDown, 200);
   }
 }
