@@ -27,22 +27,22 @@
       </thead>
       <tbody>
         <tr v-for="user in userScores">
-          <td>
+          <td class="picTd">
             <img :src="user.profilePic" class="profile-pic" />
           </td>
-          <td>
+          <td class="usernameTd">
             {{ user.username }}
           </td>
-          <td>
+          <td class="gameTd">
             {{ user.tetris }}
           </td>
-          <td>
+          <td class="gameTd">
             {{ user.hangman }}
           </td>
-          <td>
+          <td class="gameTd">
             {{ user.rps }}
           </td>
-          <td>
+          <td class="gameTd">
             {{ user.memory }}
           </td>
         </tr>
@@ -80,41 +80,6 @@ async function getHighscores() {
 }
 
 const userScores = ref([]);
-
-// const userScores = ref([
-//   {
-//     id: 1,
-//     profilePic: "⚡",
-//     username: "Harry",
-//     gameName: "Memory",
-//     score: "00:40.23",
-//     dateOfScore: "01.01.01",
-//   },
-//   {
-//     id: 2,
-//     profilePic: "🐭",
-//     username: "Mouse",
-//     gameName: "RPS",
-//     score: "5 Punkte",
-//     dateOfScore: "02.02.02",
-//   },
-//   {
-//     id: 3,
-//     profilePic: "🧔🏻",
-//     username: "Hagrid",
-//     gameName: "Tetris",
-//     score: "100 Punkte",
-//     dateOfScore: "03.03.03",
-//   },
-//   {
-//     id: 4,
-//     profilePic: "<(°.°)>",
-//     username: "Baby-Yoda",
-//     gameName: "Tetris",
-//     score: "500 Punkte",
-//     dateOfScore: "04.04.04",
-//   },
-// ]);
 
 //Filter by Input-Search
 const filter = ref("");
@@ -196,7 +161,7 @@ const resetNewHighscore = () => {
 </script>
 
 <style>
-#filter-input {
+/* #filter-input {
   all: unset;
   height: 1.5rem;
   width: 13rem;
@@ -205,18 +170,18 @@ const resetNewHighscore = () => {
   border-radius: 0.25rem;
   outline: 0.1rem solid var(--primary-dark);
   width: 20rem;
-}
+} */
 
-#table-section {
+/* #table-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
   gap: 1rem;
-}
+} */
 
-select {
+/* select {
   font-family: unset;
   font-size: unset;
   border: none;
@@ -227,7 +192,7 @@ select {
 
 select option {
   border: 0px;
-}
+} */
 
 .table {
   width: 50rem;
@@ -235,30 +200,28 @@ select option {
   text-align: center;
   background-color: var(--primary-light);
 }
-.table th {
+th {
   border-radius: 0.5rem;
 }
 
-table.table td,
-table.table th {
-  padding: 5px 4px;
+td,
+th {
+  padding: 0.5rem 0.5rem;
+  vertical-align: middle;
 }
-table.table tbody td {
-  font-size: 1.5rem;
-  text-align: start;
-}
-table.table thead {
+
+thead {
   background: #ffffff;
-  border-bottom: 4px solid var(--primary-dark);
+  border-bottom: 0.4rem solid var(--primary-dark);
 }
-table.table thead th {
-  font-size: 1rem;
+thead th {
+  font-size: 1.3rem;
   font-weight: bold;
   color: var(--primary-dark);
   text-align: center;
   border-left: 2px solid var(--primary-dark);
 }
-table.table thead th:first-child {
+thead th:first-child {
   border-left: none;
 }
 
@@ -267,10 +230,13 @@ table.table thead th:first-child {
   height: 3rem;
   border-radius: 50%;
 }
-
-.td-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.gameTd {
+  width: 10rem;
+}
+.usernameTd {
+  min-width: 10rem;
+}
+.picTd {
+  min-width: 6.5rem;
 }
 </style>
